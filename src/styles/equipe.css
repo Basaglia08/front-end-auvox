@@ -1,0 +1,414 @@
+/* ── SEÇÃO ── */
+.sectionEquipe {
+  display: block;
+  background: #ffffff;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  margin-top: -60px;
+  padding: 70px 5vw 80px;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.12);
+}
+
+.sectionEquipe::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -15%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(242, 181, 68, 0.07) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.sectionEquipe::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  right: -10%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(20, 39, 64, 0.05) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ── CABEÇALHO ── */
+.topoEquipe {
+  text-align: center;
+  margin-bottom: 52px;
+  position: relative;
+  z-index: 2;
+}
+
+.firstP {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #f2b544;
+  margin: 0 0 12px 0;
+  display: block;
+}
+
+.barrasFirtsP {
+  margin-right: 4px;
+}
+
+.firstH1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color: #142740;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  margin: 0 0 16px 0;
+}
+
+.spanH1 {
+  color: #f2b544;
+}
+
+.topoSep {
+  width: 48px;
+  height: 3px;
+  background: #f2b544;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* ── GRID ── */
+.carouselWrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.containerCards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  padding: 4px;
+  overflow: visible;
+}
+
+/* ── CARD ── */
+.container {
+  padding-bottom: 0;
+}
+
+.container .card {
+  position: relative;
+  cursor: pointer;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  width: 100%;
+  height: auto;
+  z-index: 1;
+}
+
+.container .card:hover {
+  z-index: 5;
+}
+
+/* Wrapper interno que sobe no hover */
+.container .card .cardInner {
+  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.container .card:hover .cardInner {
+  transform: translateY(-8px);
+}
+
+/* ── FOTO ── */
+.container .card .slide.slide1 {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(20, 39, 64, 0.12);
+  transition: box-shadow 0.4s ease;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.container .card:hover .slide.slide1 {
+  box-shadow: 0 20px 50px rgba(20, 39, 64, 0.22);
+}
+
+.imagIcon {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease;
+}
+
+/* Foto P&B: base, sempre visível */
+.imagIcon--bw {
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+  filter: grayscale(1);
+}
+
+/* Foto colorida: empilhada em cima, invisível por padrão */
+.imagIcon--color {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  filter: grayscale(0);
+}
+
+/* No hover: P&B some, colorida aparece */
+.container .card:hover .imagIcon--bw {
+  opacity: 0;
+}
+
+.container .card:hover .imagIcon--color {
+  opacity: 1;
+}
+
+/* Scale continua valendo em ambas */
+.container .card:hover .imagIcon {
+  transform: scale(1.06);
+}
+
+/* ── BADGE DO CARGO — ESTÁTICO, SEMPRE VISÍVEL ── */
+.cargoEquipe {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(20, 39, 64, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #f2b544;
+  font-family: 'Poppins', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  line-height: 1;
+  margin: 0;
+  display: inline-block;
+  z-index: 3;
+}
+
+/* Canto decorativo no hover */
+.container .card .slide.slide1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 36px 36px;
+  border-color: transparent transparent #142740 transparent;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.container .card:hover .slide.slide1::after {
+  opacity: 1;
+}
+
+/* ── INFO (NOME + LINHA + REDES) ── */
+.container .card .content {
+  padding: 14px 2px 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  width: auto;
+  height: auto;
+  display: block;
+  z-index: 1;
+  transition: none;
+}
+
+.container .card:hover .content {
+  transform: none;
+  box-shadow: none;
+}
+
+.container .card .content::before,
+.container .card .content::after {
+  display: none;
+}
+
+.nomeEquipe {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #142740;
+  letter-spacing: -0.3px;
+  margin: 0 0 10px 0;
+  text-align: left;
+}
+
+/* Linha dourada animada */
+.cardDivider {
+  height: 1px;
+  background: #e8e2d8;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.cardDivider::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: #f2b544;
+  transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.container .card:hover .cardDivider::after {
+  width: 100%;
+}
+
+/* ── REDES SOCIAIS ── */
+.container .card .slide.slide2 {
+  position: static;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  width: auto;
+  height: auto;
+  top: auto;
+  opacity: 0;
+  transform: translateY(5px);
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  transition: opacity 0.3s ease 0.05s, transform 0.3s ease 0.05s;
+}
+
+.container .card .slide.slide2::before {
+  display: none;
+}
+
+.container .card:hover .slide.slide2 {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cardEquipe {
+  display: flex;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+}
+
+.cardEquipe li {
+  list-style: none;
+  margin: 0 !important;
+}
+
+.cardEquipe li a {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: #142740;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.cardEquipe li a:hover {
+  background: #f2b544;
+  transform: translateY(-2px);
+}
+
+.iconCard {
+  width: 14px;
+  height: 14px;
+  color: #f2b544;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: fill 0.2s;
+  margin: auto;
+}
+
+.cardEquipe li a:hover .iconCard {
+  color: #142740;
+}
+
+/* ── SETAS ── */
+.equipeFooter {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 36px;
+  position: relative;
+  z-index: 2;
+}
+
+.arrow {
+  width: 42px;
+  min-width: 42px;
+  height: 42px;
+  min-height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(20, 39, 64, 0.2);
+  background: #fff;
+  color: #142740;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 2px 10px rgba(20, 39, 64, 0.08);
+}
+
+.arrow:hover {
+  background: #142740;
+  border-color: #142740;
+  color: #f2b544;
+  box-shadow: 0 4px 20px rgba(20, 39, 64, 0.2);
+}
+
+.sectionEquipe a {
+  text-decoration: none;
+  display: inline-flex;
+}
+
+/* ── RESPONSIVO ── */
+@media (max-width: 768px) {
+  .sectionEquipe { padding: 50px 4vw 60px; }
+  .containerCards { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+}
+
+@media (max-width: 480px) {
+  .containerCards { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+/* react-icons SVG inside social buttons */
+.cardEquipe li a svg {
+  display: block;
+  color: #f2b544;
+  transition: color 0.2s;
+}
+
+.cardEquipe li a:hover svg {
+  color: #142740;
+}

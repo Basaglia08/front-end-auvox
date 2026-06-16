@@ -1,0 +1,144 @@
+/* ==========================================================================
+   SEÇÃO PARCEIROS ESTRATÉGICOS (Layout Final Corrigido e Centralizado)
+   ========================================================================= */
+.secaoParceiros {
+  display: block;
+  background-color: #142740;
+  width: 100%;
+  padding: 120px 40px;       
+  text-align: center;
+  box-sizing: border-box;
+  
+  /* Cria os cantos arredondados para cima na seção escura */
+  border-radius: 50px 50px 0 0; 
+  overflow: hidden;          
+  font-family: "Poppins", sans-serif;
+
+  /* ── TRUQUE DA EMENDA PERFEITA AQUI ── */
+  position: relative;        
+  z-index: 4; /* Fica ligeiramente abaixo dos cards, impedindo que os cubra */
+  margin-top: -140px; /* Puxa o fundo escuro para cima, eliminando o espação */
+  box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.15);       
+}
+
+/* ── BLOCO DO TOPO (Centralização Absoluta) ── */
+.parceirosTopo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* Centraliza a tag e o título horizontalmente */
+  justify-content: center;
+  margin-bottom: 60px; 
+  width: 100%;
+  text-align: center;       /* Garante o alinhamento do texto no meio */
+}
+
+.tagParceiros {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #f2b544; /* Amarelo dourado padrão */
+  letter-spacing: 2px;
+  margin-bottom: 16px; 
+  margin-top: -40px;
+  text-transform: uppercase;
+}
+
+.parceirosTitulo {
+  font-size: 2.8rem; 
+  font-weight: 800;
+  color: #ffffff; /* Cor das outras palavras (Branco) */
+  line-height: 1.2;
+  margin: 0 auto;           
+  white-space: nowrap; 
+  display: inline-block;    
+  max-width: 100%;     
+}
+
+/* ── MUDANDO A COR DA PALAVRA SEM USAR SPAN ── */
+.parceirosTitulo strong {
+  color: #f2b544 !important; /* ◄ Troque pela cor desejada (Ex: #f2b544 para Amarelo) */
+  font-weight: inherit;      /* Herda o negrito que o título já tem */
+  text-shadow: none !important; /* Garante que aquele efeito de luz do span antigo suma */
+  display: inline !important;
+}
+
+
+.destaqueParceiros {
+  color: #f2b544;
+  font-size: 2.5rem ; 
+}
+
+/* ── CONTAINER E COMPORTAMENTO DAS LOGOS (Grandes) ── */
+.parceirosLogosWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 120px;       /* Espaço nobre entre as logos como na referência */
+  flex-wrap: wrap;  
+  margin-top: 30px; 
+  width: 100%;
+}
+
+.cardParceiroLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  padding: 10px;    
+}
+
+.cardParceiroLogo:hover {
+  transform: scale(1.05); /* Efeito suave de aproximação no hover */
+}
+
+.imgParceiroLogo {
+  width: 300px;
+ /* Força as logos a ficarem grandes e imponentes */
+  height: auto;
+    /* Garante o alinhamento de teto e proporção mútua */
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   Responsividade Avançada (Diminui a fonte para manter uma linha só no mobile)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .parceirosTitulo {
+    font-size: 2.4rem; 
+  }
+  .parceirosLogosWrap {
+    gap: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .secaoParceiros {
+    padding: 90px 30px;
+  }
+  .parceirosTitulo {
+    font-size: 1.8rem; 
+  }
+  .parceirosLogosWrap {
+    gap: 50px;
+  }
+  .imgParceiroLogo {
+    max-width: 280px;
+    max-height: 85px;
+  }
+}
+
+@media (max-width: 500px) {
+  .secaoParceiros {
+    padding: 70px 20px;
+  }
+  .parceirosTitulo {
+    font-size: 1.35rem; /* Ajuste para não quebrar a linha nem vazar da tela do celular */
+  }
+  .parceirosLogosWrap {
+    gap: 40px;
+  }
+  .imgParceiroLogo {
+    max-width: 210px;
+    max-height: 70px;
+  }
+}

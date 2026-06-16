@@ -1,0 +1,385 @@
+
+/* SOBRE SECTION */
+.sobre {
+    width: 100%;
+    padding: 100px 20px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: visible;
+     border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  margin-top: -60px;
+    box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.12); 
+}
+
+.sobre::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -20%;
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.18) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.sobre::after {
+    content: '';
+    position: absolute;
+    top: -8%;
+    right: -18%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(242, 181, 68, 0.1) 0%, transparent 65%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.sobre-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* HERO SECTION */
+.sobre-hero {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px;
+    align-items: center;
+    margin-bottom: 80px;
+    padding: 20px 0;
+}
+
+.sobre-hero-content {
+    animation: fadeInLeft 0.9s ease-out;
+}
+
+.sobre-hero-content::before {
+    content: '//';
+    display: block;
+    color: #f2b544;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px rgba(242, 181, 68, 0.3);
+}
+
+.sobre-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #142740;
+    margin-bottom: 15px;
+    letter-spacing: -1px;
+    line-height: 1.1;
+   
+}
+
+.sobre-title span {
+    color: #f2b544;
+    display: inline-block;
+    position: relative;
+}
+
+.sobre-title span::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #f2b544, transparent);
+}
+
+.sobre-subtitle {
+    font-size: 1.2rem;
+    color: #142740;
+    font-weight: 500;
+    margin-bottom: 25px;
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+}
+
+.sobre-description {
+    font-size: 1rem;
+    color: #4a5568;
+    line-height: 1.8;
+    margin-top: 20px;
+}
+
+.sobre-hero-img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: 
+        0 30px 60px rgba(20, 24, 31, 0.15),
+        0 0 40px rgba(242, 181, 68, 0.1);
+    animation: fadeInRight 0.9s ease-out;
+    border: 2px solid rgba(242, 181, 68, 0.2);
+    transition: transform 0.4s ease;
+}
+
+.sobre-hero-img:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+/* SEÇÃO DE INFORMAÇÕES (CARDS CLAROS - QUEM SOMOS / JORNADA) */
+.sobre-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px; 
+    margin-bottom: 20px; 
+}
+
+.info-box {
+    padding: 45px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(20, 24, 31, 0.05);
+    border: 1px solid rgba(242, 181, 68, 0.15);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 0;
+    background: #f2b544;
+    transition: width 0.5s ease;
+}
+
+/* Hover dos Cards Claros */
+.info-box:hover {
+    transform: translateY(-6px);
+    border-color: #f2b544;
+    box-shadow: 
+        0 15px 30px rgba(20, 24, 31, 0.1), 
+        0 0 15px rgba(242, 181, 68, 0.2);
+}
+
+.info-box:hover::before {
+    width: 100%;
+}
+
+.info-box h2 {
+    font-size: 1.6rem;
+    color: #f2b544;
+    margin-bottom: 15px;
+    font-weight: 700;
+    display: inline-block;
+    position: relative;
+}
+
+.info-box p {
+    font-size: 0.95rem;
+    color: #4a5568;
+    line-height: 1.85;
+}
+
+.info-box strong {
+    color: #142740;
+    font-weight: 700;
+}
+
+
+/* SEÇÃO MISSÃO E VISÃO (CARDS ESCUROS INVERTIDOS) */
+.missao-visao {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px; 
+    margin-bottom: 40px;
+    
+}
+
+.mv-card {
+    padding: 45px;
+    background: #142740; 
+    border-radius: 16px;
+    box-shadow: 
+        0 15px 30px rgba(20, 24, 31, 0.1), 
+        0 0 15px rgba(242, 181, 68, 0.2);
+    border: 1px solid transparent;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.mv-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 0;
+    background:  #f2b544;
+    transition: width 0.5s ease;
+}
+
+/* Hover dos Cards Escuros */
+.mv-card:hover {
+    transform: translateY(-6px);
+    background: #1a3150; 
+    border-color: #f2b544; 
+    box-shadow: 
+        0 20px 40px rgba(20, 24, 31, 0.25), 
+        0 0 20px rgba(242, 181, 68, 0.25);
+}
+
+.mv-card:hover::before {
+    width: 100%;
+}
+
+.mv-card h3 {
+    font-size: 1.6rem;
+    color: #f2b544; 
+    margin-bottom: 15px;
+    font-weight: 700;
+    display: inline-block;
+    position: relative;
+}
+
+.mv-card p {
+    font-size: 0.95rem;
+    color: #e2e8f0; 
+    line-height: 1.85;
+}
+
+
+/* LINHAS DECORATIVAS ABAIXO DOS TÍTULOS (EFEITO HOVER) */
+.info-box h2::before, .mv-card h3::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    transition: width 0.4s ease;
+}
+
+.info-box h2::before { background: #f2b544; } /* 🌟 Mudado para Dourado */
+.mv-card h3::before { background: #f2b544; }
+
+.info-box:hover h2::before, .mv-card:hover h3::before {
+    width: 100%;
+}
+
+
+/* ANIMAÇÕES ENTRADA */
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* RESPONSIVIDADE (MOBILE & TABLET) */
+@media (max-width: 768px) {
+    .sobre {
+        padding: 60px 15px;
+    }
+
+    .sobre::before {
+        width: 400px;
+        height: 400px;
+        right: -30%;
+    }
+
+    .sobre::after {
+        width: 350px;
+        height: 350px;
+        left: -20%;
+    }
+
+    .sobre-hero {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        margin-bottom: 50px;
+    }
+
+    .sobre-title {
+        font-size: 2.8rem;
+    }
+
+    .sobre-subtitle {
+        font-size: 1rem;
+    }
+
+    .sobre-hero-img {
+        max-width: 100%;
+    }
+
+    .sobre-info, .missao-visao {
+        grid-template-columns: 1fr;
+        gap: 16px; 
+        margin-bottom: 20px;
+    }
+
+    .info-box, .mv-card {
+        padding: 35px;
+    }
+
+    .info-box h2, .mv-card h3 {
+        font-size: 1.4rem;
+    }
+
+    .info-box p, .mv-card p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sobre {
+        padding: 40px 12px;
+    }
+
+    .sobre-hero-content::before {
+        font-size: 1.5rem;
+    }
+
+    .sobre-title {
+        font-size: 2rem;
+    }
+
+    .sobre-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .info-box, .mv-card {
+        padding: 25px;
+    }
+
+    .info-box h2, .mv-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .info-box p, .mv-card p {
+        font-size: 0.85rem;
+    }
+}

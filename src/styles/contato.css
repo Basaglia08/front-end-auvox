@@ -1,0 +1,448 @@
+/* ==========================================================================
+   ESTRUTURA PRINCIPAL DA SEÇÃO DE CONTATO
+   ========================================================================== */
+.contato-secao {
+  background-color: #ffffff; /* Fundo claro para contrastar com os cards */
+  padding: 100px 20px 180px 20px; /* Aumentado o padding inferior para dar espaço ao corte */
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Arredondamento e corte das bordas SUPERIORES e INFERIORES */
+  border-radius: 50px 50px 50px 50px; /* Aplica 50px em todos os quatro cantos */
+  overflow: hidden;             
+
+  /* Sobreposição na seção anterior (Home/Soluções) e na seção seguinte */
+  position: relative;        
+  z-index: 11;               
+  margin-top: clamp(-150px, -15vw, -250px);         
+  margin-bottom: -150px; /* Força a borda inferior a sobrepor a seção que vem abaixo dela */
+  
+  /* Sombra ajustada para abraçar o topo e a base da seção */
+  box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.08), 0 15px 30px rgba(0, 0, 0, 0.08); 
+}
+
+/* ==========================================================================
+   HEADER DA SEÇÃO (CORRIGIDO PARA CENTRALIZAÇÃO TOTAL)
+   ========================================================================== */
+.contato-header {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 50px auto;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important; /* Força os filhos a alinharem no centro horizontal */
+  text-align: center !important;  /* Força o texto a alinhar no centro */
+}
+
+.contato-slug {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #142740;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  text-align: center;
+  width: 100%;
+}
+
+.contato-slashes {
+  color: #f2b544;
+  margin-right: 4px;
+}
+
+/* Título em bloco vertical idêntico à referência */
+.contato-titulo {
+  font-size: 3rem; 
+  font-weight: 800;
+  font-family: 'Poppins' sans-serif;
+  color: #142740;
+  line-height: 1.2; 
+  margin: 15px auto 25px auto;
+  text-align: center !important; 
+  width: 100%;
+  max-width: 800px; /* Expandido para permitir que "Vamos TRANSFORMAR seu" fique na mesma linha */
+  display: block;
+}
+
+.contato-destaque {
+  color: #f2b544;
+  font-weight:bolder;
+  display: inline-block;
+  text-shadow: 0 0 15px rgba(242, 181, 68, 0.25); /* Efeito sutil de brilho */
+  font-family: 'Poppins' sans-serif;
+}
+
+.contato-subtitulo {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0 auto;
+  max-width: 580px; 
+  text-align: center !important;
+  display: block;
+}
+
+/* ==========================================================================
+   CONTAINER PRINCIPAL (FORMULÁRIO + CARDS)
+   ========================================================================== */
+.contato-container {
+  display: flex;
+  width: 100%;
+  max-width: 1140px;
+  gap: 40px;
+  align-items: stretch;
+}
+
+/* FORMULÁRIO (ESQUERDA) */
+.contato-form {
+  flex: 1.2; 
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #142740;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  border-radius: 0.75rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  color: #142740;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #f2b544;
+  box-shadow: 0 0 0 3px rgba(242, 181, 68, 0.15);
+}
+
+/* BOTÃO ENVIAR MENSAGEM */
+.btn-enviar {
+  background-color: #f2b544;
+  color: #142740;
+  border: none;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  margin-top: 10px;
+}
+
+.btn-enviar:hover {
+  background-color: #e0a334;
+  transform: translateY(-2px);
+}
+
+.icon-enviar {
+  font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   CARDS DE INFORMAÇÕES (DIREITA)
+   ========================================================================== */
+.contato-info-col {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: space-between; 
+}
+
+.info-card {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1; 
+}
+
+/* CÍRCULO DOURADO DO ÍCONE */
+.info-icon-box {
+  width: 70px;
+  height: 70px;
+  background-color: #f2b544; 
+  color: #ffffff; 
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.info-text-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.info-label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #142740;
+  margin: 0;
+  word-break: break-all; 
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (MOBILE)
+   ========================================================================== */
+@media (max-width: 992px) {
+  .contato-container {
+    flex-direction: column; 
+  }
+  
+  .contato-titulo {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-row {
+    flex-direction: column; 
+    gap: 20px;
+  }
+  
+  .contato-form {
+    padding: 24px;
+  }
+  
+  .contato-titulo {
+    font-size: 1.8rem;
+  }
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATION
+   ========================================================================== */
+
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px 16px 16px;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  min-width: 300px;
+  max-width: 380px;
+  animation: toastEntrar 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* SUCESSO */
+.toast-sucesso {
+  background: #142740;
+  border-left: 4px solid #f2b544;
+}
+
+/* ERRO */
+.toast-erro {
+  background: #2a0f0f;
+  border-left: 4px solid #e05252;
+}
+
+/* ÍCONE */
+.toast-icone {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.toast-sucesso .toast-icone {
+  background-color: #f2b544;
+  color: #142740;
+}
+
+.toast-erro .toast-icone {
+  background-color: #e05252;
+  color: #ffffff;
+}
+
+/* TEXTO */
+.toast-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.toast-titulo {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.toast-sucesso .toast-titulo {
+  color: #f2b544;
+}
+
+.toast-erro .toast-titulo {
+  color: #e05252;
+}
+
+.toast-msg {
+  font-size: 0.82rem;
+  color: #c8d8e8;
+  line-height: 1.4;
+}
+
+/* BOTÃO FECHAR */
+.toast-fechar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b8eaa;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.toast-fechar:hover {
+  color: #ffffff;
+}
+
+/* ANIMAÇÃO */
+@keyframes toastEntrar {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* RESPONSIVO */
+@media (max-width: 576px) {
+  .toast {
+    bottom: 20px;
+    right: 16px;
+    left: 16px;
+    min-width: unset;
+    max-width: unset;
+  }
+}
+
+/* ==========================================================================
+   VALIDAÇÃO DE CAMPOS
+   ========================================================================== */
+
+.input-erro {
+  border-color: #e05252 !important;
+  background-color: #fff8f8 !important;
+  box-shadow: 0 0 0 3px rgba(224, 82, 82, 0.12) !important;
+}
+
+.campo-erro {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: #e05252;
+  font-weight: 500;
+  margin-top: -4px;
+  animation: erroEntrar 0.2s ease;
+}
+
+.campo-erro::before {
+  content: "⚠";
+  font-size: 0.75rem;
+}
+
+@keyframes erroEntrar {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* ==========================================================================
+   CONTADOR DE CARACTERES DA MENSAGEM
+   ========================================================================== */
+
+.mensagem-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.mensagem-label-row label {
+  margin-bottom: 0;
+}
+
+.contador-chars {
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  transition: color 0.25s ease;
+}
+
+.contador-neutro {
+  color: #f2b544;
+}
+
+.contador-ok {
+  color: #4caf82;
+}
+
+.contador-erro {
+  color: #e05252;
+  font-weight: 700;
+}

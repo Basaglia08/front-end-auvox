@@ -1,0 +1,261 @@
+/* ==========================================================================
+   ESTILIZAÇÃO DO FOOTER (RODAPÉ - VERSÃO CORRIGIDA SEM DIVISÃO)
+   ========================================================================== */
+.footer-container {
+  background-color: #142740;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  position: relative;
+  z-index: 12; /* Garante que fica na camada acima do contato */
+  
+  /* Puxa o footer sutilmente para cima para colar perfeitamente no contato */
+  margin-top: -5px; 
+  
+  /* Mantém o espaçamento seguro para a onda alta não cobrir o texto */
+  padding-top: 220px; 
+  box-sizing: border-box;
+
+  /* ------------------------------------------------------------------------
+     SVG ATUALIZADO: Cor alterada de #ececec para #f8f9fa (Mesmo fundo do contato)
+     ------------------------------------------------------------------------ */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23f8f9fa' fill-opacity='1' d='M0,96L30,112C60,128,120,160,180,154.7C240,149,300,107,360,101.3C420,96,480,128,540,154.7C600,181,660,203,720,192C780,181,840,139,900,117.3C960,96,1020,96,1080,106.7C1140,117,1200,139,1260,149.3C1320,160,1380,160,1410,160L1440,160L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: top center;
+  
+  /* O navegador calcula a altura perfeita sem achatar os cantos */
+  background-size: 100% auto; 
+}
+
+/* Alinhamento do conteúdo principal em colunas (Grid/Flex) */
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px 60px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+/* --- COLUNA 1: LOGO E BRANDING --- */
+.footer-brand-column {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-logo-img {
+  width: 200px;  /* ← Vá alterando esse número para testar */
+  height: auto;  /* Não mexa aqui, isso impede a imagem de achatar */
+  display: block;
+  object-fit: contain;
+  margin: -25px;
+}
+
+.footer-slogan {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 25px 0;
+  max-width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 350;
+  margin-bottom: 20px;
+}
+
+/* Ícones das Redes Sociais */
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-socials a {
+  color: #ffffff;
+  font-size: 35px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-socials a:hover {
+  color: #f2b544; /* Destaque em dourado no hover */
+}
+
+.footer-partners {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-partners-title {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.footer-partner-logos {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.partner-logo-card {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  min-height: 52px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.partner-logo-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(242, 181, 68, 0.3);
+}
+
+.partner-logo-img {
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Customização para o texto/ícone do X */
+.x-icon {
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* --- COLUNA 2 e 3: TÍTULOS COMUNS --- */
+.footer-links-column h3,
+.footer-contact-column h3 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+}
+
+/* Menu de Links */
+.footer-links-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links-column ul li {
+  margin-bottom: 14px;
+}
+
+.footer-links-column ul li a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.footer-links-column ul li a:hover {
+  color: #ffffff;
+}
+
+/* --- COLUNA 3: CONTATOS --- */
+.footer-contact-column {
+  min-width: 220px;
+}
+
+.footer-contact-column p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 16px 0;
+}
+
+/* ==========================================================================
+   FAIXA DE COPYRIGHT (BASE DO FOOTER)
+   ========================================================================== */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px 40px;
+}
+
+.footer-bottom-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.copyright {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+.footer-legal-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-legal-links a {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-legal-links a:hover {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (MOBILE)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .footer-container {
+    padding-top: 100px; /* Reduz o topo no mobile pois a onda achata */
+    margin-top: -2px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 35px;
+    padding-bottom: 40px;
+  }
+
+  .footer-bottom-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+@media (max-width: 480px) {
+  .footer-container {
+    padding-top: 80px;
+  }
+
+  .footer-content {
+    padding: 0 20px 30px;
+  }
+
+  .footer-bottom {
+    padding: 20px;
+  }
+
+  .footer-legal-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

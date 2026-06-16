@@ -1,0 +1,737 @@
+  /* ==========================================================================
+   ── CONFIGURAÇÕES GERAIS E TIPOGRAFIA PREMIUM (PADRÃO INTERNACIONAL)
+   ========================================================================== */
+
+.secaoProjeto {
+  background-color: #0b1324;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif; /* Poppins como fonte única absoluta */
+  padding: 100px 6%;
+  display: flex;
+  flex-direction: column;
+  gap: 140px; /* Amplo espaço em branco para dar respiro premium */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Linhas sutis de grid ao fundo para quebrar o aspecto chapado */
+.secaoProjeto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Tags superiores (Ex: // FUNCIONALIDADES) */
+.tagProjeto, .tagSecao {
+  color: #f2b544;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 24px;
+}
+
+/* ── ESTILIZAÇÃO DOS TÍTULOS ── */
+.secaoTitulo, .heroTitulo, .ctaTitulo {
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;          /* Tamanho robusto e imponente */
+  font-weight: 700;            /* Peso marcante das imagens */
+  line-height: 1.15;           /* Altura de linha compacta para não espalhar */
+  letter-spacing: -0.04em;     /* Letras bem juntas para o efeito Premium */
+}
+
+/* Cor amarela de destaque */
+.secaoTitulo .destaque, 
+.heroTitulo .destaque, 
+.ctaTitulo .destaque {
+  color: #f2b544;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  display: inline-block;
+}
+
+/* Ajuste específico para o título da seção Sobre */
+.sobreTexto .secaoTitulo {
+  font-size: 3.2rem;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+
+/* ==========================================================================
+   ── HERO DO PROJETO (ESTILO SAAS)
+   ========================================================================== */
+.projetoHero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 80px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.projetoHero.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.heroSubtitulo {
+  color: rgba(255, 255, 255, 0.72);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 540px;
+  margin-bottom: 40px;
+}
+
+
+/* Botões com Física Fluida (cubic-bezier) */
+.heroBotoes {
+  display: flex;
+  gap: 16px;
+}
+
+.btnPrimario, .btnSecundario {
+  font-family: 'Poppins', sans-serif;     /* Fundo escuro padrão */
+  color: #ffffff;                /* Texto branco dentro do botão */
+  border: none;
+  padding: 12px 32px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  text-decoration: none; /* ◄ ADICIONE ESTA LINHA AQUI */
+  display: inline-block;
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+
+}
+
+.btnPrimario {
+  background: #0b1324;
+  color: #fff;
+
+}
+
+.btnPrimario:hover {
+   background-color: #f2b544;     /* Muda o botão para dourado no hover */
+  color: #142740;                /* Opcional: muda a letra para escuro ao virar dourado para dar leitura */
+  transform: translateY(-1px);
+  
+}
+
+.btnSecundario {
+  background: #f2b544; 
+  color:  #142740; 
+
+  
+}
+
+.btnSecundario:hover {
+  background-color: #142740;     /* Muda o botão para dourado no hover */
+  color: #fff;                /* Opcional: muda a letra para escuro ao virar dourado para dar leitura */
+  transform: translateY(-1px);
+  
+  
+}
+
+/* Card Espelhado da Direita */
+.logoCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 28px;
+  padding: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 380px;
+  backdrop-filter: blur(12px);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 30px 60px -10px rgba(0, 0, 0, 0.6);
+}
+
+.logoHeroImg.principal {
+  width: 150px;
+  z-index: 1;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+  border-radius: 16px;
+}
+
+.logoTag {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(242, 181, 68, 0.08);
+  border: 1px solid rgba(242, 181, 68, 0.2);
+  color: #f2b544;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+}
+
+.logoMetrica {
+  position: absolute;
+  bottom: -24px;
+  left: 24px;
+  background: rgba(20, 39, 64, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  padding: 14px 24px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+
+/* ==========================================================================
+   ── SEÇÃO SOBRE O INTERMEDI (PREMIUM REFACTOR)
+   ========================================================================== */
+.sobreWrapper {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 80px;
+  position: relative;
+  z-index: 1;
+  background: 
+    radial-gradient(circle at 80% 20%, rgba(163, 255, 84, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 90% 60%, rgba(242, 181, 68, 0.02) 0%, transparent 45%);
+}
+
+.sobreDescricao {
+  color: rgba(255, 255, 255, 0.72);
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.75;
+  max-width: 540px;
+  font-size: 1.05rem;
+  margin-bottom: 40px;
+}
+
+/* Mini-Cards Modernos */
+.sobreMiniCards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 540px;
+}
+
+.miniCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 18px 22px;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.miniCardIcone {
+  background: rgba(242, 181, 68, 0.06);
+  border: 1px solid rgba(242, 181, 68, 0.15);
+  color: #f2b544;
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.miniCardInfo h4 {
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.miniCardInfo p {
+  color: #94a3b8;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.miniCard:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(242, 181, 68, 0.2);
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.3);
+  transform: translateX(6px);
+}
+
+/* Container do Mockup de Dashboard */
+.sobreMockupContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 420px;
+}
+
+.mockupGlowVerde {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(163, 255, 84, 0.06) 0%, transparent 70%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.dashboardMockup {
+  position: relative;
+  width: 100%;
+  max-width: 310px;
+  background: rgba(11, 19, 36, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  z-index: 1;
+  backdrop-filter: blur(20px);
+}
+
+.mockupHeader {
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mockupDots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  margin-right: 4px;
+}
+
+.mockupTitle {
+  color: rgba(255, 255, 255, 0.25);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+}
+
+.mockupBody {
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mockupLogoCentral {
+  width: 60px;
+  filter: drop-shadow(0 0 25px rgba(242, 181, 68, 0.15));
+  margin-bottom: 30px;
+}
+
+.mockupLinhasCarregando {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.linhaLonga, .linhaCurta {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+}
+.linhaLonga { width: 55%; }
+.linhaCurta { width: 30%; }
+
+/* Badges de Feedback Flutuantes */
+.metricaFlutuante {
+  position: absolute;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  backdrop-filter: blur(8px);
+  animation: floatEffect 4.5s ease-in-out infinite alternate;
+}
+
+.m1 { top: 10%; left: -8%; }
+.m2 { bottom: 18%; right: -12%; }
+.m3 { bottom: -8%; left: 12%; }
+
+.metricaBadge { width: 8px; height: 8px; border-radius: 50%; }
+.metricaBadge.verde { background: #a3ff54; box-shadow: 0 0 10px #a3ff54; }
+.metricaBadge.amarelo { background: #f2b544; box-shadow: 0 0 10px #f2b544; }
+.metricaBadge.azul { background: #38bdf8; box-shadow: 0 0 10px #38bdf8; }
+
+.metricaTxt h5 { color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 700; margin: 0; }
+.metricaTxt p { color: #64748b; font-family: 'Poppins', sans-serif; font-size: 0.72rem; margin: 0; }
+
+@keyframes floatEffect {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+
+/* ==========================================================================
+   ── FUNCIONALIDADES (GRID EM COLUNAS - LADO A LADO)
+   ========================================================================== */
+.funcGrid {
+  display: flex;
+  flex-wrap: nowrap; /* Força rigidamente todos na mesma linha */
+  gap: 24px;
+  margin-top: 48px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.funcCard {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  padding: 36px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.funcIconeReact {
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.funcIconeReact svg {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+}
+
+.funcTitulo {
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.funcDescricao {
+  color: #94a3b8;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.funcBarra {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #f2b544;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover e Estados Ativos Dinâmicos */
+.funcCard:hover,
+.funcCard.ativo {
+  transform: translateY(-8px);
+  background: rgba(20, 39, 64, 0.6);
+  border-color: rgba(242, 181, 68, 0.25);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(242, 181, 68, 0.05);
+}
+
+.funcCard:hover .funcIconeReact svg,
+.funcCard.ativo .funcIconeReact svg {
+  transform: scale(1.1) rotate(2deg);
+}
+
+.funcCard:hover .funcBarra,
+.funcCard.ativo .funcBarra {
+  transform: scaleX(1);
+}
+
+
+/* ==========================================================================
+   ── PROCESSO DE DESENVOLVIMENTO (SEQUENCIAL - LADO A LADO)
+   ========================================================================== */
+.processoEtapas {
+  display: grid;
+  /* Alinha as 4 etapas rigidamente paralelas na mesma linha */
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 40px;
+  margin-top: 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.etapa {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.etapaNumero {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.214);
+  line-height: 1;
+  font-family: 'Poppins', sans-serif;
+  transition: color 0.4s ease, transform 0.4s ease;
+  cursor: pointer;
+}
+
+.etapa:hover .etapaNumero {
+  color: #f2b544;
+  transform: translateY(-2px);
+}
+
+.etapaTitulo {
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.etapaTexto {
+  color: #94a3b8;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   ── CTA FINAL E ICONES DA STACK (AJUSTE DE LOGO INTERMEDI)
+   ========================================================================== */
+.ctaFinal {
+  position: relative;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(20, 39, 64, 0.6) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 32px;
+  padding: 70px 40px;
+  text-align: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.ctaGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(242, 181, 68, 0.04) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+/* Ajuste Cirúrgico e Proporcional na Logo do Intermedi Final */
+.ctaLogoWrap {
+  margin-bottom: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ctaLogo {
+  height: 250px; 
+  width: auto;
+  opacity: 0.95;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+  border-radius: 16px;
+}
+
+.ctaLogo:hover {
+  transform: scale(1.02);
+}
+
+.ctaSubtitulo {
+  color: #94a3b8;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+}
+
+/* Grid de Badges Metálicas de Tecnologia */
+.ctaStack {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.stackTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #94a3b8;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 50px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stackTag:hover {
+  border-color: rgba(242, 181, 68, 0.3);
+  color: #f2b544;
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-3px);
+}
+
+
+/* ==========================================================================
+   ── RESPONSIVIDADE ADAPTATIVA (MOBILE / TABLET)
+   ========================================================================== */
+@media (max-width: 968px) {
+  .secaoProjeto {
+    gap: 100px;
+    padding: 80px 6%;
+  }
+
+  .projetoHero, .sobreWrapper {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    text-align: center;
+  }
+
+  /* Ajuste de tamanho responsivo dos títulos para telas menores */
+  .heroTitulo, .secaoTitulo, .sobreTexto .secaoTitulo, .ctaTitulo {
+    font-size: 2.5rem; 
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+  }
+
+  .heroSubtitulo, .sobreDescricao, .sobreMiniCards {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .heroBotoes {
+    justify-content: center;
+  }
+
+  .sobreMockupContainer {
+    height: 380px;
+    margin-top: 20px;
+  }
+  
+  .m1 { left: 2%; }
+  .m2 { right: 2%; }
+
+  /* ── FUNCIONALIDADES: quebra em grid responsivo no mobile ── */
+  .funcGrid {
+    flex-wrap: wrap;
+  }
+
+  .funcGrid .funcCard {
+    flex: 1 1 calc(50% - 12px);
+    min-width: 260px;
+  }
+
+  /* ── PROCESSO: scroll horizontal no mobile ── */
+  .processoEtapas {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .etapa {
+    scroll-snap-align: start;
+  }
+
+  /* Scrollbar sutil para o processo */
+  .processoEtapas::-webkit-scrollbar {
+    height: 4px;
+  }
+  .processoEtapas::-webkit-scrollbar-thumb {
+    background: rgba(242, 181, 68, 0.25);
+    border-radius: 10px;
+  }
+}
+/* ── MOBILE EXTRA PEQUENO (< 480px) ── */
+@media (max-width: 480px) {
+  .secaoProjeto {
+    padding: 60px 4%;
+    gap: 80px;
+  }
+
+  .heroTitulo,
+  .secaoTitulo,
+  .ctaTitulo {
+    font-size: 1.9rem;
+  }
+
+  .funcGrid .funcCard {
+    flex: 1 1 100%;
+  }
+
+  .heroBotoes {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btnPrimario,
+  .btnSecundario {
+    width: 100%;
+    text-align: center;
+  }
+
+  .logoCard {
+    padding: 40px 20px;
+  }
+
+  .metricaFlutuante {
+    display: none; /* Esconde floats em telas muito pequenas */
+  }
+
+  .ctaFinal {
+    padding: 40px 20px;
+  }
+
+  .ctaLogo {
+    height: 160px;
+  }
+}

@@ -1,0 +1,230 @@
+/* ==========================================================================
+   BAIXE.CSS — Design Compacto, Fluido e Harmônico (Corrigido)
+   ========================================================================== */
+
+.secaoBaixeApp {
+  display: block;
+  background-color: #ffffff;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Inter', 'Poppins', sans-serif;
+  padding: 60px 0; /* Reduzido o espaçamento interno vertical */
+  position: relative;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  margin-top: -60px;
+  box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.12); 
+}
+
+.baixeAppWrapper {
+  display: flex;
+  flex-direction: row-reverse; 
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px; /* Mais espaço de respiro entre o celular e o texto */
+  max-width: 1200px; /* Reduzido o limite máximo para compactar o layout */
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+/* ── LADO CONTEÚDO TEXTUAL ── */
+.baixeAppEsquerda {
+  flex: 1;
+  max-width: 550px; /* Limitado para o texto não espalhar demais */
+  text-align: left;
+}
+
+/* Ajustado para um tamanho normal de logo de cabeçalho/seção */
+.appLogoPrincipal {
+  width: 200px; /* Redução drástica do tamanho gigante anterior */
+  height: auto; 
+  object-fit: contain;
+  margin-bottom: 12px; /* Margem limpa e natural */
+  margin-top: 0;
+  display: block;
+}
+
+.baixeAppEsquerda .secaoTitulo {
+  font-size: 2.4rem; /* Diminuído de 3.6rem para uma proporção padrão de H2 */
+  font-weight: 800;
+  color: #111111;
+  line-height: 1.15;
+  margin: 0 0 12px 0; 
+  letter-spacing: -0.5px;
+}
+
+.baixeAppEsquerda .secaoTitulo .destaque {
+  color: #00ba69;
+}
+
+.baixeAppSubtitulo {
+  font-size: 1rem; /* Reduzido de 1.35rem para um tamanho de parágrafo legível */
+  font-weight: 500; /* Peso suavizado para melhor leitura */
+  color: #555555; /* Cor cinza escura para não competir com o título */
+  line-height: 1.4;
+  margin: 0 0 30px 0; 
+}
+
+/* Grid de Recursos (Diferenciais) */
+.appRecursosGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 35px; 
+  position: relative;
+  gap: 15px;
+}
+
+.recursoItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 10px;
+  position: relative;
+}
+
+/* Divisórias verticais mais sutis */
+.recursoItem:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 15%;
+  height: 70%;
+  width: 1px;
+  background-color: #dddddd; 
+}
+
+.recursoIconeWrap {
+  width: 100px; /* Encolhido de 150px para um tamanho de ícone elegante */
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px; 
+}
+
+.appIconeImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.recursoItem p {
+  font-size: 0.8rem; /* Compactado para harmonia do grid */
+  font-weight: 600;
+  color: #333333;
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* ── BOTÕES DE DOWNLOAD ── */
+.lojasBotoes {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.btnLoja {
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.btnLoja img {
+  height: 60px; /* Reduzido de 85px para o padrão recomendado pelas lojas (40px) */
+  width: auto; 
+  display: block;
+  object-fit: contain;
+}
+
+.btnLoja:hover {
+  transform: scale(1.03);
+}
+
+/* ── LADO DOS MOCKUPS (IMAGEM DO CELULAR) ── */
+.baixeAppDireita {
+  flex: 0 0 420px; /* Reduzido de 600px para equilibrar os lados */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 480px; /* Altura controlada */
+}
+
+.imgMockupCelulares {
+  width: 100%;
+  max-width: 400px; /* Encolhido para alinhar perfeitamente com a altura do texto */
+  height: auto;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+}
+
+/* Bola verde decorativa de fundo */
+.secaoBaixeApp::after {
+  content: "";
+  position: absolute;
+  bottom: -60px;
+  left: -60px; 
+  width: 320px; /* Reduzido o diâmetro */
+  height: 320px;
+  background: #a3f0cb;
+  border-radius: 50%;
+  opacity: 0.25; /* Um pouco mais sutil */
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ════════════════ RESPONSIVIDADE ADAPTADA ════════════════ */
+@media (max-width: 1024px) {
+  .baixeAppWrapper { gap: 40px; }
+  .baixeAppEsquerda .secaoTitulo { font-size: 2rem; }
+  .baixeAppDireita { flex: 0 0 350px; height: 400px; }
+  .imgMockupCelulares { max-width: 330px; }
+}
+
+@media (max-width: 868px) {
+  .baixeAppWrapper {
+    flex-direction: column; 
+    text-align: center;
+    padding: 30px 24px;
+    gap: 40px;
+  }
+  .baixeAppEsquerda { 
+    max-width: 100%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .appLogoPrincipal { margin: 0 auto 12px auto; }
+  .baixeAppEsquerda .secaoTitulo, 
+  .baixeAppSubtitulo {
+    text-align: center;
+  }
+  .lojasBotoes { justify-content: center; }
+  .baixeAppDireita { width: 100%; max-width: 350px; height: auto; }
+  
+  .secaoBaixeApp::after {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -100px;
+  }
+}
+
+@media (max-width: 550px) {
+  .appRecursosGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+  }
+  .recursoItem {
+    padding: 0;
+  }
+  .recursoItem:not(:last-child)::after {
+    display: none;
+  }
+  .baixeAppEsquerda .secaoTitulo {
+    font-size: 1.7rem;
+  }
+}

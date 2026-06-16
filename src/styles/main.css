@@ -1,0 +1,244 @@
+
+/* ==========================================================================
+   CONFIGURAÇÕES GLOBAIS E RESET
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+
+/* ==========================================================================
+   SEÇÃO MAIN DE SOLUÇÕES (TRAVADA E CORRIGIDA)
+   ========================================================================== */
+.main-solucoes {
+  background-color: #ececec;
+  padding: 80px 20px 60px 20px;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* Arredondamento e corte superior */
+  border-radius: 50px 50px 0 0;
+  overflow: hidden;
+
+  /* Sobreposição com sombra sobre a Home */
+  position: relative;
+  z-index: 10;
+  margin-top: -50px;
+  box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.containerMain {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+/* Subtítulo // NOSSAS SOLUÇÕES */
+.firstP {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #142740;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.barrasFirtsP {
+  color: #f2b544;
+  margin-right: 4px;
+}
+
+/* Título Principal */
+.firstH1 {
+  font-size: 2.5rem;
+  color: #142740;
+  font-weight: 800;
+  margin: 0;
+}
+
+.spanH1 {
+  color: #f2b544;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(242, 181, 68, 0.2);
+}
+
+/* GRID DOS CARDS */
+.grid-cards-solucoes {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; 
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   ESTRUTURA DOS CARDS (QUADRADO EM 360PX - EVITA CORTES)
+   ========================================================================== */
+.card-solucao {
+  width: 320px !important;
+  max-width: 320px !important;
+  height: 360px !important;
+  min-height: 360px !important; 
+  max-height: 360px !important; 
+
+  border-radius: 2rem;
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: flex-start;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+  transition: transform 0.3s ease;
+  overflow: hidden; 
+}
+
+.card-solucao:hover {
+  transform: translateY(-5px);
+}
+
+/* Temas dos Cards (Escuro / Claro) */
+.card-dark {
+  background-color: #142740;
+  color: #ffffff;
+}
+
+.card-light {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+/* Container circular do Ícone */
+.classImgSection {
+  width: 52px;
+  height: 52px;
+  border-radius: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-shrink: 0; 
+}
+
+.card-dark .classImgSection { background: rgba(255, 255, 255, 0.08); }
+.card-light .classImgSection { background: rgba(20, 39, 64, 0.05); }
+
+.icon-main-solucoes { font-size: 26px; }
+.card-dark .icon-main-solucoes { color: #ffffff; }
+.card-light .icon-main-solucoes { color: #142740; }
+
+/* Bloco de Texto Interno */
+.card-body-text {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 1;                
+  justify-content: flex-start; 
+  margin-top: 4px;
+  margin-bottom: 8px; 
+}
+
+.tituloSection {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  flex-shrink: 0; 
+}
+.card-dark .tituloSection { color: #ffffff; }
+.card-light .tituloSection { color: #142740; }
+
+.spanLinha {
+  width: 35px;
+  height: 3px;
+  background-color: #f2b544;
+  margin-bottom: 8px;
+  border-radius: 2px;
+  flex-shrink: 0; 
+}
+
+.descricaoSection {
+  font-size: 0.80rem;
+  line-height: 1.4;
+  margin: 0 0 6px 0; 
+}
+.card-dark .descricaoSection { color: #cbd5e1; }
+.card-light .descricaoSection { color: #64748b; }
+
+/* Listas de Tópicos */
+.ulSection {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 0;
+}
+
+.ulSection li {
+  font-size: 0.80rem;
+  line-height: 1.3;
+  margin-bottom: 3px;
+  display: flex; 
+  align-items: center;
+}
+
+.ulSection li::before {
+  content: "•";
+  color: #f2b544;
+  font-weight: bold;
+  display: inline-block;
+  width: 12px;
+  font-size: 1rem;
+}
+
+/* Botões da base do card */
+.buttonSection {
+  width: auto;
+  min-width: 120px;
+  padding: 8px 20px;
+  border-radius: 2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  align-self: flex-start;
+  flex-shrink: 0; 
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.card-dark .buttonSection { background-color: #ffffff; color: #142740; }
+.card-dark .buttonSection:hover { background-color: #f2b544; color: #142740; }
+
+.card-light .buttonSection { background-color: #142740; color: #ffffff; }
+.card-light .buttonSection:hover { background-color: #f2b544; color: #142740; }
+
+/* ==========================================================================
+   RESPONSIVIDADE COMPLETA
+   ========================================================================== */
+@media (max-width: 768px) {
+  .firstH1 { font-size: 1.8rem; }
+  
+  .main-solucoes {
+    border-radius: 30px 30px 0 0;
+    margin-top: -30px;
+  }
+
+  .card-solucao { 
+    width: 100% !important; 
+    max-width: 310px !important; 
+    height: 350px !important;
+    min-height: 350px !important;
+    max-height: 350px !important;
+  }
+
+  .container-contato {
+    flex-direction: column;
+    margin-bottom: 50px;
+  }
+  
+  .form-contato, .card-info-endereco {
+    width: 100%;
+  }
+}
