@@ -31,6 +31,24 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   align-items: stretch;
+  transition: grid-template-columns 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* No hover, o card apontado ocupa 75% da fileira; os demais dividem o
+   espaço restante. A imagem continua com object-fit: cover, portanto
+   preenche a nova largura sem esticar ou deformar. */
+@media (min-width: 901px) {
+  .carrossel-grid:has(.carrossel-card-wrap:nth-child(1) .carrossel-card:hover) {
+    grid-template-columns: 3fr 0.5fr 0.5fr;
+  }
+
+  .carrossel-grid:has(.carrossel-card-wrap:nth-child(2) .carrossel-card:hover) {
+    grid-template-columns: 0.5fr 3fr 0.5fr;
+  }
+
+  .carrossel-grid:has(.carrossel-card-wrap:nth-child(3) .carrossel-card:hover) {
+    grid-template-columns: 0.5fr 0.5fr 3fr;
+  }
 }
 
 /* Wrapper do parallax: o GSAP move este elemento (y), enquanto o card

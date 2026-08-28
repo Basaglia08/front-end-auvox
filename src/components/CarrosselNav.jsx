@@ -186,61 +186,61 @@ export default function CarrosselNav() {
         <div className="hero">
           <div className="layer active">
             <button className="button-top-right">Nossas Soluções</button>
-            <h1 className="heading">Impulsionando <br />a transformação <br />digital</h1>
+            <h1 className="heading">TECNOLOGIA QUE <br/> TRANSFORMA IDEIAS </h1>
           </div>
           <div className="layer">
             <button className="button-top-right">Conheça a IA</button>
-            <h1 className="heading">Inteligência <br />artificial em <br />escala</h1>
+            <h1 className="heading">INOVAÇÃO EM <br /> CADA SOLUÇÃO</h1>
           </div>
           <div className="layer">
             <button className="button-top-right">Ver Arquiteturas</button>
-            <h1 className="heading">Infraestrutura <br />em nuvem <br />de alto nível</h1>
+            <h1 className="heading">DESENVOLVIMENTO   <br />DE ALTO NÍVEL</h1>
           </div>
           <div className="layer">
             <button className="button-top-right">Falar com Especialistas</button>
-            <h1 className="heading">Segurança <br />e conformidade <br />end-to-end</h1>
+            <h1 className="heading">TECNOLOGIA  <br /> COM PROPÓSITO</h1>
           </div>
         </div>
 
         <div className="left-content">
           <div className="layer active">
-            <div className="fact subtitle">Mais de</div>
-            <div className="fact number" style={{'color': 'var(--primary-color)'}}>99,99%</div>
-            <div className="fact description">de SLA de disponibilidade em nossos serviços</div>
+            <div className="fact subtitle">Foco em</div>
+            <div className="fact number" style={{'color': 'var(--primary-color)'}}>SOLUÇÕES</div>
+            <div className="fact description">digitais para diferentes necessidades</div>
           </div>
           <div className="layer">
-            <div className="fact subtitle">Processamento de dados</div>
-            <div className="fact number" style={{'color': 'var(--primary-color)'}}>10 TB/s</div>
-            <div className="fact description">analisados em tempo real pela nossa plataforma</div>
+            <div className="fact subtitle">Nossa abordagem</div>
+            <div className="fact number" style={{'color': 'var(--primary-color)'}}>INOVAÇÃO</div>
+            <div className="fact description">aplicada ao desenvolvimento de soluções</div>
           </div>
           <div className="layer">
-            <div className="fact subtitle">Mais de</div>
-            <div className="fact number" style={{'color': 'var(--primary-color)'}}>500+</div>
-            <div className="fact description">empresas globais escalando suas operações</div>
+            <div className="fact subtitle">Foco em</div>
+            <div className="fact number" style={{'color': 'var(--primary-color)'}}>TECNOLOGIA</div>
+            <div className="fact description">do desenvolvimento ao resultado</div>
           </div>
           <div className="layer">
-            <div className="fact subtitle">Proteção contínua</div>
-            <div className="fact number" style={{'color': 'var(--primary-color)'}}>0 Vulnerabilidades</div>
-            <div className="fact description">críticas não mitigadas nos últimos 5 anos</div>
+            <div className="fact subtitle">Nosso propósito</div>
+            <div className="fact number" style={{'color': 'var(--primary-color)'}}>IMPACTO</div>
+            <div className="fact description">tecnologia criada para fazer a diferença</div>
           </div>
         </div>
 
         <div className="right-content">
           <div className="layer active">
-            <h2 className="heading">Construindo o futuro da tecnologia corporativa.</h2>
-            <p className="paragraph">Desenvolvemos ecossistemas de software modernos, integrando automação de ponta e arquiteturas escaláveis para impulsionar negócios no mercado global.</p>
+            <h2 className="heading">Tecnologia que gera novas possibilidades.</h2>
+            <p className="paragraph">Criamos soluções digitais que combinam inovação, funcionalidade e tecnologia para transformar necessidades em oportunidades.</p>
           </div>
           <div className="layer">
-            <h2 className="heading">Modelos preditivos e inteligência avançada.</h2>
-            <p className="paragraph">Transforme grandes volumes de dados não estruturados em insights valiosos para tomada de decisão em tempo real através de nossos algoritmos avançados.</p>
+            <h2 className="heading">Tecnologia pensada para evoluir.</h2>
+            <p className="paragraph">Buscamos unir criatividade, conhecimento técnico e novas tecnologias para criar soluções eficientes, modernas e adaptáveis.</p>
           </div>
           <div className="layer">
-            <h2 className="heading">Mobilidade, escalabilidade e performance.</h2>
-            <p className="paragraph">Oferecemos suporte completo à migração multicloud, otimização de custos operacionais e gerenciamento contínuo com tolerância a falhas.</p>
+            <h2 className="heading">Tecnologia, desempenho e evolução.</h2>
+            <p className="paragraph">Desenvolvemos soluções digitais buscando equilíbrio entre desempenho, organização, escalabilidade e uma experiência de uso eficiente.</p>
           </div>
           <div className="layer">
-            <h2 className="heading">Proteja seu ativo mais valioso: seus dados.</h2>
-            <p className="paragraph">Implementamos arquiteturas Zero Trust, criptografia avançada e sistemas de resposta rápida a incidentes para garantir segurança ininterrupta.</p>
+            <h2 className="heading">Criamos tecnologia que faz sentido.</h2>
+            <p className="paragraph">A Auvox transforma desafios em soluções digitais, buscando criar experiências úteis, acessíveis e capazes de gerar impacto.</p>
           </div>
         </div>
       </main>

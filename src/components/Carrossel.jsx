@@ -9,30 +9,29 @@ gsap.registerPlugin(ScrollTrigger);
 const CARDS = [
   {
     id: 1,
-    subtitle: 'DESENVOLVIMENTO',
-    title: 'Desenvolvimento de Sistemas',
-    text: 'Sistemas web e mobile sob medida, do protótipo ao deploy, com arquitetura escalável e código sustentável para crescer junto com a sua operação.',
+    subtitle: 'ESTRATÉGIA E GESTÃO',
+    title: 'Planejamento',
+    text: 'Analisamos as necessidades do seu negócio e estruturamos cada etapa do projeto, definindo objetivos, funcionalidades e tecnologias para transformar sua ideia em uma solução viável e eficiente.',
     image:
-      'https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?auto=format&fit=crop&w=2000&q=85',
   },
   {
     id: 2,
-    subtitle: 'AUTOMAÇÃO',
-    title: 'Automação de Processos',
-    text: 'Integrações e fluxos automatizados que eliminam tarefas repetitivas, reduzem erros manuais e liberam o time para o que realmente gera valor.',
+    subtitle: 'IDEIAS EM SOLUÇÃO',
+    title: 'Prototipação',
+    text: 'Criamos protótipos interativos para visualizar e validar sua solução antes do desenvolvimento, permitindo testar funcionalidades e experiência do usuário com mais agilidade.',
     image:
-      'https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=2000&q=85',
   },
   {
     id: 3,
-    subtitle: 'PRODUTO DIGITAL',
-    title: 'Soluções Digitais',
-    text: 'Da descoberta ao produto no ar: UX, design system e front-end de alta performance para entregar uma experiência consistente em qualquer tela.',
+    subtitle: 'TECNOLOGIA E INOVAÇÃO',
+    title: 'Desenvolvimento',
+    text: 'Desenvolvemos sistemas web, aplicativos e soluções digitais sob medida, utilizando tecnologias modernas para entregar produtos seguros, responsivos e preparados para crescer.',
     image:
-      'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=2000&q=85',
   },
 ];
-
 // Quanto cada card "flutua" no parallax. O do meio se move mais, o que dá
 // o desenho de arco/onda na fileira conforme a página rola.
 const PARALLAX = [46, 84, 46];
