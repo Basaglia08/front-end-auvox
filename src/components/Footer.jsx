@@ -6,6 +6,12 @@ import logoSkillDev from "../assets/skilldev-logo.png";
 function Footer() {
   return (
     <footer className="footer-container">
+      <div className="footer-wave-divider" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 280" preserveAspectRatio="none" focusable="false">
+          <path fill="#142740" d="M0,160 Q180,260 380,130 T800,160 T1200,120 T1440,140 L1440,280 L0,280 Z" />
+        </svg>
+      </div>
+
       <div className="footer-content">
 
         {/* Coluna 1: Logo, Slogan e Redes Sociais */}
@@ -39,7 +45,7 @@ function Footer() {
           <ul>
             <li><a href="#inicio">Início</a></li>
             <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#solucoes">Serviços</a></li>
             <li><a href="#equipe">Equipe</a></li>
             <li><a href="#contato">Contato</a></li>
           </ul>

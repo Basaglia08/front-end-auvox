@@ -1,267 +1,376 @@
 /* ==========================================================================
-   ESTRUTURA PRINCIPAL DA SEÇÃO DE CONTATO
+   CONTATO
+   Seção transparente: o fundo é a MESMA textura escura que corre por trás
+   do ScrollAnimation, do CarrosselNav e do Carrossel (pintada uma única vez
+   no body, em app.css). Sobre ela, um painel de vidro com o dourado #f2b544
+   como cor secundária em ícones, foco dos campos e botão.
    ========================================================================== */
 .contato-secao {
-  background-color: #ffffff; /* Fundo claro para contrastar com os cards */
-  padding: 100px 20px 180px 20px; /* Aumentado o padding inferior para dar espaço ao corte */
-  width: 100%;
+  --azul: #142740;
+  --dourado: #d49b28;
+  --texto: #1e293b;
+  --texto-suave: #64748b;
+  --borda: rgba(20, 39, 64, 0.12);
+
+  position: relative;
+  isolation: isolate;
   box-sizing: border-box;
+  margin-top: 40px;
+  padding: 40px 5vw 70px;
   font-family: 'Poppins', sans-serif;
+  color: var(--texto);
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /* Arredondamento e corte das bordas SUPERIORES e INFERIORES */
-  border-radius: 50px 50px 50px 50px; /* Aplica 50px em todos os quatro cantos */
-  overflow: hidden;             
-
-  /* Sobreposição na seção anterior (Home/Soluções) e na seção seguinte */
-  position: relative;        
-  z-index: 11;               
-  margin-top: clamp(-150px, -15vw, -250px);         
-  margin-bottom: -150px; /* Força a borda inferior a sobrepor a seção que vem abaixo dela */
-  
-  /* Sombra ajustada para abraçar o topo e a base da seção */
-  box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.08), 0 15px 30px rgba(0, 0, 0, 0.08); 
 }
 
+/* FUNDO: nenhum.
+   A seção é transparente de propósito — quem pinta é a textura do body
+   (app.css, com background-attachment: fixed), a mesma que corre por trás
+   do ScrollAnimation, do CarrosselNav e do Carrossel. Por isso também
+   desfazemos aqui o tratamento de "quadro" que o app.css aplica nas seções
+   claras: margem, cantos e sombra criariam uma emenda visível bem no meio
+   de uma superfície que deveria ser contínua.
+   O seletor usa `body section.contato-secao` para ter especificidade maior
+   que a regra `body .contato-secao` do app.css. */
+body section.contato-secao {
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  overflow: visible;
+}
+
+/* Brilhos difusos, para a superfície não ficar chapada */
+.contato-brilho {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* .contato-brilho.-um {
+  width: 460px;
+  height: 460px;
+  top: -140px;
+  right: -120px;
+  background: rgba(242, 181, 68, 0.15);
+} */
+
+/* .contato-brilho.-dois {
+  width: 380px;
+  height: 380px;
+  bottom: -160px;
+  left: -100px;
+  background: rgba(20, 39, 64, 0.06);
+} */
+
 /* ==========================================================================
-   HEADER DA SEÇÃO (CORRIGIDO PARA CENTRALIZAÇÃO TOTAL)
+   CABEÇALHO
+   O visual (slug, título, traço dourado) vem das classes compartilhadas
+   .secao-topo / .secao-slug / .secao-titulo / .secao-sep, no app.css — as
+   mesmas medidas do topo da Equipe. A variante `-escuro` troca a cor do
+   título para branco. Aqui fica só o espaçamento da seção.
    ========================================================================== */
 .contato-header {
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto 50px auto;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important; /* Força os filhos a alinharem no centro horizontal */
-  text-align: center !important;  /* Força o texto a alinhar no centro */
-}
-
-.contato-slug {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #142740;
-  letter-spacing: 1.5px;
-  margin-bottom: 12px;
-  text-align: center;
-  width: 100%;
-}
-
-.contato-slashes {
-  color: #f2b544;
-  margin-right: 4px;
-}
-
-/* Título em bloco vertical idêntico à referência */
-.contato-titulo {
-  font-size: 3rem; 
-  font-weight: 800;
-  font-family: 'Poppins' sans-serif;
-  color: #142740;
-  line-height: 1.2; 
-  margin: 15px auto 25px auto;
-  text-align: center !important; 
-  width: 100%;
-  max-width: 800px; /* Expandido para permitir que "Vamos TRANSFORMAR seu" fique na mesma linha */
-  display: block;
-}
-
-.contato-destaque {
-  color: #f2b544;
-  font-weight:bolder;
-  display: inline-block;
-  text-shadow: 0 0 15px rgba(242, 181, 68, 0.25); /* Efeito sutil de brilho */
-  font-family: 'Poppins' sans-serif;
+  margin-bottom: 70px;
 }
 
 .contato-subtitulo {
-  font-size: 0.95rem;
-  color: #64748b;
-  line-height: 1.6;
-  margin: 0 auto;
-  max-width: 580px; 
-  text-align: center !important;
-  display: block;
+  margin: 20px auto 0;
+  max-width: 560px;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--texto-suave);
 }
 
 /* ==========================================================================
-   CONTAINER PRINCIPAL (FORMULÁRIO + CARDS)
+   PAINEL: lateral + formulário
    ========================================================================== */
-.contato-container {
-  display: flex;
+.contato-painel {
+  position: relative;
   width: 100%;
-  max-width: 1140px;
-  gap: 40px;
-  align-items: stretch;
+  max-width: 1150px;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 0;
+  border: 1px solid var(--borda);
+  border-radius: 15px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 20px 50px rgba(20, 39, 64, 0.06);
 }
 
-/* FORMULÁRIO (ESQUERDA) */
-.contato-form {
-  flex: 1.2; 
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+/* ── Lateral ── */
+.contato-lateral {
+  padding: 52px 44px;
+  border-right: 1px solid var(--borda);
+  background: #142740;
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
-.form-row {
+.contato-lateral-titulo {
+  margin: 0 0 16px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.contato-lateral-texto {
+  margin: 0 0 42px;
+  font-size: 0.86rem;
+  line-height: 1.75;
+  color: #d3d3d3;
+}
+
+.contato-canais {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 26px;
+ 
 }
 
-.form-group {
+.contato-canal {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+   
+}
+
+.contato-canal-icone {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 1px solid var(--borda);
+  background: #ffffff;
+  color: var(--azul);
+  /* tamanho fixo para os três ícones terem o mesmo peso óptico */
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.contato-canal:hover .contato-canal-icone {
+  background: var(--azul);
+  color: #ffffff;
+  transform: translateY(-3px);
+  border-color: var(--azul);
+}
+
+.contato-canal-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.contato-canal-rotulo {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #d3d3d3;
+}
+
+.contato-canal-valor {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--azul);
+  word-break: break-word;
+}
+
+.contato-assinatura {
+  margin-top: auto;
+  padding-top: 40px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: rgba(20, 39, 64, 0.4);
+}
+
+/* ==========================================================================
+   FORMULÁRIO
+   Campos com linha embaixo (não caixa fechada): mais leve e elegante.
+   O foco acende a linha em dourado com um brilho suave.
+   ========================================================================== */
+.contato-form {
+  padding: 52px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background: #ffffff;
+}
+
+.contato-linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.contato-campo {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  flex: 1;
+  min-width: 0;
 }
 
-.form-group label {
-  font-size: 0.85rem;
+.contato-campo label {
+  font-size: 0.62rem;
   font-weight: 600;
-  color: #142740;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  transition: color 0.3s ease;
 }
 
-.form-group input,
-.form-group textarea {
+.contato-campo:focus-within label {
+  color: var(--azul);
+}
+
+.contato-campo input,
+.contato-campo textarea {
   width: 100%;
-  padding: 14px 16px;
-  border: 1px solid #e2e8f0;
-  background-color: #f8fafc;
-  border-radius: 0.75rem;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
-  color: #142740;
-  box-sizing: border-box;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: #f2b544;
-  box-shadow: 0 0 0 3px rgba(242, 181, 68, 0.15);
-}
-
-/* BOTÃO ENVIAR MENSAGEM */
-.btn-enviar {
-  background-color: #f2b544;
-  color: #142740;
+  padding: 12px 2px;
   border: none;
-  padding: 15px;
-  font-size: 1rem;
-  font-weight: 700;
-  border-radius: 0.75rem;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
+  border-bottom: 1px solid var(--borda);
+  background: transparent;
+  color: var(--texto);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.contato-campo textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+.contato-campo input::placeholder,
+.contato-campo textarea::placeholder {
+  color: #94a3b8;
+}
+
+.contato-campo input:focus,
+.contato-campo textarea:focus {
+  border-bottom-color: var(--azul);
+  box-shadow: 0 10px 24px -18px rgba(20, 39, 64, 0.4);
+}
+
+/* autofill do navegador não pode voltar a pintar de branco */
+.contato-campo input:-webkit-autofill,
+.contato-campo input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--texto);
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  transition: background-color 9999s ease-out;
+}
+
+/* ── Botão ── */
+.btn-enviar {
+  align-self: flex-start;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-  margin-top: 10px;
-}
-
-.btn-enviar:hover {
-  background-color: #e0a334;
-  transform: translateY(-2px);
-}
-
-.icon-enviar {
-  font-size: 1.1rem;
-}
-
-/* ==========================================================================
-   CARDS DE INFORMAÇÕES (DIREITA)
-   ========================================================================== */
-.contato-info-col {
-  flex: 0.8;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  justify-content: space-between; 
-}
-
-.info-card {
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex: 1; 
-}
-
-/* CÍRCULO DOURADO DO ÍCONE */
-.info-icon-box {
-  width: 70px;
-  height: 70px;
-  background-color: #f2b544; 
-  color: #ffffff; 
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  flex-shrink: 0;
-}
-
-.info-text-box {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.info-label {
-  font-size: 0.8rem;
-  color: #94a3b8;
-  font-weight: 500;
-}
-
-.info-value {
-  font-size: 1rem;
+  margin-top: 6px;
+  padding: 16px 34px;
+  border: none;
+  border-radius: 999px;
+  background: var(--azul);
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
   font-weight: 700;
-  color: #142740;
-  margin: 0;
-  word-break: break-all; 
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              opacity 0.3s ease;
+}
+
+.btn-enviar i {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-enviar:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px -12px rgba(242, 181, 68, 0.75);
+}
+
+.btn-enviar:hover:not(:disabled) i {
+  transform: translateX(5px);
+}
+
+.btn-enviar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* ==========================================================================
-   RESPONSIVIDADE (MOBILE)
+   VALIDAÇÃO DE CAMPOS
    ========================================================================== */
-@media (max-width: 992px) {
-  .contato-container {
-    flex-direction: column; 
-  }
-  
-  .contato-titulo {
-    font-size: 2.2rem;
-  }
+.input-erro {
+  border-bottom-color: #e05252 !important;
+  box-shadow: 0 10px 24px -18px #e05252 !important;
 }
 
-@media (max-width: 576px) {
-  .form-row {
-    flex-direction: column; 
-    gap: 20px;
-  }
-  
-  .contato-form {
-    padding: 24px;
-  }
-  
-  .contato-titulo {
-    font-size: 1.8rem;
-  }
+.campo-erro {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.74rem;
+  color: #e97b7b;
+  font-weight: 500;
+  animation: erroEntrar 0.2s ease;
 }
+
+.campo-erro::before {
+  content: "⚠";
+  font-size: 0.72rem;
+}
+
+@keyframes erroEntrar {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   CONTADOR DE CARACTERES DA MENSAGEM
+   ========================================================================== */
+.mensagem-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.contador-chars {
+  font-size: 0.68rem;
+  font-weight: 500;
+  transition: color 0.25s ease;
+}
+
+.contador-neutro { color: var(--texto-suave); }
+.contador-ok     { color: #6fd3a5; }
+.contador-erro   { color: #e97b7b; font-weight: 700; }
 
 /* ==========================================================================
    TOAST NOTIFICATION
    ========================================================================== */
-
 .toast {
   position: fixed;
   bottom: 32px;
@@ -272,26 +381,23 @@
   gap: 14px;
   padding: 16px 20px 16px 16px;
   border-radius: 14px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
   min-width: 300px;
   max-width: 380px;
   animation: toastEntrar 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   font-family: 'Poppins', sans-serif;
 }
 
-/* SUCESSO */
 .toast-sucesso {
   background: #142740;
   border-left: 4px solid #f2b544;
 }
 
-/* ERRO */
 .toast-erro {
   background: #2a0f0f;
   border-left: 4px solid #e05252;
 }
 
-/* ÍCONE */
 .toast-icone {
   width: 38px;
   height: 38px;
@@ -313,7 +419,6 @@
   color: #ffffff;
 }
 
-/* TEXTO */
 .toast-texto {
   display: flex;
   flex-direction: column;
@@ -327,13 +432,8 @@
   letter-spacing: 0.5px;
 }
 
-.toast-sucesso .toast-titulo {
-  color: #f2b544;
-}
-
-.toast-erro .toast-titulo {
-  color: #e05252;
-}
+.toast-sucesso .toast-titulo { color: #f2b544; }
+.toast-erro .toast-titulo    { color: #e05252; }
 
 .toast-msg {
   font-size: 0.82rem;
@@ -341,7 +441,6 @@
   line-height: 1.4;
 }
 
-/* BOTÃO FECHAR */
 .toast-fechar {
   background: none;
   border: none;
@@ -355,23 +454,47 @@
   flex-shrink: 0;
 }
 
-.toast-fechar:hover {
-  color: #ffffff;
-}
+.toast-fechar:hover { color: #ffffff; }
 
-/* ANIMAÇÃO */
 @keyframes toastEntrar {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ==========================================================================
+   RESPONSIVO
+   ========================================================================== */
+@media (max-width: 900px) {
+  .contato-secao {
+    padding: 80px 6vw 90px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+
+  .contato-painel {
+    grid-template-columns: 1fr;
+    border-radius: 20px;
+  }
+
+  .contato-lateral {
+    padding: 38px 28px;
+    border-right: none;
+    border-bottom: 1px solid var(--borda);
+  }
+
+  .contato-form {
+    padding: 38px 28px;
+  }
+
+  .contato-linha {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .btn-enviar {
+    align-self: stretch;
+    justify-content: center;
   }
 }
 
-/* RESPONSIVO */
 @media (max-width: 576px) {
   .toast {
     bottom: 20px;
@@ -380,69 +503,4 @@
     min-width: unset;
     max-width: unset;
   }
-}
-
-/* ==========================================================================
-   VALIDAÇÃO DE CAMPOS
-   ========================================================================== */
-
-.input-erro {
-  border-color: #e05252 !important;
-  background-color: #fff8f8 !important;
-  box-shadow: 0 0 0 3px rgba(224, 82, 82, 0.12) !important;
-}
-
-.campo-erro {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.78rem;
-  color: #e05252;
-  font-weight: 500;
-  margin-top: -4px;
-  animation: erroEntrar 0.2s ease;
-}
-
-.campo-erro::before {
-  content: "⚠";
-  font-size: 0.75rem;
-}
-
-@keyframes erroEntrar {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-/* ==========================================================================
-   CONTADOR DE CARACTERES DA MENSAGEM
-   ========================================================================== */
-
-.mensagem-label-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0;
-}
-
-.mensagem-label-row label {
-  margin-bottom: 0;
-}
-
-.contador-chars {
-  font-size: 0.75rem;
-  font-weight: 500;
-  font-family: 'Poppins', sans-serif;
-  transition: color 0.25s ease;
-}
-
-.contador-neutro {
-  color: #f2b544;
-}
-
-.contador-ok {
-  color: #4caf82;
-}
-
-.contador-erro {
-  color: #e05252;
-  font-weight: 700;
 }

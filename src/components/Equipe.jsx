@@ -37,7 +37,7 @@ const membros = [
 
 function Equipe() {
   return (
-    <section className="sectionEquipe" id="equipe">
+    <div id="equipe" className="equipeBloco">
       <div className="topoEquipe">
         <p className="firstP"><span className="barrasFirtsP">//</span> NOSSA EQUIPE</p>
         <h1 className="firstH1">
@@ -107,12 +107,7 @@ function Equipe() {
           ))}
         </div>
       </div>
-
-      <div className="equipeFooter">
-        <button className="arrow" aria-label="Anterior">❮</button>
-        <button className="arrow" aria-label="Próximo">❯</button>
-      </div>
-    </section>
+    </div>
   );
 }
 

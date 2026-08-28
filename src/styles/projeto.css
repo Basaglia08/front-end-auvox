@@ -1,737 +1,669 @@
-  /* ==========================================================================
-   ── CONFIGURAÇÕES GERAIS E TIPOGRAFIA PREMIUM (PADRÃO INTERNACIONAL)
-   ========================================================================== */
+/* ══════════════════════════════════════════════════════════════
+   PROJETOS
+   Grade editorial na identidade da Auvox: azul #142740 como tinta
+   principal e dourado #f2b544 nos destaques, mesma combinação de
+   Main, Equipe e Sobre.
 
-.secaoProjeto {
-  background-color: #0b1324;
-  color: #ffffff;
-  font-family: 'Poppins', sans-serif; /* Poppins como fonte única absoluta */
-  padding: 100px 6%;
-  display: flex;
-  flex-direction: column;
-  gap: 140px; /* Amplo espaço em branco para dar respiro premium */
-  overflow: hidden;
-  position: relative;
-}
+   Os itens alternam esquerda / direita e os da direita descem um
+   pouco, criando o desencontro do layout. A alternância é feita
+   por :nth-child, então o array do componente pode crescer sem
+   precisar mexer aqui.
+   ══════════════════════════════════════════════════════════════ */
 
-/* Linhas sutis de grid ao fundo para quebrar o aspecto chapado */
-.secaoProjeto::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-  z-index: 0;
-}
+.projeto-secao {
+  --projeto-fundo: #ffffff;
+  --projeto-azul: #142740;    /* mesma tinta dos títulos dos outros blocos */
+  --projeto-dourado: #f2b544;
+  --projeto-suave: #6b7a8c;
+  --projeto-linha: rgba(20, 39, 64, 0.14);
+  --projeto-raio: 8px;       /* arredondamento dos cards */
+  --projeto-desnivel: 12vh;   /* quanto os itens da direita descem */
 
-/* Tags superiores (Ex: // FUNCIONALIDADES) */
-.tagProjeto, .tagSecao {
-  color: #f2b544;
+  /* background: var(--projeto-fundo); */
+  color: var(--projeto-azul);
   font-family: 'Poppins', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
+  padding: 90px 5vw 110px;
+
+  /* o home.css tem regras no seletor `section` puro (min-height: 100vh,
+     display: flex, centralização) que valem para toda <section> do site;
+     estas três linhas desfazem isso só aqui */
   display: block;
-  margin-bottom: 24px;
+  min-height: 0;
+  align-items: initial;
 }
 
-/* ── ESTILIZAÇÃO DOS TÍTULOS ── */
-.secaoTitulo, .heroTitulo, .ctaTitulo {
-  color: #ffffff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 2.8rem;          /* Tamanho robusto e imponente */
-  font-weight: 700;            /* Peso marcante das imagens */
-  line-height: 1.15;           /* Altura de linha compacta para não espalhar */
-  letter-spacing: -0.04em;     /* Letras bem juntas para o efeito Premium */
-}
-
-/* Cor amarela de destaque */
-.secaoTitulo .destaque, 
-.heroTitulo .destaque, 
-.ctaTitulo .destaque {
-  color: #f2b544;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  display: inline-block;
-}
-
-/* Ajuste específico para o título da seção Sobre */
-.sobreTexto .secaoTitulo {
-  font-size: 3.2rem;
-  line-height: 1.15;
-  letter-spacing: -0.04em;
-}
-
-
-/* ==========================================================================
-   ── HERO DO PROJETO (ESTILO SAAS)
-   ========================================================================== */
-.projetoHero {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  align-items: center;
-  gap: 80px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  z-index: 1;
-}
-
-.projetoHero.fadeIn {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.heroSubtitulo {
-  color: rgba(255, 255, 255, 0.72);
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.1rem;
-  line-height: 1.7;
-  max-width: 540px;
-  margin-bottom: 40px;
-}
-
-
-/* Botões com Física Fluida (cubic-bezier) */
-.heroBotoes {
-  display: flex;
-  gap: 16px;
-}
-
-.btnPrimario, .btnSecundario {
-  font-family: 'Poppins', sans-serif;     /* Fundo escuro padrão */
-  color: #ffffff;                /* Texto branco dentro do botão */
-  border: none;
-  padding: 12px 32px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border-radius: 50px;
-  cursor: pointer;
-  text-decoration: none; /* ◄ ADICIONE ESTA LINHA AQUI */
-  display: inline-block;
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
-  transition: all 0.2s ease;
-
-}
-
-.btnPrimario {
-  background: #0b1324;
-  color: #fff;
-
-}
-
-.btnPrimario:hover {
-   background-color: #f2b544;     /* Muda o botão para dourado no hover */
-  color: #142740;                /* Opcional: muda a letra para escuro ao virar dourado para dar leitura */
-  transform: translateY(-1px);
-  
-}
-
-.btnSecundario {
-  background: #f2b544; 
-  color:  #142740; 
-
-  
-}
-
-.btnSecundario:hover {
-  background-color: #142740;     /* Muda o botão para dourado no hover */
-  color: #fff;                /* Opcional: muda a letra para escuro ao virar dourado para dar leitura */
-  transform: translateY(-1px);
-  
-  
-}
-
-/* Card Espelhado da Direita */
-.logoCard {
-  position: relative;
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 28px;
-  padding: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 380px;
-  backdrop-filter: blur(12px);
-  box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 30px 60px -10px rgba(0, 0, 0, 0.6);
-}
-
-.logoHeroImg.principal {
-  width: 150px;
-  z-index: 1;
-  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
-  border-radius: 16px;
-}
-
-.logoTag {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  background: rgba(242, 181, 68, 0.08);
-  border: 1px solid rgba(242, 181, 68, 0.2);
-  color: #f2b544;
-  padding: 6px 16px;
-  border-radius: 50px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-}
-
-.logoMetrica {
-  position: absolute;
-  bottom: -24px;
-  left: 24px;
-  background: rgba(20, 39, 64, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  padding: 14px 24px;
-  border-radius: 16px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
-
-
-/* ==========================================================================
-   ── SEÇÃO SOBRE O INTERMEDI (PREMIUM REFACTOR)
-   ========================================================================== */
-.sobreWrapper {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  align-items: center;
-  gap: 80px;
-  position: relative;
-  z-index: 1;
-  background: 
-    radial-gradient(circle at 80% 20%, rgba(163, 255, 84, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 90% 60%, rgba(242, 181, 68, 0.02) 0%, transparent 45%);
-}
-
-.sobreDescricao {
-  color: rgba(255, 255, 255, 0.72);
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.75;
-  max-width: 540px;
-  font-size: 1.05rem;
-  margin-bottom: 40px;
-}
-
-/* Mini-Cards Modernos */
-.sobreMiniCards {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  max-width: 540px;
-}
-
-.miniCard {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  padding: 18px 22px;
-  border-radius: 16px;
-  backdrop-filter: blur(8px);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.miniCardIcone {
-  background: rgba(242, 181, 68, 0.06);
-  border: 1px solid rgba(242, 181, 68, 0.15);
-  color: #f2b544;
-  padding: 8px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.miniCardInfo h4 {
-  color: #ffffff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin: 0 0 4px 0;
-}
-
-.miniCardInfo p {
-  color: #94a3b8;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.88rem;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.miniCard:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(242, 181, 68, 0.2);
-  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.3);
-  transform: translateX(6px);
-}
-
-/* Container do Mockup de Dashboard */
-.sobreMockupContainer {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 420px;
-}
-
-.mockupGlowVerde {
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(circle, rgba(163, 255, 84, 0.06) 0%, transparent 70%);
-  filter: blur(30px);
-  pointer-events: none;
-}
-
-.dashboardMockup {
-  position: relative;
-  width: 100%;
-  max-width: 310px;
-  background: rgba(11, 19, 36, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 20px;
-  box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.6);
+/* Mesmo tratamento de "quadro" das outras seções claras: recuo pelas
+   bordas e cantos arredondados, com a textura escura do body em volta.
+   O `body ` na frente sobe a especificidade para vencer o cascade. */
+body .projeto-secao {
+  width: auto;
+  margin: var(--quadro-espaco, 18px);
+  border-radius: var(--quadro-raio, 32px);
   overflow: hidden;
-  z-index: 1;
-  backdrop-filter: blur(20px);
+  /* box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45); */
 }
 
-.mockupHeader {
-  background: rgba(255, 255, 255, 0.02);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* ── Cabeçalho ──
+   O visual (slug, título, traço dourado) vem das classes compartilhadas
+   .secao-topo / .secao-slug / .secao-titulo / .secao-sep, no app.css — as
+   mesmas medidas do topo da Equipe. Aqui fica só o espaçamento. */
+.projeto-cabecalho {
+  margin-bottom: 70px;
 }
 
-.mockupDots span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.15);
+.projeto-barras {
   margin-right: 4px;
 }
 
-.mockupTitle {
-  color: rgba(255, 255, 255, 0.25);
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.75rem;
-}
-
-.mockupBody {
-  padding: 50px 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.mockupLogoCentral {
-  width: 60px;
-  filter: drop-shadow(0 0 25px rgba(242, 181, 68, 0.15));
-  margin-bottom: 30px;
-}
-
-.mockupLinhasCarregando {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-}
-
-.linhaLonga, .linhaCurta {
-  height: 4px;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 10px;
-}
-.linhaLonga { width: 55%; }
-.linhaCurta { width: 30%; }
-
-/* Badges de Feedback Flutuantes */
-.metricaFlutuante {
-  position: absolute;
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4);
-  z-index: 2;
-  backdrop-filter: blur(8px);
-  animation: floatEffect 4.5s ease-in-out infinite alternate;
-}
-
-.m1 { top: 10%; left: -8%; }
-.m2 { bottom: 18%; right: -12%; }
-.m3 { bottom: -8%; left: 12%; }
-
-.metricaBadge { width: 8px; height: 8px; border-radius: 50%; }
-.metricaBadge.verde { background: #a3ff54; box-shadow: 0 0 10px #a3ff54; }
-.metricaBadge.amarelo { background: #f2b544; box-shadow: 0 0 10px #f2b544; }
-.metricaBadge.azul { background: #38bdf8; box-shadow: 0 0 10px #38bdf8; }
-
-.metricaTxt h5 { color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 700; margin: 0; }
-.metricaTxt p { color: #64748b; font-family: 'Poppins', sans-serif; font-size: 0.72rem; margin: 0; }
-
-@keyframes floatEffect {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-10px); }
-}
-
-
-/* ==========================================================================
-   ── FUNCIONALIDADES (GRID EM COLUNAS - LADO A LADO)
-   ========================================================================== */
-.funcGrid {
-  display: flex;
-  flex-wrap: nowrap; /* Força rigidamente todos na mesma linha */
-  gap: 24px;
-  margin-top: 48px;
-  position: relative;
-  z-index: 1;
-  width: 100%;
-}
-
-.funcCard {
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  border-radius: 20px;
-  padding: 36px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.funcIconeReact {
-  margin-bottom: 28px;
-  display: flex;
-  align-items: center;
-  height: 40px;
-}
-
-.funcIconeReact svg {
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
-}
-
-.funcTitulo {
-  color: #ffffff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  letter-spacing: -0.01em;
-}
-
-.funcDescricao {
-  color: #94a3b8;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.95rem;
-  line-height: 1.65;
-}
-
-.funcBarra {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: #f2b544;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Hover e Estados Ativos Dinâmicos */
-.funcCard:hover,
-.funcCard.ativo {
-  transform: translateY(-8px);
-  background: rgba(20, 39, 64, 0.6);
-  border-color: rgba(242, 181, 68, 0.25);
-  box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(242, 181, 68, 0.05);
-}
-
-.funcCard:hover .funcIconeReact svg,
-.funcCard.ativo .funcIconeReact svg {
-  transform: scale(1.1) rotate(2deg);
-}
-
-.funcCard:hover .funcBarra,
-.funcCard.ativo .funcBarra {
-  transform: scaleX(1);
-}
-
-
-/* ==========================================================================
-   ── PROCESSO DE DESENVOLVIMENTO (SEQUENCIAL - LADO A LADO)
-   ========================================================================== */
-.processoEtapas {
+/* ── Grade alternada ── */
+.projeto-grade {
+  max-width: 1200px;
+  margin: 0 auto;
   display: grid;
-  /* Alinha as 4 etapas rigidamente paralelas na mesma linha */
-  grid-template-columns: repeat(4, 1fr); 
-  gap: 40px;
-  margin-top: 48px;
-  position: relative;
-  z-index: 1;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 6vw;
+  row-gap: 10vh;
+  align-items: start;
 }
 
-.etapa {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* Os pares (2º, 4º, 6º...) caem na coluna da direita e descem, criando o
+   desencontro. Vale para qualquer quantidade de itens no array. */
+.projeto-item:nth-child(even) {
+  transform: translateY(var(--projeto-desnivel));
 }
 
-.etapaNumero {
-  font-size: 3.5rem;
-  font-weight: 900;
-  color: rgba(255, 255, 255, 0.214);
-  line-height: 1;
-  font-family: 'Poppins', sans-serif;
-  transition: color 0.4s ease, transform 0.4s ease;
+/* O card é um <button> (abre o modal): zera o visual padrão do botão */
+.projeto-card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  font: inherit;
+  color: inherit;
   cursor: pointer;
+  text-decoration: none;
 }
 
-.etapa:hover .etapaNumero {
-  color: #f2b544;
-  transform: translateY(-2px);
+.projeto-card:focus-visible {
+  outline: 2px solid var(--projeto-dourado);
+  outline-offset: 6px;
+  border-radius: 8px;
 }
 
-.etapaTitulo {
-  color: #ffffff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.etapaTexto {
-  color: #94a3b8;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-
-/* ==========================================================================
-   ── CTA FINAL E ICONES DA STACK (AJUSTE DE LOGO INTERMEDI)
-   ========================================================================== */
-.ctaFinal {
+/* ── Moldura da foto ── */
+.projeto-moldura {
   position: relative;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(20, 39, 64, 0.6) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 32px;
-  padding: 70px 40px;
-  text-align: center;
-  overflow: hidden;
-  z-index: 1;
+  will-change: transform, opacity;
 }
 
-.ctaGlow {
+/* Bloco colorido deslocado atrás da foto (o GSAP anima o deslocamento) */
+.projeto-bloco {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(242, 181, 68, 0.04) 0%, transparent 70%);
-  filter: blur(40px);
+  inset: 0;
+  background: var(--cor-projeto, var(--projeto-dourado));
+  border-radius: var(--projeto-raio);
+  transform: translate(14px, 14px);
+  z-index: 0;
+}
+
+.projeto-foto {
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+  overflow: hidden;
+  border-radius: var(--projeto-raio);
+  border: 1px solid rgba(20, 39, 64, 0.12);
+  background: #eef1f4;
+  aspect-ratio: 16 / 10;
+  box-shadow: 0 14px 30px rgba(20, 39, 64, 0.14);
+  transition: box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.projeto-card:hover .projeto-foto {
+  box-shadow: 0 22px 45px rgba(20, 39, 64, 0.22);
+}
+
+.projeto-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.01);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.projeto-card:hover .projeto-foto img {
+  transform: scale(1.06);
+}
+
+/* O "+" no canto superior esquerdo, como no layout de referência */
+.projeto-marcador {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  font-size: 0.9rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 4px rgba(20, 39, 64, 0.5);
   pointer-events: none;
 }
 
-/* Ajuste Cirúrgico e Proporcional na Logo do Intermedi Final */
-.ctaLogoWrap {
-  margin-bottom: 28px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* ── Rodapé do item: número · título · etiqueta ── */
+.projeto-rodape {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 18px;
+  margin-top: 26px;
+  padding-top: 16px;
+  border-top: 1px solid var(--projeto-linha);
+  will-change: transform, opacity;
 }
 
-.ctaLogo {
-  height: 250px; 
-  width: auto;
-  opacity: 0.95;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-  transition: transform 0.3s ease;
-  border-radius: 16px;
+.projeto-numero {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--projeto-suave);
 }
 
-.ctaLogo:hover {
-  transform: scale(1.02);
-}
-
-.ctaSubtitulo {
-  color: #94a3b8;
+/* Poppins, como nos títulos dos outros cards do site */
+.projeto-nome {
+  margin: 0;
   font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 800;
+  color: var(--projeto-fundo);
+  letter-spacing: -1px;
+  line-height: 1.1;
 }
 
-/* Grid de Badges Metálicas de Tecnologia */
-.ctaStack {
+.projeto-legenda {
+  margin: 10px 0 0;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+  color: var(--projeto-fundo);
+}
+
+.projeto-etiqueta {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  color: var(--projeto-dourado);
+  white-space: nowrap;
+}
+
+/* ── Responsivo ── */
+@media (max-width: 900px) {
+  .projeto-secao {
+    padding: 70px 6vw 80px;
+    --projeto-raio: 18px;
+  }
+
+  .projeto-grade {
+    grid-template-columns: 1fr;
+    row-gap: 70px;
+  }
+
+  /* uma coluna só: sem desnível */
+  .projeto-item:nth-child(even) {
+    transform: none;
+  }
+
+  .projeto-rodape {
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+  }
+
+  /* a etiqueta desce para a linha de baixo em vez de espremer o título */
+  .projeto-etiqueta {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projeto-foto,
+  .projeto-foto img {
+    transition: none;
+  }
+}
+/* ══════════════════════════════════════════════════════════════
+   MODAL DE PROJETO
+   Ocupa a tela inteira: foto ocupando a maior parte à esquerda e
+   uma coluna de ~1/3 à direita com título, descrição, ficha e o
+   botão de acesso. Barra de topo com contador e fechar; barra de
+   rodapé com anterior (esquerda) e próximo (direita).
+
+   Renderizado no <body> via portal, por isso as variáveis de cor
+   são redeclaradas aqui — ele não é filho de .projeto-secao.
+   ══════════════════════════════════════════════════════════════ */
+.projeto-modal {
+  --projeto-azul: #142740;
+  --projeto-dourado: #f2b544;
+  --projeto-suave: #6b7a8c;
+  --projeto-linha: rgba(20, 39, 64, 0.14);
+
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 40px;
+  flex-direction: column;
+  /* tela cheia de verdade: sem recuo nas bordas */
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  animation: projetoModalEntra 0.35s ease both;
 }
 
-.stackTag {
+.projeto-modal-fundo {
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 14, 22, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@keyframes projetoModalEntra {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Barras de topo e rodapé ── */
+/* As barras NÃO ocupam espaço no fluxo: ficam absolutas por cima do
+   painel, no topo e na base. É o que garante que a foto e a coluna de
+   informações preencham a tela inteira, sem sobra em cima nem embaixo.
+   O degradê por trás de cada barra mantém o texto legível sobre
+   qualquer imagem. */
+.projeto-modal-topo,
+.projeto-modal-rodape {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 26px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 2.4px;
+  color: rgba(255, 255, 255, 0.85);
+  pointer-events: none;   /* só os botões capturam clique */
+}
+
+.projeto-modal-topo {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(6, 10, 16, 0.85), transparent);
+}
+
+.projeto-modal-rodape {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(6, 10, 16, 0.85), transparent);
+}
+
+.projeto-modal-topo button,
+.projeto-modal-rodape button {
+  pointer-events: auto;
+}
+
+.projeto-modal-contador,
+.projeto-modal-dica {
+  text-align: center;
+}
+
+.projeto-modal-fechar,
+.projeto-modal-nav {
+  justify-self: end;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  color: #94a3b8;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
+  gap: 8px;
+  padding: 6px 2px;
+  border: none;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.projeto-modal-rodape .projeto-modal-nav:first-child {
+  justify-self: start;
+}
+
+.projeto-modal-fechar:hover,
+.projeto-modal-nav:hover {
+  color: var(--projeto-dourado);
+}
+
+.projeto-modal-rodape .projeto-modal-nav:first-child:hover {
+  transform: translateX(-4px);
+}
+
+.projeto-modal-rodape .projeto-modal-nav:last-child:hover {
+  transform: translateX(4px);
+}
+
+/* ── Painel central ── */
+.projeto-modal-painel {
+  position: absolute;
+  inset: 0;              /* tela cheia: nada sobra em cima nem embaixo */
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 2fr 1fr;   /* foto ocupa a maior parte, info ~1/3 */
+  background: #ffffff;
+  border-radius: 0;
+  overflow: hidden;
+  animation: projetoConteudoEntra 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* O painel usa esta animação ao abrir; a coluna de informações tem uma
+   `key` no JSX e remonta a cada troca de projeto, então repete a animação
+   a cada anterior / próximo. */
+@keyframes projetoConteudoEntra {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Carrossel de imagens ──
+   Sem moldura colorida e sem padding: a imagem preenche o lado esquerdo
+   inteiro. A cor do projeto segue sendo usada só no card da grade e na
+   frase de destaque. */
+.projeto-modal-galeria {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: #0d1219;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Trilho: uma fileira de imagens que desliza -100% por posição.
+   A largura se ajusta sozinha à quantidade de slides. */
+.projeto-galeria-trilho {
+  display: flex;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.projeto-galeria-slide {
+  flex: 0 0 100%;
+  height: 100%;
+  min-width: 0;
+}
+
+.projeto-galeria-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+}
+
+/* Setas do carrossel */
+.projeto-galeria-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 15px;
+  background: rgba(13, 18, 25, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #ffffff;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.projeto-galeria-btn.-esquerda { left: 20px; }
+.projeto-galeria-btn.-direita  { right: 20px; }
+
+.projeto-galeria-btn:hover {
+  background: rgba(242, 181, 68, 0.9);
+  border-color: transparent;
+  color: #142740;
+}
+
+/* Contador + indicadores na base da imagem */
+.projeto-galeria-rodape {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 56px;   /* acima da barra de navegação do modal */
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  /* background: linear-gradient(to top, rgba(13, 18, 25, 0.75), transparent); */
+}
+
+.projeto-galeria-contador {
+  font-size: 0.62rem;
   font-weight: 600;
-  padding: 10px 22px;
-  border-radius: 50px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-.stackTag:hover {
-  border-color: rgba(242, 181, 68, 0.3);
-  color: #f2b544;
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-3px);
+.projeto-galeria-pontos {
+  display: flex;
+  gap: 8px;
 }
 
+.projeto-galeria-ponto {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
 
-/* ==========================================================================
-   ── RESPONSIVIDADE ADAPTATIVA (MOBILE / TABLET)
-   ========================================================================== */
-@media (max-width: 968px) {
-  .secaoProjeto {
-    gap: 100px;
-    padding: 80px 6%;
+.projeto-galeria-ponto.ativo {
+  width: 22px;
+  border-radius: 4px;
+  background: #f2b544;
+}
+
+/* ── Coluna de informações ── */
+.projeto-modal-info {
+  /* folga extra em cima e embaixo: as barras flutuam sobre o painel */
+  padding: 78px 40px 84px;
+  /* rolagem própria; `contain` impede que o fim da lista "vaze" o scroll
+     para a página de trás */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  /* sem isto o item do grid cresce com o conteúdo e nada rola */
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  color: var(--projeto-azul);
+  animation: projetoConteudoEntra 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.projeto-modal-tags {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--projeto-suave);
+  margin-bottom: 14px;
+}
+
+.projeto-modal-nome {
+  margin: 0;
+  font-size: clamp(1.9rem, 3vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  border-bottom: 1px solid var(--projeto-linha);
+  padding-bottom: 14px;
+}
+
+.projeto-modal-destaque {
+  margin: 20px 0 0;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--cor-projeto, var(--projeto-dourado));
+}
+
+.projeto-modal-descricao {
+  margin: 18px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--projeto-suave);
+}
+
+/* ── Ficha técnica ── */
+.projeto-modal-ficha {
+  margin: 28px 0 0;
+}
+
+.projeto-modal-ficha > div {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-top: 1px solid var(--projeto-linha);
+}
+
+.projeto-modal-ficha dt {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  color: var(--projeto-suave);
+}
+
+.projeto-modal-ficha dd {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.projeto-modal-botao {
+  margin-top: 28px;
+  align-self: flex-start;
+  padding: 15px 28px;
+  border-radius: 999px;
+  background: var(--projeto-azul);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.25s ease;
+}
+
+.projeto-modal-botao:hover {
+  background: var(--projeto-dourado);
+  color: var(--projeto-azul);
+  transform: translateY(-2px);
+}
+
+/* ── Responsivo ── */
+@media (max-width: 900px) {
+  .projeto-modal {
+    padding: 0;
   }
 
-  .projetoHero, .sobreWrapper {
+  /* empilha: foto em cima, informações embaixo com rolagem */
+  .projeto-modal-painel {
     grid-template-columns: 1fr;
-    gap: 50px;
-    text-align: center;
+    grid-template-rows: minmax(160px, 34vh) 1fr;
+    border-radius: 0;
   }
 
-  /* Ajuste de tamanho responsivo dos títulos para telas menores */
-  .heroTitulo, .secaoTitulo, .sobreTexto .secaoTitulo, .ctaTitulo {
-    font-size: 2.5rem; 
-    letter-spacing: -0.03em;
-    line-height: 1.2;
+  .projeto-modal-info {
+    padding: 26px 22px 92px;   /* espaço para a barra de baixo */
   }
 
-  .heroSubtitulo, .sobreDescricao, .sobreMiniCards {
-    margin-left: auto;
-    margin-right: auto;
+  .projeto-galeria-rodape {
+    bottom: 8px;   /* a barra do modal fica embaixo do texto, não da foto */
   }
 
-  .heroBotoes {
-    justify-content: center;
+  .projeto-galeria-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
   }
 
-  .sobreMockupContainer {
-    height: 380px;
-    margin-top: 20px;
-  }
-  
-  .m1 { left: 2%; }
-  .m2 { right: 2%; }
+  .projeto-galeria-btn.-esquerda { left: 10px; }
+  .projeto-galeria-btn.-direita  { right: 10px; }
 
-  /* ── FUNCIONALIDADES: quebra em grid responsivo no mobile ── */
-  .funcGrid {
-    flex-wrap: wrap;
+  .projeto-galeria-rodape {
+    padding: 12px 14px;
   }
 
-  .funcGrid .funcCard {
-    flex: 1 1 calc(50% - 12px);
-    min-width: 260px;
+  .projeto-modal-tags {
+    flex-direction: column;
+    gap: 4px;
   }
 
-  /* ── PROCESSO: scroll horizontal no mobile ── */
-  .processoEtapas {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    overflow-x: auto;
-    padding-bottom: 20px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
+  .projeto-modal-ficha > div {
+    grid-template-columns: 1fr;
+    gap: 4px;
   }
 
-  .etapa {
-    scroll-snap-align: start;
+  /* no celular a dica de teclado não faz sentido */
+  .projeto-modal-dica {
+    display: none;
   }
 
-  /* Scrollbar sutil para o processo */
-  .processoEtapas::-webkit-scrollbar {
-    height: 4px;
-  }
-  .processoEtapas::-webkit-scrollbar-thumb {
-    background: rgba(242, 181, 68, 0.25);
-    border-radius: 10px;
+  .projeto-modal-topo,
+  .projeto-modal-rodape {
+    font-size: 0.55rem;
+    letter-spacing: 1.6px;
+    padding: 12px 16px;
   }
 }
-/* ── MOBILE EXTRA PEQUENO (< 480px) ── */
-@media (max-width: 480px) {
-  .secaoProjeto {
-    padding: 60px 4%;
-    gap: 80px;
+
+@media (prefers-reduced-motion: reduce) {
+  .projeto-modal,
+  .projeto-modal-painel,
+  .projeto-modal-info {
+    animation: none;
   }
 
-  .heroTitulo,
-  .secaoTitulo,
-  .ctaTitulo {
-    font-size: 1.9rem;
+  .projeto-galeria-trilho {
+    transition: none;
+  }
+}
+
+@media (max-width: 560px) {
+  /* na barra do rodapé sobra pouco espaço: mostra só as setas */
+  .projeto-modal-rodape .projeto-modal-nav {
+    font-size: 0;   /* esconde o texto, mantém a seta */
   }
 
-  .funcGrid .funcCard {
-    flex: 1 1 100%;
+  .projeto-modal-rodape .projeto-modal-nav span {
+    font-size: 1.4rem;
   }
 
-  .heroBotoes {
-    flex-direction: column;
-    align-items: center;
+  .projeto-modal-nome {
+    font-size: 1.6rem;
   }
 
-  .btnPrimario,
-  .btnSecundario {
-    width: 100%;
-    text-align: center;
-  }
-
-  .logoCard {
-    padding: 40px 20px;
-  }
-
-  .metricaFlutuante {
-    display: none; /* Esconde floats em telas muito pequenas */
-  }
-
-  .ctaFinal {
-    padding: 40px 20px;
-  }
-
-  .ctaLogo {
-    height: 160px;
+  .projeto-modal-ficha > div {
+    grid-template-columns: 1fr;
   }
 }

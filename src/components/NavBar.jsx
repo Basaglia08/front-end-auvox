@@ -13,8 +13,58 @@ const NAV_LINKS = [
 
 function NavBar() {
   const [menuAberto, setMenuAberto] = useState(false);
+  const [naHome, setNaHome] = useState(true);   // está sobre a tela inicial?
+  const [escondida, setEscondida] = useState(false); // recolhida no scroll
 
   const fecharMenu = useCallback(() => setMenuAberto(false), []);
+
+  /* Comportamento da barra conforme o scroll:
+     - sobre a tela inicial (#inicio): sempre visível, faz parte do quadro;
+     - abaixo dela: some ao descer e reaparece ao subir, em qualquer ponto
+       do site. O Lenis rola a janela normalmente, então window.scrollY
+       continua sendo a fonte de verdade. */
+  useEffect(() => {
+    let ultimoY = window.scrollY;
+    let travado = false; // evita rodar a lógica mais de uma vez por frame
+
+    const avaliar = () => {
+      travado = false;
+      const y = window.scrollY;
+      const home = document.getElementById("inicio");
+      // ponto em que a home termina (desconta a altura da própria barra)
+      const limite = home
+        ? home.offsetTop + home.offsetHeight - 90
+        : window.innerHeight;
+
+      const dentroDaHome = y < limite;
+      setNaHome(dentroDaHome);
+
+      if (dentroDaHome) {
+        setEscondida(false);
+      } else {
+        const delta = y - ultimoY;
+        // margem de 6px para ignorar tremidas e o bounce do scroll suave
+        if (Math.abs(delta) > 6) setEscondida(delta > 0);
+      }
+
+      ultimoY = y;
+    };
+
+    const onScroll = () => {
+      if (travado) return;
+      travado = true;
+      requestAnimationFrame(avaliar);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    avaliar();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
 
   /* Fecha menu ao redimensionar para desktop */
   useEffect(() => {
@@ -30,7 +80,11 @@ function NavBar() {
   }, [menuAberto]);
 
   return (
-    <nav className="navbar">
+    <nav
+      className={`navbar ${naHome ? "na-home" : "flutuante"}${
+        escondida && !menuAberto ? " escondida" : ""
+      }`}
+    >
       {/* Logo */}
       <a href="#inicio" className="nav-logo" onClick={fecharMenu}>
         <img src={logo} alt="Auvox Logo" width="60" height="60" />

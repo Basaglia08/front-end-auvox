@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+// @ts-nocheck
+import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/contato.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // MÁSCARA DE TELEFONE
 const aplicarMascara = (valor) => {
@@ -25,7 +30,18 @@ const validarTelefone = (tel) => {
 const MENSAGEM_MIN = 10;
 const MENSAGEM_MAX = 2000;
 
+// Canais de contato — editar aqui reflete no painel lateral
+/* Todos os ícones vêm da família SÓLIDA do Boxicons (prefixo `bxs-`).
+   Misturar `bx-` (contorno) com `bxs-` (preenchido) é o que deixa um
+   conjunto sem unidade — assim os três têm o mesmo peso visual. */
+const CANAIS = [
+  { icone: "bxs-envelope", rotulo: "Mande um e-mail",     valor: "company.auvox@gmail.com" },
+  { icone: "bxs-phone",    rotulo: "Fale por telefone",   valor: "(11) 1234-5678" },
+  { icone: "bxs-map",      rotulo: "Venha tomar um café", valor: "Av. Paulista, 1000 — São Paulo, SP" },
+];
+
 function Contato() {
+  const secaoRef = useRef(null);
 
   const [formData, setFormData] = useState({
     nome: "",
@@ -42,6 +58,95 @@ function Contato() {
     setToast({ tipo, mensagem });
     setTimeout(() => setToast(null), 3500);
   };
+
+  /* ── ANIMAÇÕES DE SCROLL ──
+     Todas com `scrub`: o progresso fica amarrado à posição do scroll, então
+     descendo a seção se monta e subindo ela se desmonta sozinha. */
+  useEffect(() => {
+    const raiz = secaoRef.current;
+    if (!raiz) return undefined;
+
+    let ctx;
+
+    /* try/catch por segurança: o componente vive dentro do <Suspense> do
+       App. Um erro solto aqui derrubaria a árvore inteira. */
+    try {
+      ctx = gsap.context(() => {
+        /* CABEÇALHO — efeito simples: aparece subindo quando o scroll
+           desce e desaparece quando sobe. Como o timeline usa `scrub`, o
+           progresso segue a posição da página nos dois sentidos. */
+        const cabecalho = raiz.querySelector(".contato-header");
+
+        if (cabecalho) {
+          gsap.fromTo(
+            cabecalho.children,
+            { opacity: 0, y: 34 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: "power2.out",
+              stagger: 0.12,
+              scrollTrigger: {
+                trigger: cabecalho,
+                start: "top 92%",
+                end: "top 50%",
+                scrub: 0.8,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+        }
+
+        // Painel: lateral entra pela esquerda, campos sobem em cascata
+        const painel = raiz.querySelector(".contato-painel");
+        const lateral = raiz.querySelector(".contato-lateral");
+        const canais = Array.from(raiz.querySelectorAll(".contato-canal"));
+        const campos = Array.from(raiz.querySelectorAll(".contato-form > *"));
+
+        if (painel) {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: painel,
+              start: "top 88%",
+              end: "top 40%",
+              scrub: 0.9,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          if (lateral) {
+            tl.fromTo(lateral, { opacity: 0, x: -40 },
+              { opacity: 1, x: 0, duration: 1, ease: "power3.out" }, 0);
+          }
+
+          if (canais.length) {
+            tl.fromTo(canais, { opacity: 0, y: 26 },
+              { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", stagger: 0.1 }, 0.3);
+          }
+
+          if (campos.length) {
+            tl.fromTo(campos, { opacity: 0, y: 34 },
+              { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.09 }, 0.15);
+          }
+        }
+
+        ScrollTrigger.refresh();
+      }, secaoRef);
+    } catch (erro) {
+      console.warn("[Contato] animação desativada:", erro);
+    }
+
+    const onLoad = () => {
+      try { ScrollTrigger.refresh(); } catch (_) { /* ignora */ }
+    };
+    window.addEventListener("load", onLoad);
+
+    return () => {
+      window.removeEventListener("load", onLoad);
+      try { if (ctx) ctx.revert(); } catch (_) { /* ignora */ }
+    };
+  }, []);
 
   // ATUALIZA INPUTS
   const handleChange = (e) => {
@@ -145,39 +250,72 @@ function Contato() {
   );
 
   return (
-    <section className="contato-secao" id="contato">
+    <section className="contato-secao" id="contato" ref={secaoRef}>
 
       {/* TOAST — renderizado no body via Portal */}
       {toastPortal}
 
-      {/* TOPO */}
-      <div className="contato-header">
-        <p className="contato-slug">
-          <span className="contato-slashes">//</span> ENTRE EM CONTATO
+      {/* brilhos suaves de fundo */}
+      <span className="contato-brilho -um" aria-hidden="true" />
+      <span className="contato-brilho -dois" aria-hidden="true" />
+
+      {/* TOPO — mesmo formato do cabeçalho da Equipe */}
+      <div className="contato-header secao-topo -escuro">
+        <p className="secao-slug">
+          <span className="contato-slashes">//</span> Fale com a Auvox
         </p>
-        <h1 className="contato-titulo">
-          Vamos <span className="contato-destaque">TRANSFORMAR</span> seu <br />
-          negócio juntos
-        </h1>
+
+        <h2 className="secao-titulo">
+          <span>CONTATO</span>
+        </h2>
+
+        <div className="secao-sep" />
+
         <p className="contato-subtitulo">
-          Entre em contato conosco e descubra como podemos ajudar sua empresa a alcançar novos patamares
+          Tem um projeto em mente, uma ideia solta ou só uma dúvida? Escreva pra
+          gente — a resposta vem rápido e sem enrolação.
         </p>
       </div>
 
-      {/* CONTAINER */}
-      <div className="contato-container">
+      {/* PAINEL */}
+      <div className="contato-painel">
+
+        {/* LATERAL */}
+        <aside className="contato-lateral">
+          <h3 className="contato-lateral-titulo">Não seja tímido</h3>
+          <p className="contato-lateral-texto">
+            Fique à vontade para chamar a gente. Estamos sempre abertos a projetos
+            novos, ideias fora da caixa e à chance de fazer parte da sua visão —
+            do primeiro rascunho até o site no ar.
+          </p>
+
+          <ul className="contato-canais">
+            {CANAIS.map((canal) => (
+              <li className="contato-canal" key={canal.rotulo}>
+                <span className="contato-canal-icone">
+                  <i className={`bx ${canal.icone}`}></i>
+                </span>
+                <span className="contato-canal-texto">
+                  <span className="contato-canal-rotulo">{canal.rotulo}</span>
+                  <span className="contato-canal-valor">{canal.valor}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <span className="contato-assinatura">AUVOX · SÃO PAULO — SP</span>
+        </aside>
 
         {/* FORM */}
         <form className="contato-form" onSubmit={handleSubmit} noValidate>
 
-          <div className="form-row">
-
-            <div className="form-group">
+          <div className="contato-linha">
+            <div className="contato-campo">
               <label htmlFor="nome">Nome</label>
               <input
                 type="text"
                 id="nome"
-                placeholder="Seu nome completo"
+                placeholder="Como podemos te chamar?"
                 value={formData.nome}
                 onChange={handleChange}
                 className={erros.nome ? "input-erro" : ""}
@@ -185,22 +323,21 @@ function Contato() {
               {erros.nome && <span className="campo-erro">{erros.nome}</span>}
             </div>
 
-            <div className="form-group">
+            <div className="contato-campo">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
-                placeholder="seu@gmail.com"
+                placeholder="Seu melhor e-mail"
                 value={formData.email}
                 onChange={handleChange}
                 className={erros.email ? "input-erro" : ""}
               />
               {erros.email && <span className="campo-erro">{erros.email}</span>}
             </div>
-
           </div>
 
-          <div className="form-group">
+          <div className="contato-campo">
             <label htmlFor="telefone">Telefone</label>
             <input
               type="tel"
@@ -213,7 +350,7 @@ function Contato() {
             {erros.telefone && <span className="campo-erro">{erros.telefone}</span>}
           </div>
 
-          <div className="form-group">
+          <div className="contato-campo">
             <div className="mensagem-label-row">
               <label htmlFor="mensagem">Mensagem</label>
               <span className={`contador-chars ${contadorClasse}`}>
@@ -226,7 +363,7 @@ function Contato() {
             <textarea
               id="mensagem"
               rows="5"
-              placeholder="Conte-nos sobre o site..."
+              placeholder="Conte o que você tem em mente..."
               value={formData.mensagem}
               onChange={handleChange}
               className={erros.mensagem ? "input-erro" : ""}
@@ -236,48 +373,11 @@ function Contato() {
           </div>
 
           <button type="submit" className="btn-enviar" disabled={loading}>
-            {loading
-              ? "Enviando..."
-              : <>Enviar Mensagem <i className="bx bx-paper-plane icon-enviar"></i></>
-            }
+            <span>{loading ? "Enviando..." : "Enviar mensagem"}</span>
+            {!loading && <i className="bx bx-right-arrow-alt"></i>}
           </button>
 
         </form>
-
-        {/* INFO */}
-        <div className="contato-info-col">
-
-          <div className="info-card">
-            <div className="info-icon-box">
-              <i className="bx bx-envelope"></i>
-            </div>
-            <div className="info-text-box">
-              <span className="info-label">Email</span>
-              <p className="info-value">company.auvox@gmail.com</p>
-            </div>
-          </div>
-
-          <div className="info-card">
-            <div className="info-icon-box">
-              <i className="bx bx-phone"></i>
-            </div>
-            <div className="info-text-box">
-              <span className="info-label">Telefone</span>
-              <p className="info-value">(11) 1234-5678</p>
-            </div>
-          </div>
-
-          <div className="info-card">
-            <div className="info-icon-box">
-              <i className="bx bx-map"></i>
-            </div>
-            <div className="info-text-box">
-              <span className="info-label">Endereço</span>
-              <p className="info-value">Av. Paulista, 1000 - São Paulo, SP</p>
-            </div>
-          </div>
-
-        </div>
 
       </div>
 

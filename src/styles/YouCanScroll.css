@@ -1,0 +1,174 @@
+@property --hue {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0;
+  }
+  
+  @property --chroma {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0.3;
+  }
+  
+  :root {
+    --start: 280;
+    --end: 100;
+    --lightness: 65%;
+    --base-chroma: 0.3;
+    --hue: var(--start);
+    --chroma: var(--base-chroma);
+    --color: oklch(var(--lightness) var(--chroma) var(--hue));
+  }
+  
+  html[data-theme="dark"] {
+    background-color: #17191e;
+    color: #ffffff;
+  }
+  
+  html[data-theme="light"] {
+    background-color: #ffffff;
+    color: #000000;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: inherit;
+    color: inherit;
+    overflow-x: hidden;
+  }
+
+  /* Sem fundo próprio: .scroll-main agora vive dentro do wrapper
+     .slide-scroll-unificado (carrosselNav.css), que já fornece a mesma
+     textura escura por trás dele e do slide — uma superfície só, sem
+     costura entre as duas partes. */
+  .scroll-main {
+    position: relative;
+  }
+
+  /* Espaço vazio antes/depois do efeito — bem menor que os 100vh originais,
+     só o suficiente pra dar um respiro entre as seções vizinhas. */
+  .scroll-header,
+  .scroll-footer-section {
+    min-height: 20vh;
+  }
+  
+  /* Linha que agrupa o "you can" e a lista lado a lado — como um
+     justify-content: space-between, com um gap fixo e generoso entre eles.
+     Como os dois vivem dentro do MESMO flex, a posição relativa entre um e
+     outro nunca muda (nunca mais vão se sobrepor). */
+  .scroll-row {
+    display: flex;
+    /* `center` centraliza o PAR (prefixo + palavra) na tela, e o gap curto
+       mantém os dois colados. Assim o "Auvox pode" fica perto do centro,
+       encostado nas palavras, em vez de jogado na borda esquerda. */
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.75rem;
+    /* largura pelo conteúdo: sem os 1000px fixos o par não é esticado */
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  /* Container do scroll (a lista fica dentro dele).
+     Padding pequeno: só o suficiente pra dar folga ao efeito, sem deixar
+     espaço em branco desnecessário acima/abaixo (não há mais texto ali). */
+  .scroll-content {
+    position: relative;
+    flex: 0 0 auto;
+    padding-top: 8vh;
+    padding-bottom: 8vh;
+  }
+  
+  /* Texto "you can" estático na tela: position: sticky faz ele "grudar" no
+     centro vertical da viewport enquanto a `.scroll-row` estiver passando
+     pela tela (subindo ou descendo), e sair de cena naturalmente antes e
+     depois dela — sem overlap com a lista, porque os dois moram no mesmo
+     flex com gap fixo. */
+  .sticky-prefix {
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
+    flex: 0 0 auto;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    white-space: nowrap;
+    line-height: 1.2;
+    z-index: 10;
+    opacity: 0; /* estado inicial; o GSAP controla o fade in/out */
+    pointer-events: none;
+    will-change: opacity;
+  }
+  
+  /* Gap bem maior entre as palavras = muito mais distância física de scroll
+     entre uma palavra e outra, o que deixa o efeito bem mais lento. */
+  .scroll-list {
+    display: flex;
+    flex-direction: column;
+    /* distância vertical entre uma palavra e a próxima (quanto de scroll
+       separa uma da outra) */
+    gap: 5rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1.2;
+  }
+  
+  /* Todas as palavras da lista na cor da marca (#f2b544); só a opacidade e
+     o brilho mudam conforme a palavra entra/sai do foco no centro da tela. */
+  .scroll-list li {
+    color: #f2b544;
+    opacity: 0.15;
+    filter: brightness(0.5) saturate(0.5);
+    will-change: opacity, filter;
+    transform-origin: left center;
+  }
+  
+  .scroll-footer {
+    padding: 2.5rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+
+  /* ── RESPONSIVO ── */
+  @media (max-width: 768px) {
+    .scroll-row {
+      gap: 0.5rem;
+      padding: 0 1.2rem;
+    }
+
+    .sticky-prefix,
+    .scroll-list {
+      font-size: clamp(1.5rem, 8vw, 2.4rem);
+    }
+
+    .scroll-list {
+      gap: 3.5rem;
+    }
+
+    .scroll-content {
+      padding-top: 5vh;
+      padding-bottom: 5vh;
+    }
+  }
+
+  @media (max-width: 480px) {
+    /* empilha: "Auvox pode" em cima, a palavra logo abaixo */
+    .scroll-row {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .sticky-prefix {
+      top: 42%;
+    }
+  }

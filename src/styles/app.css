@@ -10,26 +10,190 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
   font-size: 16px;
+  /* o YouCanScroll.css pinta html[data-theme="dark"] com uma cor chapada;
+     zerar aqui deixa a textura do body aparecer sem competição */
+  background: transparent;
 }
 
+/* ── FUNDO ÚNICO DO SITE ──
+   A textura escura vive AQUI, uma vez só, no body. Antes cada bloco pintava
+   o próprio fundo (o body em #14181F, o .slide-scroll-unificado em #17191e
+   com gradientes), e como um gradiente reinicia a cada elemento, sobrava uma
+   linha visível onde um terminava e o outro começava.
+
+   `background-attachment: fixed` é a peça-chave: prende a textura à viewport
+   em vez de esticar pela altura da página. Assim Home, CarrosselNav,
+   ScrollAnimation e Carrossel ficam todos sobre a MESMA superfície contínua
+   — não existe emenda possível, porque não existe mais de um fundo. */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
-  background-color: #14181F;
   overflow-x: hidden;
+  background-color: #17191e;
+  background-image:
+    radial-gradient(120% 90% at 90% 100%, rgba(255, 255, 255, 0.05), transparent 60%),
+    linear-gradient(120deg, transparent 38%, rgba(255, 255, 255, 0.05) 46%, transparent 54%),
+    linear-gradient(120deg, transparent 58%, rgba(255, 255, 255, 0.035) 65%, transparent 74%),
+    linear-gradient(160deg, #1d2027 0%, #17191e 45%, #101114 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
-/* ── NAVBAR FIXA ── */
+/* ── FONTE ÚNICA DO SITE ──
+   Poppins em tudo. Alguns arquivos antigos declaravam system-ui, Arial e
+   Courier New em regras próprias; esta regra cobre qualquer elemento que
+   não tenha uma fonte explícita, e as exceções foram corrigidas nos
+   respectivos arquivos. */
+body,
+button,
+input,
+textarea,
+select {
+  font-family: 'Poppins', sans-serif;
+}
+
+:root {
+  --nav-raio: 44px;   /* arredondamento dos cantos da barra de navegação */
+}
+
+/* ── NAVBAR ──
+   Alinhada ao quadro da home: mesmo recuo lateral (--quadro-espaco) e mesmo
+   raio (--quadro-raio), definidos no home.css. Como left/right/top são os
+   mesmos do card, a barra tem exatamente a largura dele — fica "dentro" do
+   quadro em vez de parecer maior que ele. */
 .navbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  top: var(--quadro-espaco, 18px);
+  left: var(--quadro-espaco, 18px);
+  right: var(--quadro-espaco, 18px);
+  width: auto;
   z-index: 1000;
+  /* mais arredondada que o quadro: raio próprio, ajustável aqui */
+  border-radius: var(--nav-raio, 44px);
   backdrop-filter: blur(8px);
   background-color: rgba(20, 24, 31, 0.85);
+  will-change: transform;
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* Fora da home a barra ganha um pouco mais de corpo, já que passa por
+   cima de conteúdo claro/escuro variado. */
+.navbar.flutuante {
+  background-color: rgba(20, 24, 31, 0.92);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Recolhida: sobe para fora da tela (some ao descer o scroll). Volta
+   sozinha quando o usuário sobe. Na home a classe nunca é aplicada. */
+.navbar.escondida {
+  transform: translateY(calc(-100% - var(--quadro-espaco, 18px) - 20px));
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar {
+    transition: none;
+  }
+}
+
+/* ── QUADROS CLAROS ──
+   Baixe, Sobre, Equipe e Contato viram "cards" soltos, do mesmo jeito que a
+   home: recuados por --quadro-espaco, com os quatro cantos arredondados em
+   --quadro-raio. O fundo interno de cada um continua o que já era (branco,
+   degradê claro, etc.); o que aparece na margem à volta é a textura escura
+   do body — a mesma superfície contínua que corre por trás do site inteiro.
+
+   Antes esses blocos usavam um truque de sobreposição (border-radius só no
+   topo + margin-top negativa) para colar um no outro. Como agora cada um é
+   um card independente, essas margens negativas são zeradas aqui.
+
+   O seletor começa com `body ` de propósito: os CSS dos componentes são
+   carregados depois deste arquivo (imports lazy), então precisamos de uma
+   especificidade um pouco maior para vencer no cascade. */
+body .secaoBaixeApp,
+body .sobre,
+body .sectionEquipe {
+  width: auto;
+  margin: var(--quadro-espaco, 18px);
+  border-radius: var(--quadro-raio, 32px);
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* CONTATO + FOOTER = UMA SUPERFÍCIE SÓ
+   Os dois ficam de borda a borda, sem margem, sem cantos e sem fundo
+   próprio: quem pinta é a textura do body. Assim não existe nenhuma linha
+   de divisão entre um e outro — visualmente são o mesmo bloco.
+   A onda SVG clara do topo do footer também sai: ela só existia para
+   emendar com o branco que o Contato tinha antes. */
+body .footer-container {
+  /* Mesmo recuo lateral do Contato. Os cantos do conjunto só fecham na
+     base do Footer; a onda continua sendo a transição entre os fundos. */
+  width: auto;
+  margin: 0 var(--quadro-espaco, 18px) var(--quadro-espaco, 18px);
+  border-radius: 0 0 var(--quadro-raio, 32px) var(--quadro-raio, 32px);
+  box-shadow: none;
+  background: #142740;
+  overflow: hidden;
+}
+
+body .footer-container {
+  padding-top: 0;
+}
+
+/* ── CABEÇALHO PADRÃO DE SEÇÃO ──
+   Mesmas medidas do topo da Equipe (.firstP / .firstH1 / .topoSep), agora
+   em classes compartilhadas para Projetos, Sobre e Contato usarem o mesmo
+   formato: slug dourado, título centralizado numa linha só e um traço
+   dourado embaixo. Sem <br>, sem palavra quebrada. */
+.secao-topo {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  margin: 0 auto 52px;
+  max-width: 900px;
+}
+
+.secao-slug {
+  display: block;
+  margin: 0 0 12px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #f2b544;
+}
+
+.secao-titulo {
+  margin: 0 0 16px;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color: #142740;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+}
+
+.secao-titulo span {
+  color: #f2b544;
+}
+
+.secao-sep {
+  width: 48px;
+  height: 3px;
+  margin: 0 auto;
+  border-radius: 2px;
+  background: #f2b544;
+}
+
+/* variante para seções de fundo escuro (Contato) */
+.secao-topo.-escuro .secao-titulo {
+  color: #ffffff;
 }
 
 /* ── ANIMAÇÃO DE REVELAR SEÇÃO ── */
@@ -50,4 +214,45 @@ body {
   html {
     font-size: 14px;
   }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVO GERAL
+   Ajustes que valem para o site inteiro. Cada componente tem os
+   seus próprios breakpoints; aqui ficam os que atravessam vários.
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root {
+    --nav-raio: 26px;
+  }
+
+  /* cabeçalho padrão das seções */
+  .secao-topo {
+    margin-bottom: 38px;
+    padding: 0 1rem;
+  }
+
+  .secao-slug {
+    letter-spacing: 3.5px;
+  }
+
+  .secao-titulo {
+    font-size: clamp(1.35rem, 6.5vw, 2rem);
+    letter-spacing: -0.8px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --nav-raio: 20px;
+  }
+}
+
+/* Evita rolagem horizontal em qualquer tela: elementos largos demais
+   (imagens, tabelas, blocos com largura fixa) passam a caber. */
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
 }

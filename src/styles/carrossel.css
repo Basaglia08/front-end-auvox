@@ -1,0 +1,265 @@
+/* ──────────────────────────────────────────────────────────────
+   CARROSSEL
+   SEM fundo próprio de propósito: o componente é renderizado dentro
+   do wrapper .slide-scroll-unificado (carrosselNav.css), que já pinta
+   a textura escura por trás do slide, do efeito de texto e daqui.
+   É o mesmo motivo pelo qual o ScrollAnimation também não tem fundo:
+   um único elemento de fundo = zero emenda entre as partes.
+   ────────────────────────────────────────────────────────────── */
+.carrossel-secao {
+  position: relative;
+  width: 100%;
+  /* Seção no fluxo normal (sem pin, sem sticky, sem altura forçada de
+     100vh): assim ela não empurra nem cobre as seções vizinhas — só um
+     respiro entre o bloco "Auvox pode ..." e o que vem depois. */
+  padding: 14vh 0 16vh;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Mesma largura/alinhamento do bloco "Auvox pode ..." (.scroll-row:
+   max-width 1000px centralizado), para os dois ficarem alinhados. */
+.carrossel-inner {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ── Grade dos cards ── */
+.carrossel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* Wrapper do parallax: o GSAP move este elemento (y), enquanto o card
+   por dentro recebe a animação de revelação. Separar os dois evita que
+   uma animação sobrescreva o transform da outra. */
+.carrossel-card-wrap {
+  will-change: transform;
+}
+
+/* Moldura da foto: leva o clip-path (cortina abrindo de baixo para cima)
+   e a escala da revelação. O <img> fica livre para o zoom do hover. */
+.carrossel-card-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  will-change: transform, clip-path;
+}
+
+/* Altura fixa: a caixinha abre POR DENTRO do card, então o grid nunca
+   "pula" nem desalinha quando um card abre. */
+.carrossel-card {
+  position: relative;
+  height: 420px;
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  /* obs.: opacity / transform iniciais são controlados pelo GSAP
+     (aparecem um de cada vez conforme o scroll) — não defina aqui. */
+  transition:
+    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.45s ease;
+}
+
+.carrossel-card:hover,
+.carrossel-card:focus-visible,
+.carrossel-card.aberto {
+  border-color: rgba(242, 181, 68, 0.5);
+  box-shadow:
+    0 28px 55px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(242, 181, 68, 0.18);
+}
+
+.carrossel-card-imagem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.62) saturate(0.85);
+  transform: scale(1.02);
+  transition:
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.5s ease;
+}
+
+.carrossel-card:hover .carrossel-card-imagem,
+.carrossel-card:focus-visible .carrossel-card-imagem,
+.carrossel-card.aberto .carrossel-card-imagem {
+  filter: brightness(0.95) saturate(1.05);
+  transform: scale(1.08);
+}
+
+/* Gradiente escuro na base para o texto ficar legível */
+.carrossel-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 11, 14, 0.92) 0%,
+    rgba(10, 11, 14, 0.45) 45%,
+    transparent 100%
+  );
+}
+
+.carrossel-card-conteudo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 22px;
+  color: #ffffff;
+  z-index: 2;
+}
+
+.carrossel-card-subtitulo {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #f2b544;
+  margin-bottom: 6px;
+}
+
+.carrossel-card-titulo {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #ffffff;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   A "CAIXINHA" QUE ABRE
+   grid-template-rows: 0fr → 1fr é o truque que permite animar a
+   altura suavemente sem precisar saber o tamanho do texto.
+   ────────────────────────────────────────────────────────────── */
+.carrossel-caixa {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: 0;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    margin-top 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s ease;
+}
+
+.carrossel-card:hover .carrossel-caixa,
+.carrossel-card:focus-visible .carrossel-caixa,
+.carrossel-card.aberto .carrossel-caixa {
+  grid-template-rows: 1fr;
+  margin-top: 14px;
+  opacity: 1;
+}
+
+.carrossel-caixa-clip {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Caixinha branca: contraste alto sobre a foto, texto no azul escuro da
+   Auvox. Sem backdrop-filter aqui — com fundo branco sólido ele não
+   apareceria e ainda custaria composição a cada frame. */
+.carrossel-caixa-box {
+  background: #ffffff;
+  border: 1px solid rgba(20, 39, 64, 0.12);
+  border-radius: 15px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+  padding: 14px 16px;
+  transform: translateY(10px) scale(0.97);
+  opacity: 0;
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.05s,
+    opacity 0.4s ease 0.05s;
+}
+
+.carrossel-card:hover .carrossel-caixa-box,
+.carrossel-card:focus-visible .carrossel-caixa-box,
+.carrossel-card.aberto .carrossel-caixa-box {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.carrossel-caixa-texto {
+  margin: 0 0 10px 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #0f1f36;
+}
+
+.carrossel-caixa-link {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #14406e;
+  transition: transform 0.3s ease;
+}
+
+.carrossel-card:hover .carrossel-caixa-link,
+.carrossel-card.aberto .carrossel-caixa-link {
+  transform: translateX(4px);
+}
+
+/* ── Responsivo ── */
+@media (max-width: 900px) {
+  /* mobile: cards empilhados, cada um aparece ao entrar na tela */
+  .carrossel-secao {
+    padding: 10vh 0;
+  }
+
+  .carrossel-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* sem parallax no celular */
+  .carrossel-card-wrap {
+    transform: none !important;
+  }
+
+  .carrossel-card {
+    height: 300px;
+  }
+
+  .carrossel-card-conteudo {
+    padding: 18px;
+  }
+
+  /* No celular não existe hover: a caixinha abre no toque (.aberto) */
+  .carrossel-caixa-texto {
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carrossel-card-wrap {
+    transform: none !important;
+  }
+
+  .carrossel-card,
+  .carrossel-card-imagem,
+  .carrossel-caixa,
+  .carrossel-caixa-box {
+    transition-duration: 0.01ms;
+  }
+}
+
+@media (max-width: 480px) {
+  .carrossel-card {
+    height: 260px;
+  }
+
+  .carrossel-card-titulo {
+    font-size: 1.05rem;
+  }
+}
