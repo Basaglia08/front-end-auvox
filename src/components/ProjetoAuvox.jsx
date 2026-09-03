@@ -6,7 +6,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/projeto.css';
 
 import mockupCelulares from '../assets/mockup-celulares.png';
+
 import baixeIntermedi from '../assets/baixeIntermedi.png';
+
+import banner1 from '../assets/banner1.png';
+import celular from '../assets/celular.png';
+import computer from '../assets/computer.png';
+import equipeAuvox from '../assets/equipeAuvox.png';
+import minhaImagem from '../assets/logo.png';
+import baixeIntermedi from '../assets/propaganda.png';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
