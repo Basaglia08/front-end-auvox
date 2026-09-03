@@ -199,6 +199,9 @@
   
   .button {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
     height: 5rem;
     width: 420px;
@@ -209,6 +212,7 @@
     border: none;
     cursor: pointer;
     font-size: 1.4rem;
+    text-decoration: none;
   }
   
   .button:hover::before {

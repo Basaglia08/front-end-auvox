@@ -7,7 +7,7 @@ import '../styles/projeto.css';
 
 import mockupCelulares from '../assets/mockup-celulares.png';
 
-import baixeIntermedi from '../assets/baixeIntermedi.png';
+
 
 import banner1 from '../assets/banner1.png';
 import celular from '../assets/celular.png';
