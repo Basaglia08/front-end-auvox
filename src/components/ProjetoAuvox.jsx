@@ -30,8 +30,8 @@ gsap.registerPlugin(ScrollTrigger);
      (anterior / próximo), que dá a volta ao chegar no fim.
 
    IMAGENS
-   - imagens   array. A PRIMEIRA é a capa que aparece no card da
-               grade; TODAS entram no carrossel do modal. Pode ter
+   - capa      imagem usada exclusivamente no card da grade.
+   - imagens   array com as imagens exibidas no carrossel do modal. Pode ter
                quantas quiser — as setas e os indicadores se
                ajustam à quantidade automaticamente. Com uma
                imagem só, os controles do carrossel nem aparecem.
@@ -66,9 +66,10 @@ const PROJETOS = [
     cor: '#f2b544',
     alt: 'Plataforma Intermedi',
 
-    // a 1ª é a capa do card; todas entram no carrossel do modal
+    capa: { src: mockupCelulares, alt: 'Aplicativo Intermedi em telas de celular' },
+
+    // imagens exibidas somente dentro do modal
     imagens: [
-      { src: mockupCelulares, alt: 'Aplicativo Intermedi em telas de celular' },
       { src: baixeIntermedi, alt: 'Tela de login do aplicativo' },
     ],
 
@@ -378,7 +379,7 @@ export default function ProjetoAuvox() {
         <div className="projeto-grade">
           {PROJETOS.map((projeto, i) => {
             const numero = String(i + 1).padStart(2, '0');
-            const capa = galeriaDe(projeto)[0]; // a 1ª imagem é a capa
+            const capa = projeto.capa || galeriaDe(projeto)[0];
 
             return (
               <article className="projeto-item" key={projeto.id || projeto.titulo}>
