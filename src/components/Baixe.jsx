@@ -8,7 +8,7 @@ import iconeLupa from "../assets/lupa.png";
 import iconeConexao from "../assets/conexao.png";
 import iconeSus from "../assets/sus.png";
 import logoTextoVerde from "../assets/logo-baixe.png"; // Caminho da logo corrigido
-
+// hub
 function Baixe() {
   return (
     <section className="secaoBaixeApp" >

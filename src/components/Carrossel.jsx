@@ -34,7 +34,7 @@ const CARDS = [
 ];
 // Quanto cada card "flutua" no parallax. O do meio se move mais, o que dá
 // o desenho de arco/onda na fileira conforme a página rola.
-const PARALLAX = [46, 84, 46];
+const PARALLAX = [28, 52, 28];
 
 /* Este componente NÃO tem fundo próprio: ele é renderizado dentro do
    wrapper .slide-scroll-unificado (CarrosselNav), que já fornece a textura
@@ -52,6 +52,11 @@ export default function Carrossel() {
     const cards = Array.from(raiz.querySelectorAll('.carrossel-card'));
     const wraps = Array.from(raiz.querySelectorAll('.carrossel-card-wrap'));
     if (!cards.length) return undefined;
+
+    const reduzirMovimento =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduzirMovimento) return undefined;
 
     let ctx;
 
@@ -76,14 +81,20 @@ export default function Carrossel() {
 
           tl.fromTo(
             card,
-            { opacity: 0, y: 100, scale: 0.88, rotation: (i - 1) * 3, transformOrigin: '50% 100%' },
+            {
+              opacity: 0,
+              y: 72,
+              scale: 0.93,
+              rotation: (i - 1) * 1.8,
+              transformOrigin: '50% 100%',
+            },
             {
               opacity: 1,
               y: 0,
               scale: 1,
               rotation: 0,
-              duration: 1,
-              ease: 'power3.out',
+              duration: 1.15,
+              ease: 'power4.out',
               immediateRender: true,
             },
             posicao
@@ -92,12 +103,12 @@ export default function Carrossel() {
           if (media) {
             tl.fromTo(
               media,
-              { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.35 },
+              { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.18 },
               {
                 clipPath: 'inset(0% 0% 0% 0%)',
                 scale: 1,
-                duration: 1.15,
-                ease: 'power2.out',
+                duration: 1.3,
+                ease: 'power3.out',
                 immediateRender: true,
               },
               posicao
@@ -107,9 +118,9 @@ export default function Carrossel() {
           if (conteudo) {
             tl.fromTo(
               conteudo,
-              { opacity: 0, y: 38 },
-              { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', immediateRender: true },
-              posicao + 0.45
+              { opacity: 0, y: 24 },
+              { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', immediateRender: true },
+              posicao + 0.38
             );
           }
         };
@@ -127,7 +138,7 @@ export default function Carrossel() {
           /* (A) REVELAÇÃO — gatilho na própria fileira (.carrossel-grid),
              de 'top 90%' a 'top 30%', com `scrub`: o progresso é amarrado
              ao scroll, então acontece exatamente enquanto os cards
-             atravessam a tela e volta ao subir. O delay de 0.4 entre um
+             atravessam a tela e volta ao subir. O pequeno atraso entre um
              card e outro faz a entrada em cascata: 1º, 2º, 3º. */
           const tl = gsap.timeline({
             scrollTrigger: {
@@ -139,8 +150,8 @@ export default function Carrossel() {
             },
           });
 
-          cards.forEach((card, i) => revelar(tl, card, i, i * 0.4));
-          tl.to({}, { duration: 0.3 }); // respiro no fim do percurso
+          cards.forEach((card, i) => revelar(tl, card, i, i * 0.28));
+          tl.to({}, { duration: 0.24 }); // respiro no fim do percurso
 
           /* (B) PARALLAX — enquanto a seção inteira passa pela tela, cada
              card flutua em velocidade diferente. É o que dá profundidade e
@@ -183,7 +194,7 @@ export default function Carrossel() {
       try {
         gsap.set(cards, { clearProps: 'all' });
         gsap.set(wraps, { clearProps: 'all' });
-      } catch (_) {
+      } catch {
         /* ignora */
       }
     }
@@ -193,7 +204,7 @@ export default function Carrossel() {
     const onLoad = () => {
       try {
         ScrollTrigger.refresh();
-      } catch (_) {
+      } catch {
         /* ignora */
       }
     };
@@ -203,7 +214,7 @@ export default function Carrossel() {
       window.removeEventListener('load', onLoad);
       try {
         if (ctx) ctx.revert();
-      } catch (_) {
+      } catch {
         /* ignora */
       }
     };
@@ -238,8 +249,17 @@ export default function Carrossel() {
                   <img
                     src={card.image}
                     alt={card.title}
-                    className="carrossel-card-imagem"
+                    className="carrossel-card-imagem carrossel-card-imagem-capa"
                     loading="lazy"
+                    decoding="async"
+                  />
+                  <img
+                    src={card.image}
+                    alt=""
+                    aria-hidden="true"
+                    className="carrossel-card-imagem carrossel-card-imagem-completa"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="carrossel-card-overlay" />
@@ -257,6 +277,16 @@ export default function Carrossel() {
                       </div>
                     </div>
                   </div>
+                </div>
+
+                {/* Rótulo compacto: quando o card vira uma "faixa" fina
+                    (porque um vizinho está expandido), o conteúdo normal
+                    não cabe mais — este rótulo na vertical assume o lugar
+                    dele. Puramente decorativo (aria-hidden): o título real
+                    já foi anunciado pelo <h3> acima. Controlado 100% via
+                    container query em carrossel.css, sem JS. */}
+                <div className="carrossel-card-rotulo" aria-hidden="true">
+                  <span>{card.title}</span>
                 </div>
               </article>
             </div>
