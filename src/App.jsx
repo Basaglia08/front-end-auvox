@@ -55,8 +55,23 @@ function App() {
       if (!id || id === "#") return;
       const target = document.querySelector(id);
       if (!target) return;
+
       event.preventDefault();
-      lenis.scrollTo(target, { offset: -80 });
+
+      /* A duração acompanha a distância: links próximos continuam ágeis e
+         saltos longos ganham tempo suficiente para não parecerem bruscos. */
+      const distancia = Math.abs(target.getBoundingClientRect().top - 80);
+      const telas = distancia / Math.max(window.innerHeight, 1);
+      const duracao = Math.min(2.15, 1.15 + Math.min(telas, 5) * 0.2);
+      const easingSuave = (t) =>
+        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+      window.history.replaceState(null, "", id);
+      lenis.scrollTo(target, {
+        offset: -80,
+        duration: duracao,
+        easing: easingSuave,
+      });
     };
     document.addEventListener("click", onAnchorClick);
 

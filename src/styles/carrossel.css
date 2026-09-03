@@ -24,6 +24,24 @@
     margin: 0 auto;
     padding: 0 clamp(1.5rem, 4vw, 4rem);
   }
+
+  .carrossel-cabecalho {
+    margin-bottom: clamp(72px, 9vh, 112px);
+    will-change: transform, opacity;
+  }
+
+  .carrossel-cabecalho .carrossel-titulo-linha {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .carrossel-cabecalho .carrossel-titulo-como {
+    color: #ffffff;
+  }
+
+  .carrossel-barras {
+    margin-right: 4px;
+  }
   
   /* ── Grade dos cards ── */
   .carrossel-grid {
@@ -36,8 +54,8 @@
        curva usada por baixo em todos os outros elementos que reagem ao
        hover, para o conjunto inteiro se mover como uma coisa só. */
     transition:
-      grid-template-columns 0.86s cubic-bezier(0.22, 1, 0.36, 1),
-      gap 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+      grid-template-columns 1.02s cubic-bezier(0.22, 1, 0.36, 1),
+      gap 0.78s cubic-bezier(0.22, 1, 0.36, 1);
   }
   
   /* No hover, foco ou clique, o card ativo ocupa toda a área útil da seção.
@@ -66,25 +84,29 @@
       pointer-events: none;
     }
 
+    .carrossel-grid:has(.carrossel-card:is(:hover, :focus-visible, .aberto))
+      .carrossel-card-wrap:not(:has(.carrossel-card:is(:hover, :focus-visible, .aberto)))
+      :is(.carrossel-card-subtitulo, .carrossel-card-titulo, .carrossel-caixa) {
+      opacity: 0;
+    }
+
     .carrossel-grid:has(.carrossel-card:is(:hover, :focus-visible, .aberto)) .carrossel-card {
-      height: clamp(540px, 48vw, 680px);
+      height: clamp(540px, 51.75vw, 760px);
     }
   }
   
   /* Wrapper do parallax: o GSAP move este elemento (y), enquanto o card
      por dentro recebe a animação de revelação. Separar os dois evita que
      uma animação sobrescreva o transform da outra.
-     container-type: inline-size transforma este wrapper numa "régua": o
-     conteúdo do card (mais abaixo) consulta essa largura via @container
-     para decidir sozinho, sem JS, se mostra o texto normal ou o rótulo
-     compacto — é isso que faz o texto "se adaptar ao formato da imagem". */
+     container-type: inline-size permite que a tipografia se adapte à
+     largura real do card expandido, sem medições em JavaScript. */
   .carrossel-card-wrap {
     will-change: transform;
     container-type: inline-size;
     container-name: cartao;
     min-width: 0;
     opacity: 1;
-    transition: opacity 0.28s ease;
+    transition: opacity 0.2s ease;
   }
   
   /* Moldura da foto: leva o clip-path (cortina abrindo de baixo para cima)
@@ -114,7 +136,7 @@
     /* obs.: opacity / transform iniciais são controlados pelo GSAP
        (aparecem um de cada vez conforme o scroll) — não defina aqui. */
     transition:
-      height 0.86s cubic-bezier(0.22, 1, 0.36, 1),
+      height 1.02s cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
       border-color 0.45s ease;
   }
@@ -139,34 +161,40 @@
 
   .carrossel-card-imagem-capa {
     object-fit: cover;
+    object-position: center;
     filter: brightness(0.62) saturate(0.85);
     opacity: 1;
     transform: scale(1.045);
     transition:
-      opacity 0.48s ease,
-      transform 0.92s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.5s ease 0.16s,
+      transform 1.02s cubic-bezier(0.22, 1, 0.36, 1),
       filter 0.62s ease;
   }
 
   .carrossel-card-imagem-completa {
     object-fit: contain;
+    object-position: center;
     filter: brightness(0.96) saturate(1.04);
     opacity: 0;
     transform: scale(1.025);
     transition:
-      opacity 0.62s ease 0.12s,
-      transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 0.42s ease,
+      transform 0.78s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .carrossel-card:is(:hover, :focus-visible, .aberto) .carrossel-card-imagem-capa {
     filter: brightness(0.82) saturate(0.92);
     opacity: 0;
     transform: scale(1.01);
+    transition-delay: 0s;
   }
 
   .carrossel-card:is(:hover, :focus-visible, .aberto) .carrossel-card-imagem-completa {
     opacity: 1;
     transform: scale(1);
+    transition:
+      opacity 0.72s ease 0.2s,
+      transform 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.08s;
   }
   
   /* Gradiente escuro na base para o texto ficar legível */
@@ -211,61 +239,6 @@
     transition:
       opacity 0.4s ease,
       transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  
-  /* ── Rótulo compacto (card "faixa") ──
-     Fica sobreposto ao conteúdo normal, invisível por padrão. Quando o
-     container (o wrap) fica estreito — porque um vizinho está expandido —
-     a query abaixo faz a troca: o conteúdo normal esmaece e este rótulo
-     vertical assume, sempre legível independente da largura da imagem. */
-  .carrossel-card-rotulo {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding-bottom: 22px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.45s ease 0.1s;
-  }
-  
-  .carrossel-card-rotulo span {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    white-space: nowrap;
-    font-size: 0.92rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: #ffffff;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  }
-  
-  /* ── Container queries: o texto reage à FORMA real da imagem, não ao
-     viewport. É o que faz "o texto se adaptar ao formato da imagem" de
-     verdade, sem depender de JS medindo nada. ── */
-  @container cartao (max-width: 150px) {
-    /* Card virou uma faixa fina: título e legenda normais não cabem mais
-       na horizontal — cede lugar ao rótulo vertical. */
-    .carrossel-card-subtitulo,
-    .carrossel-card-titulo,
-    .carrossel-caixa {
-      opacity: 0;
-      pointer-events: none;
-    }
-  
-    .carrossel-card-titulo {
-      transform: translateY(10px);
-    }
-  
-    .carrossel-card-rotulo {
-      opacity: 1;
-    }
-  
-    .carrossel-card-conteudo {
-      padding: 22px 10px;
-    }
   }
   
   @container cartao (min-width: 650px) {
@@ -365,6 +338,14 @@
     .carrossel-secao {
       padding: 10vh 0;
     }
+
+    .carrossel-cabecalho {
+      margin-bottom: 56px;
+    }
+
+    .carrossel-cabecalho .secao-titulo {
+      font-size: clamp(1.25rem, 5.8vw, 2rem);
+    }
   
     .carrossel-grid {
       grid-template-columns: 1fr;
@@ -403,7 +384,6 @@
     .carrossel-card-imagem,
     .carrossel-card-titulo,
     .carrossel-card-subtitulo,
-    .carrossel-card-rotulo,
     .carrossel-caixa,
     .carrossel-caixa-box {
       transition-duration: 0.01ms;

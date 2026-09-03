@@ -54,6 +54,7 @@ export default function Carrossel() {
 
     const cards = Array.from(raiz.querySelectorAll('.carrossel-card'));
     const wraps = Array.from(raiz.querySelectorAll('.carrossel-card-wrap'));
+    const cabecalho = raiz.querySelector('.carrossel-cabecalho');
     if (!cards.length) return undefined;
 
     const reduzirMovimento =
@@ -72,6 +73,24 @@ export default function Carrossel() {
        do site continua de pé. */
     try {
       ctx = gsap.context(() => {
+        if (cabecalho) {
+          gsap.fromTo(
+            cabecalho,
+            { opacity: 0, y: 32 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: cabecalho,
+                start: 'top 88%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          );
+        }
+
         /* Cada card é revelado em 3 camadas que se sobrepõem — é isso que
            tira o "seco" de um fade simples:
            1. a moldura sobe, desgira e ganha escala;
@@ -202,8 +221,7 @@ export default function Carrossel() {
       }
     }
 
-    // As imagens são remotas: quando terminam de carregar, a altura muda,
-    // então recalculamos os pontos de start/end.
+    // Recalcula os pontos depois que todos os recursos terminam de carregar.
     const onLoad = () => {
       try {
         ScrollTrigger.refresh();
@@ -226,8 +244,25 @@ export default function Carrossel() {
   const alternar = (index) => setAberto((atual) => (atual === index ? null : index));
 
   return (
-    <section className="carrossel-secao" ref={sectionRef}>
+    <section
+      className="carrossel-secao"
+      id="processos"
+      aria-labelledby="processos-titulo"
+      ref={sectionRef}
+    >
       <div className="carrossel-inner">
+        <header className="carrossel-cabecalho secao-topo -escuro">
+          <p className="secao-slug">
+            <span className="carrossel-barras" aria-hidden="true">//</span> Nossos processos
+          </p>
+          <h2 className="secao-titulo" id="processos-titulo">
+            <span className="carrossel-titulo-linha">
+              <span className="carrossel-titulo-como">Como</span> TRABALHAMOS
+            </span>
+          </h2>
+          <div className="secao-sep" />
+        </header>
+
         <div className="carrossel-grid">
           {CARDS.map((card, index) => (
             // .carrossel-card-wrap existe só para o parallax: o GSAP mexe
@@ -281,15 +316,6 @@ export default function Carrossel() {
                   </div>
                 </div>
 
-                {/* Rótulo compacto: quando o card vira uma "faixa" fina
-                    (porque um vizinho está expandido), o conteúdo normal
-                    não cabe mais — este rótulo na vertical assume o lugar
-                    dele. Puramente decorativo (aria-hidden): o título real
-                    já foi anunciado pelo <h3> acima. Controlado 100% via
-                    container query em carrossel.css, sem JS. */}
-                <div className="carrossel-card-rotulo" aria-hidden="true">
-                  <span>{card.title}</span>
-                </div>
               </article>
             </div>
           ))}
