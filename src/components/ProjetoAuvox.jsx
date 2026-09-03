@@ -11,7 +11,7 @@ import celular from '../assets/celular.png';
 import computer from '../assets/computer.png';
 import equipeAuvox from '../assets/equipeAuvox.png';
 import minhaImagem from '../assets/logo.png';
-import baixeIntermedi from '../assets/baixeIntermedi.png';
+import baixeIntermedi from '../assets/propaganda.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
