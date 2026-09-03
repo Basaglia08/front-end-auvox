@@ -273,7 +273,6 @@ export default function Carrossel() {
                     <div className="carrossel-caixa-clip">
                       <div className="carrossel-caixa-box">
                         <p className="carrossel-caixa-texto">{card.text}</p>
-                        <span className="carrossel-caixa-link">Saiba mais →</span>
                       </div>
                     </div>
                   </div>

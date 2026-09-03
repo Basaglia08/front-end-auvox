@@ -326,49 +326,37 @@
     min-height: 0;
   }
   
-  /* Caixinha branca: contraste alto sobre a foto, texto no azul escuro da
-     Auvox. Sem backdrop-filter aqui — com fundo branco sólido ele não
-     apareceria e ainda custaria composição a cada frame. */
+  /* Bloco editorial integrado à foto: sem painel branco, usando apenas a
+     linha dourada e a sombra do texto para manter a leitura. */
   .carrossel-caixa-box {
-    background: #ffffff;
-    border: 1px solid rgba(20, 39, 64, 0.12);
-    border-radius: 15px;
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
-    padding: 14px 16px;
-    transform: translateY(10px) scale(0.97);
+    max-width: 640px;
+    background: transparent;
+    border: 0;
+    border-left: 2px solid rgba(242, 181, 68, 0.9);
+    border-radius: 0;
+    box-shadow: none;
+    padding: 3px 0 3px 18px;
+    transform: translateY(12px);
     opacity: 0;
     transition:
-      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.05s,
-      opacity 0.4s ease 0.05s;
+      transform 0.62s cubic-bezier(0.22, 1, 0.36, 1) 0.04s,
+      opacity 0.42s ease 0.04s;
   }
   
   .carrossel-card:hover .carrossel-caixa-box,
   .carrossel-card:focus-visible .carrossel-caixa-box,
   .carrossel-card.aberto .carrossel-caixa-box {
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
     opacity: 1;
   }
   
   .carrossel-caixa-texto {
-    margin: 0 0 10px 0;
-    font-size: 0.8rem;
-    line-height: 1.6;
-    color: #0f1f36;
-  }
-  
-  .carrossel-caixa-link {
-    display: inline-block;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #14406e;
-    transition: transform 0.3s ease;
-  }
-  
-  .carrossel-card:hover .carrossel-caixa-link,
-  .carrossel-card.aberto .carrossel-caixa-link {
-    transform: translateX(4px);
+    margin: 0 0 12px;
+    font-size: 0.84rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.78);
   }
   
   /* ── Responsivo ── */
