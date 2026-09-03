@@ -4,32 +4,35 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/carrossel.css';
 
+// 1. IMPORTAÇÃO DAS IMAGENS DA PASTA SRC/ASSETS/
+import imgPlanejamento from '../assets/planejamento.png';
+import imgPrototipacao from '../assets/prototipacao.png';
+import imgDesenvolvimento from '../assets/desenvolvimento.png';
+
 gsap.registerPlugin(ScrollTrigger);
 
+// 2. USO DAS VARIÁVEIS IMPORTADAS NO ARRAY
 const CARDS = [
   {
     id: 1,
     subtitle: 'ESTRATÉGIA E GESTÃO',
     title: 'Planejamento',
     text: 'Analisamos as necessidades do seu negócio e estruturamos cada etapa do projeto, definindo objetivos, funcionalidades e tecnologias para transformar sua ideia em uma solução viável e eficiente.',
-    image:
-      'https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?auto=format&fit=crop&w=2000&q=85',
+    image: imgPlanejamento,
   },
   {
     id: 2,
     subtitle: 'IDEIAS EM SOLUÇÃO',
     title: 'Prototipação',
     text: 'Criamos protótipos interativos para visualizar e validar sua solução antes do desenvolvimento, permitindo testar funcionalidades e experiência do usuário com mais agilidade.',
-    image:
-      'https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=2000&q=85',
+    image: imgPrototipacao,
   },
   {
     id: 3,
     subtitle: 'TECNOLOGIA E INOVAÇÃO',
     title: 'Desenvolvimento',
     text: 'Desenvolvemos sistemas web, aplicativos e soluções digitais sob medida, utilizando tecnologias modernas para entregar produtos seguros, responsivos e preparados para crescer.',
-    image:
-      'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=2000&q=85',
+    image: imgDesenvolvimento,
   },
 ];
 // Quanto cada card "flutua" no parallax. O do meio se move mais, o que dá
