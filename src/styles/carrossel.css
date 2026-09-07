@@ -6,278 +6,396 @@
    É o mesmo motivo pelo qual o ScrollAnimation também não tem fundo:
    um único elemento de fundo = zero emenda entre as partes.
    ────────────────────────────────────────────────────────────── */
-.carrossel-secao {
-  position: relative;
-  width: 100%;
-  /* Seção no fluxo normal (sem pin, sem sticky, sem altura forçada de
-     100vh): assim ela não empurra nem cobre as seções vizinhas — só um
-     respiro entre o bloco "Auvox pode ..." e o que vem depois. */
-  padding: 14vh 0 16vh;
-  font-family: 'Poppins', sans-serif;
-}
-
-/* Mesma largura/alinhamento do bloco "Auvox pode ..." (.scroll-row:
-   max-width 1000px centralizado), para os dois ficarem alinhados. */
-.carrossel-inner {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-/* ── Grade dos cards ── */
-.carrossel-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  align-items: stretch;
-  transition: grid-template-columns 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* No hover, o card apontado ocupa 75% da fileira; os demais dividem o
-   espaço restante. A imagem continua com object-fit: cover, portanto
-   preenche a nova largura sem esticar ou deformar. */
-@media (min-width: 901px) {
-  .carrossel-grid:has(.carrossel-card-wrap:nth-child(1) .carrossel-card:hover) {
-    grid-template-columns: 3fr 0.5fr 0.5fr;
+   .carrossel-secao {
+    position: relative;
+    width: 100%;
+    /* Seção no fluxo normal (sem pin, sem sticky, sem altura forçada de
+       100vh): assim ela não empurra nem cobre as seções vizinhas — só um
+       respiro entre o bloco "Auvox pode ..." e o que vem depois. */
+    padding: 14vh 0 16vh;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Usa praticamente toda a largura da seção para os cards já nascerem
+     maiores e para o item ativo ganhar uma área realmente panorâmica. */
+  .carrossel-inner {
+    width: 100%;
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 4vw, 4rem);
   }
 
-  .carrossel-grid:has(.carrossel-card-wrap:nth-child(2) .carrossel-card:hover) {
-    grid-template-columns: 0.5fr 3fr 0.5fr;
+  .carrossel-cabecalho {
+    margin-bottom: clamp(72px, 9vh, 112px);
+    will-change: transform, opacity;
   }
 
-  .carrossel-grid:has(.carrossel-card-wrap:nth-child(3) .carrossel-card:hover) {
-    grid-template-columns: 0.5fr 0.5fr 3fr;
-  }
-}
-
-/* Wrapper do parallax: o GSAP move este elemento (y), enquanto o card
-   por dentro recebe a animação de revelação. Separar os dois evita que
-   uma animação sobrescreva o transform da outra. */
-.carrossel-card-wrap {
-  will-change: transform;
-}
-
-/* Moldura da foto: leva o clip-path (cortina abrindo de baixo para cima)
-   e a escala da revelação. O <img> fica livre para o zoom do hover. */
-.carrossel-card-media {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  will-change: transform, clip-path;
-}
-
-/* Altura fixa: a caixinha abre POR DENTRO do card, então o grid nunca
-   "pula" nem desalinha quando um card abre. */
-.carrossel-card {
-  position: relative;
-  height: 420px;
-  border-radius: 15px;
-  overflow: hidden;
-  cursor: pointer;
-  outline: none;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  /* obs.: opacity / transform iniciais são controlados pelo GSAP
-     (aparecem um de cada vez conforme o scroll) — não defina aqui. */
-  transition:
-    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.45s ease;
-}
-
-.carrossel-card:hover,
-.carrossel-card:focus-visible,
-.carrossel-card.aberto {
-  border-color: rgba(242, 181, 68, 0.5);
-  box-shadow:
-    0 28px 55px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(242, 181, 68, 0.18);
-}
-
-.carrossel-card-imagem {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: brightness(0.62) saturate(0.85);
-  transform: scale(1.02);
-  transition:
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.5s ease;
-}
-
-.carrossel-card:hover .carrossel-card-imagem,
-.carrossel-card:focus-visible .carrossel-card-imagem,
-.carrossel-card.aberto .carrossel-card-imagem {
-  filter: brightness(0.95) saturate(1.05);
-  transform: scale(1.08);
-}
-
-/* Gradiente escuro na base para o texto ficar legível */
-.carrossel-card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(10, 11, 14, 0.92) 0%,
-    rgba(10, 11, 14, 0.45) 45%,
-    transparent 100%
-  );
-}
-
-.carrossel-card-conteudo {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 22px;
-  color: #ffffff;
-  z-index: 2;
-}
-
-.carrossel-card-subtitulo {
-  display: block;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 1.6px;
-  text-transform: uppercase;
-  color: #f2b544;
-  margin-bottom: 6px;
-}
-
-.carrossel-card-titulo {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 700;
-  line-height: 1.25;
-  color: #ffffff;
-}
-
-/* ──────────────────────────────────────────────────────────────
-   A "CAIXINHA" QUE ABRE
-   grid-template-rows: 0fr → 1fr é o truque que permite animar a
-   altura suavemente sem precisar saber o tamanho do texto.
-   ────────────────────────────────────────────────────────────── */
-.carrossel-caixa {
-  display: grid;
-  grid-template-rows: 0fr;
-  margin-top: 0;
-  opacity: 0;
-  transition:
-    grid-template-rows 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    margin-top 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.35s ease;
-}
-
-.carrossel-card:hover .carrossel-caixa,
-.carrossel-card:focus-visible .carrossel-caixa,
-.carrossel-card.aberto .carrossel-caixa {
-  grid-template-rows: 1fr;
-  margin-top: 14px;
-  opacity: 1;
-}
-
-.carrossel-caixa-clip {
-  overflow: hidden;
-  min-height: 0;
-}
-
-/* Caixinha branca: contraste alto sobre a foto, texto no azul escuro da
-   Auvox. Sem backdrop-filter aqui — com fundo branco sólido ele não
-   apareceria e ainda custaria composição a cada frame. */
-.carrossel-caixa-box {
-  background: #ffffff;
-  border: 1px solid rgba(20, 39, 64, 0.12);
-  border-radius: 15px;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
-  padding: 14px 16px;
-  transform: translateY(10px) scale(0.97);
-  opacity: 0;
-  transition:
-    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.05s,
-    opacity 0.4s ease 0.05s;
-}
-
-.carrossel-card:hover .carrossel-caixa-box,
-.carrossel-card:focus-visible .carrossel-caixa-box,
-.carrossel-card.aberto .carrossel-caixa-box {
-  transform: translateY(0) scale(1);
-  opacity: 1;
-}
-
-.carrossel-caixa-texto {
-  margin: 0 0 10px 0;
-  font-size: 0.8rem;
-  line-height: 1.6;
-  color: #0f1f36;
-}
-
-.carrossel-caixa-link {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #14406e;
-  transition: transform 0.3s ease;
-}
-
-.carrossel-card:hover .carrossel-caixa-link,
-.carrossel-card.aberto .carrossel-caixa-link {
-  transform: translateX(4px);
-}
-
-/* ── Responsivo ── */
-@media (max-width: 900px) {
-  /* mobile: cards empilhados, cada um aparece ao entrar na tela */
-  .carrossel-secao {
-    padding: 10vh 0;
+  .carrossel-cabecalho .carrossel-titulo-linha {
+    display: inline-block;
+    white-space: nowrap;
   }
 
+  .carrossel-cabecalho .carrossel-titulo-como {
+    color: #ffffff;
+  }
+
+  .carrossel-barras {
+    margin-right: 4px;
+  }
+  
+  /* ── Grade dos cards ── */
   .carrossel-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(18px, 1.7vw, 28px);
+    align-items: stretch;
+    /* Easing tipo "expo-out": acelera rápido e desacelera bem devagar no
+       final — é o que dá a sensação de suavidade/peso no expandir. Mesma
+       curva usada por baixo em todos os outros elementos que reagem ao
+       hover, para o conjunto inteiro se mover como uma coisa só. */
+    transition:
+      grid-template-columns 1.02s cubic-bezier(0.22, 1, 0.36, 1),
+      gap 0.78s cubic-bezier(0.22, 1, 0.36, 1);
   }
+  
+  /* No hover, foco ou clique, o card ativo ocupa toda a área útil da seção.
+     As demais colunas chegam a zero e o gap desaparece, sem saltos. */
+  @media (min-width: 901px) {
+    .carrossel-grid:has(.carrossel-card-wrap:nth-child(1) .carrossel-card:is(:hover, :focus-visible, .aberto)) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0fr) minmax(0, 0fr);
+      gap: 0;
+    }
+  
+    .carrossel-grid:has(.carrossel-card-wrap:nth-child(2) .carrossel-card:is(:hover, :focus-visible, .aberto)) {
+      grid-template-columns: minmax(0, 0fr) minmax(0, 1fr) minmax(0, 0fr);
+      gap: 0;
+    }
+  
+    .carrossel-grid:has(.carrossel-card-wrap:nth-child(3) .carrossel-card:is(:hover, :focus-visible, .aberto)) {
+      grid-template-columns: minmax(0, 0fr) minmax(0, 0fr) minmax(0, 1fr);
+      gap: 0;
+    }
+  
+    /* Durante a abertura, os cards vizinhos desaparecem com suavidade e
+       deixam todo o espaço útil da seção para o item em foco. */
+    .carrossel-grid:has(.carrossel-card:is(:hover, :focus-visible, .aberto))
+      .carrossel-card-wrap:not(:has(.carrossel-card:is(:hover, :focus-visible, .aberto))) {
+      opacity: 0;
+      pointer-events: none;
+    }
 
-  /* sem parallax no celular */
+    .carrossel-grid:has(.carrossel-card:is(:hover, :focus-visible, .aberto))
+      .carrossel-card-wrap:not(:has(.carrossel-card:is(:hover, :focus-visible, .aberto)))
+      :is(.carrossel-card-subtitulo, .carrossel-card-titulo, .carrossel-caixa) {
+      opacity: 0;
+    }
+
+    .carrossel-grid:has(.carrossel-card:is(:hover, :focus-visible, .aberto)) .carrossel-card {
+      height: clamp(540px, 51.75vw, 760px);
+    }
+  }
+  
+  /* Wrapper do parallax: o GSAP move este elemento (y), enquanto o card
+     por dentro recebe a animação de revelação. Separar os dois evita que
+     uma animação sobrescreva o transform da outra.
+     container-type: inline-size permite que a tipografia se adapte à
+     largura real do card expandido, sem medições em JavaScript. */
   .carrossel-card-wrap {
-    transform: none !important;
+    will-change: transform;
+    container-type: inline-size;
+    container-name: cartao;
+    min-width: 0;
+    opacity: 1;
+    transition: opacity 0.2s ease;
   }
-
+  
+  /* Moldura da foto: leva o clip-path (cortina abrindo de baixo para cima)
+     e a escala da revelação. O <img> fica livre para o zoom do hover. */
+  .carrossel-card-media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #0b0e13;
+    will-change: transform, clip-path;
+  }
+  
+  /* Altura fixa: a caixinha abre POR DENTRO do card, então o grid nunca
+     "pula" nem desalinha quando um card abre. */
   .carrossel-card {
-    height: 300px;
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    height: clamp(470px, 38vw, 550px);
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    /* obs.: opacity / transform iniciais são controlados pelo GSAP
+       (aparecem um de cada vez conforme o scroll) — não defina aqui. */
+    transition:
+      height 1.02s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.45s ease;
+  }
+  
+  .carrossel-card:hover,
+  .carrossel-card:focus-visible,
+  .carrossel-card.aberto {
+    border-color: rgba(242, 181, 68, 0.5);
+    box-shadow:
+      0 28px 55px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(242, 181, 68, 0.18);
+  }
+  
+  .carrossel-card-imagem {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    will-change: transform, opacity, filter;
   }
 
+  .carrossel-card-imagem-capa {
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.62) saturate(0.85);
+    opacity: 1;
+    transform: scale(1.045);
+    transition:
+      opacity 0.5s ease 0.16s,
+      transform 1.02s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.62s ease;
+  }
+
+  .carrossel-card-imagem-completa {
+    object-fit: contain;
+    object-position: center;
+    filter: brightness(0.96) saturate(1.04);
+    opacity: 0;
+    transform: scale(1.025);
+    transition:
+      opacity 0.42s ease,
+      transform 0.78s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .carrossel-card:is(:hover, :focus-visible, .aberto) .carrossel-card-imagem-capa {
+    filter: brightness(0.82) saturate(0.92);
+    opacity: 0;
+    transform: scale(1.01);
+    transition-delay: 0s;
+  }
+
+  .carrossel-card:is(:hover, :focus-visible, .aberto) .carrossel-card-imagem-completa {
+    opacity: 1;
+    transform: scale(1);
+    transition:
+      opacity 0.72s ease 0.2s,
+      transform 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.08s;
+  }
+  
+  /* Gradiente escuro na base para o texto ficar legível */
+  .carrossel-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(10, 11, 14, 0.92) 0%,
+      rgba(10, 11, 14, 0.45) 45%,
+      transparent 100%
+    );
+  }
+  
   .carrossel-card-conteudo {
-    padding: 18px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 22px;
+    color: #ffffff;
+    z-index: 2;
   }
-
-  /* No celular não existe hover: a caixinha abre no toque (.aberto) */
-  .carrossel-caixa-texto {
-    font-size: 0.85rem;
+  
+  .carrossel-card-subtitulo {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: #f2b544;
+    margin-bottom: 6px;
+    transition: opacity 0.35s ease;
   }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .carrossel-card-wrap {
-    transform: none !important;
-  }
-
-  .carrossel-card,
-  .carrossel-card-imagem,
-  .carrossel-caixa,
-  .carrossel-caixa-box {
-    transition-duration: 0.01ms;
-  }
-}
-
-@media (max-width: 480px) {
-  .carrossel-card {
-    height: 260px;
-  }
-
+  
   .carrossel-card-titulo {
-    font-size: 1.05rem;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #ffffff;
+    transition:
+      opacity 0.4s ease,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
-}
+  
+  @container cartao (min-width: 650px) {
+    /* Card expandido, ocupando quase a seção inteira: mais respiro e uma
+       tipografia maior — a foto agora tem espaço de sobra para o texto
+       "espalhar" com calma. */
+    .carrossel-card-conteudo {
+      padding: 40px 46px;
+      max-width: 680px;
+    }
+  
+    .carrossel-card-subtitulo {
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+  
+    .carrossel-card-titulo {
+      font-size: 2.1rem;
+    }
+  
+    .carrossel-caixa-box {
+      padding: 20px 24px;
+    }
+  
+    .carrossel-caixa-texto {
+      font-size: 0.94rem;
+      line-height: 1.7;
+    }
+  }
+  
+  /* ──────────────────────────────────────────────────────────────
+     A "CAIXINHA" QUE ABRE
+     grid-template-rows: 0fr → 1fr é o truque que permite animar a
+     altura suavemente sem precisar saber o tamanho do texto.
+     ────────────────────────────────────────────────────────────── */
+  .carrossel-caixa {
+    display: grid;
+    grid-template-rows: 0fr;
+    margin-top: 0;
+    opacity: 0;
+    transition:
+      grid-template-rows 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      margin-top 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.35s ease;
+  }
+  
+  .carrossel-card:hover .carrossel-caixa,
+  .carrossel-card:focus-visible .carrossel-caixa,
+  .carrossel-card.aberto .carrossel-caixa {
+    grid-template-rows: 1fr;
+    margin-top: 14px;
+    opacity: 1;
+  }
+  
+  .carrossel-caixa-clip {
+    overflow: hidden;
+    min-height: 0;
+  }
+  
+  /* Bloco editorial integrado à foto: sem painel branco, usando apenas a
+     linha dourada e a sombra do texto para manter a leitura. */
+  .carrossel-caixa-box {
+    max-width: 640px;
+    background: transparent;
+    border: 0;
+    border-left: 2px solid rgba(242, 181, 68, 0.9);
+    border-radius: 0;
+    box-shadow: none;
+    padding: 3px 0 3px 18px;
+    transform: translateY(12px);
+    opacity: 0;
+    transition:
+      transform 0.62s cubic-bezier(0.22, 1, 0.36, 1) 0.04s,
+      opacity 0.42s ease 0.04s;
+  }
+  
+  .carrossel-card:hover .carrossel-caixa-box,
+  .carrossel-card:focus-visible .carrossel-caixa-box,
+  .carrossel-card.aberto .carrossel-caixa-box {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .carrossel-caixa-texto {
+    margin: 0 0 12px;
+    font-size: 0.84rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.78);
+  }
+  
+  /* ── Responsivo ── */
+  @media (max-width: 900px) {
+    /* mobile: cards empilhados, cada um aparece ao entrar na tela */
+    .carrossel-secao {
+      padding: 10vh 0;
+    }
+
+    .carrossel-cabecalho {
+      margin-bottom: 56px;
+    }
+
+    .carrossel-cabecalho .secao-titulo {
+      font-size: clamp(1.25rem, 5.8vw, 2rem);
+    }
+  
+    .carrossel-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+  
+    /* sem parallax no celular */
+    .carrossel-card-wrap {
+      transform: none !important;
+    }
+  
+    .carrossel-card {
+      height: clamp(340px, 72vw, 430px);
+    }
+  
+    .carrossel-card-conteudo {
+      padding: 18px;
+    }
+  
+    /* No celular não existe hover: a caixinha abre no toque (.aberto) */
+    .carrossel-caixa-texto {
+      font-size: 0.85rem;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .carrossel-card-wrap {
+      transform: none !important;
+    }
+  
+    .carrossel-grid {
+      transition-duration: 0.01ms;
+    }
+  
+    .carrossel-card,
+    .carrossel-card-imagem,
+    .carrossel-card-titulo,
+    .carrossel-card-subtitulo,
+    .carrossel-caixa,
+    .carrossel-caixa-box {
+      transition-duration: 0.01ms;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .carrossel-card {
+      height: 260px;
+    }
+  
+    .carrossel-card-titulo {
+      font-size: 1.05rem;
+    }
+  }

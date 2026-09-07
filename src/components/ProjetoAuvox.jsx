@@ -6,12 +6,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/projeto.css';
 
 import mockupCelulares from '../assets/mockup-celulares.png';
+
+
+
 import banner1 from '../assets/banner1.png';
 import celular from '../assets/celular.png';
 import computer from '../assets/computer.png';
 import equipeAuvox from '../assets/equipeAuvox.png';
 import minhaImagem from '../assets/logo.png';
-import baixeIntermedi from '../assets/baixeIntermedi.png';
+import baixeIntermedi from '../assets/propaganda.png';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,8 +30,8 @@ gsap.registerPlugin(ScrollTrigger);
      (anterior / próximo), que dá a volta ao chegar no fim.
 
    IMAGENS
-   - imagens   array. A PRIMEIRA é a capa que aparece no card da
-               grade; TODAS entram no carrossel do modal. Pode ter
+   - capa      imagem usada exclusivamente no card da grade.
+   - imagens   array com as imagens exibidas no carrossel do modal. Pode ter
                quantas quiser — as setas e os indicadores se
                ajustam à quantidade automaticamente. Com uma
                imagem só, os controles do carrossel nem aparecem.
@@ -62,9 +66,10 @@ const PROJETOS = [
     cor: '#f2b544',
     alt: 'Plataforma Intermedi',
 
-    // a 1ª é a capa do card; todas entram no carrossel do modal
+    capa: { src: mockupCelulares, alt: 'Aplicativo Intermedi em telas de celular' },
+
+    // imagens exibidas somente dentro do modal
     imagens: [
-      { src: mockupCelulares, alt: 'Aplicativo Intermedi em telas de celular' },
       { src: baixeIntermedi, alt: 'Tela de login do aplicativo' },
     ],
 
@@ -76,40 +81,6 @@ const PROJETOS = [
     ano: '2026',
     link: '#contato',
     textoBotao: 'Ver o projeto completo',
-  },
-  {
-    id: 'auvox-institucional',
-    titulo: 'Auvox',
-    legenda: 'SITE INSTITUCIONAL · IDENTIDADE E FRONT-END',
-    etiqueta: 'PROJETO INTERNO',
-    cor: '#f2b544',
-    alt: 'Site institucional da Auvox',
-
-    imagens: [banner1, equipeAuvox],
-
-    destaque: 'A nossa casa: identidade, movimento e um site que se explica sozinho.',
-    descricao:
-      'Site institucional construído em React com animações amarradas ao scroll, design system próprio e foco em performance — a vitrine de como a Auvox trabalha.',
-    disciplina: 'Identidade visual · Front-end · Motion',
-    equipe: 'Time Auvox',
-    ano: '2026',
-  },
-  {
-    id: 'meu-projeto',
-    titulo: 'Nome do Projeto',
-    legenda: 'CATEGORIA · O QUE FOI FEITO',
-    etiqueta: 'PROJETO AUVOX',
-    cor: '#f2b544',
-    alt: 'descrição da imagem',
-
-    imagens: [minhaImagem],
-
-    destaque: 'Frase curta que resume a ideia do projeto.',
-    descricao: 'Parágrafo com o contexto do projeto, o problema e a solução entregue.',
-    disciplina: 'O que foi feito',
-    equipe: 'Quem fez',
-    ano: '2026',
-    link: '#contato',
   },
 ];
 
@@ -369,7 +340,7 @@ export default function ProjetoAuvox() {
     const onLoad = () => {
       try {
         ScrollTrigger.refresh();
-      } catch (_) {
+      } catch {
         /* ignora */
       }
     };
@@ -379,7 +350,7 @@ export default function ProjetoAuvox() {
       window.removeEventListener('load', onLoad);
       try {
         if (ctx) ctx.revert();
-      } catch (_) {
+      } catch {
         /* ignora */
       }
     };
@@ -408,7 +379,7 @@ export default function ProjetoAuvox() {
         <div className="projeto-grade">
           {PROJETOS.map((projeto, i) => {
             const numero = String(i + 1).padStart(2, '0');
-            const capa = galeriaDe(projeto)[0]; // a 1ª imagem é a capa
+            const capa = projeto.capa || galeriaDe(projeto)[0];
 
             return (
               <article className="projeto-item" key={projeto.id || projeto.titulo}>
@@ -613,19 +584,25 @@ export default function ProjetoAuvox() {
             </div>
 
             <footer className="projeto-modal-rodape">
-              <button type="button" className="projeto-modal-nav" onClick={anterior}>
-                <span aria-hidden="true">←</span> PROJETO ANTERIOR
-              </button>
+              {total > 1 ? (
+                <button type="button" className="projeto-modal-nav" onClick={anterior}>
+                  <span aria-hidden="true">←</span> PROJETO ANTERIOR
+                </button>
+              ) : (
+                <span />
+              )}
 
               <span className="projeto-modal-dica">
-                {temGaleria
-                  ? '← → IMAGENS · ↑ ↓ PROJETOS · ESC FECHAR'
-                  : '← → PROJETOS · ESC FECHAR'}
+                {temGaleria ? '← → IMAGENS · ESC FECHAR' : 'ESC FECHAR'}
               </span>
 
-              <button type="button" className="projeto-modal-nav" onClick={proximo}>
-                PRÓXIMO PROJETO <span aria-hidden="true">→</span>
-              </button>
+              {total > 1 ? (
+                <button type="button" className="projeto-modal-nav" onClick={proximo}>
+                  PRÓXIMO PROJETO <span aria-hidden="true">→</span>
+                </button>
+              ) : (
+                <span />
+              )}
             </footer>
           </div>,
           document.body

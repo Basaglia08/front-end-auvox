@@ -195,9 +195,9 @@ function Home() {
         </h2>
 
         <div className="container-btn">
-          <button className="button">
+          <a className="button" href="#solucoes">
             <span className="button-content">Conheça nossas soluções</span>
-          </button>
+          </a>
         </div>
       </div>
     </section>

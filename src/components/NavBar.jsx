@@ -5,6 +5,7 @@ import logo from "../assets/logo.png";
 const NAV_LINKS = [
   { href: "#inicio",   label: "Início" },
   { href: "#solucoes", label: "Soluções" },
+  { href: "#processos", label: "Processos" },
   { href: "#projeto",  label: "Projeto"},
   { href: "#sobre",    label: "Sobre" },
   { href: "#equipe",   label: "Equipe" },
@@ -68,7 +69,7 @@ function NavBar() {
 
   /* Fecha menu ao redimensionar para desktop */
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth > 768) fecharMenu(); };
+    const onResize = () => { if (window.innerWidth > 900) fecharMenu(); };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, [fecharMenu]);

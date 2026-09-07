@@ -60,7 +60,8 @@ body .projeto-secao {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: minmax(0, 560px);
+  justify-content: center;
   column-gap: 6vw;
   row-gap: 10vh;
   align-items: start;

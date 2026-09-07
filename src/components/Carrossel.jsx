@@ -4,37 +4,40 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/carrossel.css';
 
+// 1. IMPORTAÇÃO DAS IMAGENS DA PASTA SRC/ASSETS/
+import imgPlanejamento from '../assets/planejamento.png';
+import imgPrototipacao from '../assets/prototipacao.png';
+import imgDesenvolvimento from '../assets/desenvolvimento.png';
+
 gsap.registerPlugin(ScrollTrigger);
 
+// 2. USO DAS VARIÁVEIS IMPORTADAS NO ARRAY
 const CARDS = [
   {
     id: 1,
     subtitle: 'ESTRATÉGIA E GESTÃO',
     title: 'Planejamento',
     text: 'Analisamos as necessidades do seu negócio e estruturamos cada etapa do projeto, definindo objetivos, funcionalidades e tecnologias para transformar sua ideia em uma solução viável e eficiente.',
-    image:
-      'https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?auto=format&fit=crop&w=2000&q=85',
+    image: imgPlanejamento,
   },
   {
     id: 2,
     subtitle: 'IDEIAS EM SOLUÇÃO',
     title: 'Prototipação',
     text: 'Criamos protótipos interativos para visualizar e validar sua solução antes do desenvolvimento, permitindo testar funcionalidades e experiência do usuário com mais agilidade.',
-    image:
-      'https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=2000&q=85',
+    image: imgPrototipacao,
   },
   {
     id: 3,
     subtitle: 'TECNOLOGIA E INOVAÇÃO',
     title: 'Desenvolvimento',
     text: 'Desenvolvemos sistemas web, aplicativos e soluções digitais sob medida, utilizando tecnologias modernas para entregar produtos seguros, responsivos e preparados para crescer.',
-    image:
-      'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=2000&q=85',
+    image: imgDesenvolvimento,
   },
 ];
 // Quanto cada card "flutua" no parallax. O do meio se move mais, o que dá
 // o desenho de arco/onda na fileira conforme a página rola.
-const PARALLAX = [46, 84, 46];
+const PARALLAX = [28, 52, 28];
 
 /* Este componente NÃO tem fundo próprio: ele é renderizado dentro do
    wrapper .slide-scroll-unificado (CarrosselNav), que já fornece a textura
@@ -51,7 +54,13 @@ export default function Carrossel() {
 
     const cards = Array.from(raiz.querySelectorAll('.carrossel-card'));
     const wraps = Array.from(raiz.querySelectorAll('.carrossel-card-wrap'));
+    const cabecalho = raiz.querySelector('.carrossel-cabecalho');
     if (!cards.length) return undefined;
+
+    const reduzirMovimento =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduzirMovimento) return undefined;
 
     let ctx;
 
@@ -64,6 +73,24 @@ export default function Carrossel() {
        do site continua de pé. */
     try {
       ctx = gsap.context(() => {
+        if (cabecalho) {
+          gsap.fromTo(
+            cabecalho,
+            { opacity: 0, y: 32 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: cabecalho,
+                start: 'top 88%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          );
+        }
+
         /* Cada card é revelado em 3 camadas que se sobrepõem — é isso que
            tira o "seco" de um fade simples:
            1. a moldura sobe, desgira e ganha escala;
@@ -76,14 +103,20 @@ export default function Carrossel() {
 
           tl.fromTo(
             card,
-            { opacity: 0, y: 100, scale: 0.88, rotation: (i - 1) * 3, transformOrigin: '50% 100%' },
+            {
+              opacity: 0,
+              y: 72,
+              scale: 0.93,
+              rotation: (i - 1) * 1.8,
+              transformOrigin: '50% 100%',
+            },
             {
               opacity: 1,
               y: 0,
               scale: 1,
               rotation: 0,
-              duration: 1,
-              ease: 'power3.out',
+              duration: 1.15,
+              ease: 'power4.out',
               immediateRender: true,
             },
             posicao
@@ -92,12 +125,12 @@ export default function Carrossel() {
           if (media) {
             tl.fromTo(
               media,
-              { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.35 },
+              { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.18 },
               {
                 clipPath: 'inset(0% 0% 0% 0%)',
                 scale: 1,
-                duration: 1.15,
-                ease: 'power2.out',
+                duration: 1.3,
+                ease: 'power3.out',
                 immediateRender: true,
               },
               posicao
@@ -107,9 +140,9 @@ export default function Carrossel() {
           if (conteudo) {
             tl.fromTo(
               conteudo,
-              { opacity: 0, y: 38 },
-              { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', immediateRender: true },
-              posicao + 0.45
+              { opacity: 0, y: 24 },
+              { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', immediateRender: true },
+              posicao + 0.38
             );
           }
         };
@@ -127,7 +160,7 @@ export default function Carrossel() {
           /* (A) REVELAÇÃO — gatilho na própria fileira (.carrossel-grid),
              de 'top 90%' a 'top 30%', com `scrub`: o progresso é amarrado
              ao scroll, então acontece exatamente enquanto os cards
-             atravessam a tela e volta ao subir. O delay de 0.4 entre um
+             atravessam a tela e volta ao subir. O pequeno atraso entre um
              card e outro faz a entrada em cascata: 1º, 2º, 3º. */
           const tl = gsap.timeline({
             scrollTrigger: {
@@ -139,8 +172,8 @@ export default function Carrossel() {
             },
           });
 
-          cards.forEach((card, i) => revelar(tl, card, i, i * 0.4));
-          tl.to({}, { duration: 0.3 }); // respiro no fim do percurso
+          cards.forEach((card, i) => revelar(tl, card, i, i * 0.28));
+          tl.to({}, { duration: 0.24 }); // respiro no fim do percurso
 
           /* (B) PARALLAX — enquanto a seção inteira passa pela tela, cada
              card flutua em velocidade diferente. É o que dá profundidade e
@@ -183,17 +216,16 @@ export default function Carrossel() {
       try {
         gsap.set(cards, { clearProps: 'all' });
         gsap.set(wraps, { clearProps: 'all' });
-      } catch (_) {
+      } catch {
         /* ignora */
       }
     }
 
-    // As imagens são remotas: quando terminam de carregar, a altura muda,
-    // então recalculamos os pontos de start/end.
+    // Recalcula os pontos depois que todos os recursos terminam de carregar.
     const onLoad = () => {
       try {
         ScrollTrigger.refresh();
-      } catch (_) {
+      } catch {
         /* ignora */
       }
     };
@@ -203,7 +235,7 @@ export default function Carrossel() {
       window.removeEventListener('load', onLoad);
       try {
         if (ctx) ctx.revert();
-      } catch (_) {
+      } catch {
         /* ignora */
       }
     };
@@ -212,8 +244,25 @@ export default function Carrossel() {
   const alternar = (index) => setAberto((atual) => (atual === index ? null : index));
 
   return (
-    <section className="carrossel-secao" ref={sectionRef}>
+    <section
+      className="carrossel-secao"
+      id="processos"
+      aria-labelledby="processos-titulo"
+      ref={sectionRef}
+    >
       <div className="carrossel-inner">
+        <header className="carrossel-cabecalho secao-topo -escuro">
+          <p className="secao-slug">
+            <span className="carrossel-barras" aria-hidden="true">//</span> Nossos processos
+          </p>
+          <h2 className="secao-titulo" id="processos-titulo">
+            <span className="carrossel-titulo-linha">
+              <span className="carrossel-titulo-como">Como</span> TRABALHAMOS
+            </span>
+          </h2>
+          <div className="secao-sep" />
+        </header>
+
         <div className="carrossel-grid">
           {CARDS.map((card, index) => (
             // .carrossel-card-wrap existe só para o parallax: o GSAP mexe
@@ -238,8 +287,17 @@ export default function Carrossel() {
                   <img
                     src={card.image}
                     alt={card.title}
-                    className="carrossel-card-imagem"
+                    className="carrossel-card-imagem carrossel-card-imagem-capa"
                     loading="lazy"
+                    decoding="async"
+                  />
+                  <img
+                    src={card.image}
+                    alt=""
+                    aria-hidden="true"
+                    className="carrossel-card-imagem carrossel-card-imagem-completa"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="carrossel-card-overlay" />
@@ -253,11 +311,11 @@ export default function Carrossel() {
                     <div className="carrossel-caixa-clip">
                       <div className="carrossel-caixa-box">
                         <p className="carrossel-caixa-texto">{card.text}</p>
-                        <span className="carrossel-caixa-link">Saiba mais →</span>
                       </div>
                     </div>
                   </div>
                 </div>
+
               </article>
             </div>
           ))}

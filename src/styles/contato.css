@@ -188,7 +188,7 @@ body section.contato-secao {
 .contato-canal-valor {
   font-size: 0.88rem;
   font-weight: 500;
-  color: var(--azul);
+  color: rgba(255, 255, 255, 0.9);
   word-break: break-word;
 }
 

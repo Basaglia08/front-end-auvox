@@ -154,7 +154,7 @@ export default function CarrosselNav() {
   ];
 
   return (
-    <div className="slide-scroll-unificado">
+    <div className="slide-scroll-unificado" id="solucoes">
       {/* ── Slide 01–04 ── */}
       <main className="carrossel-nav" ref={mainRef}>
         <div className="scroll-indicator">

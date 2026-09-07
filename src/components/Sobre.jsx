@@ -91,7 +91,7 @@ function Sobre() {
                 /* 2. HERO — a foto abre em círculo e o texto desliza */
                 const hero = raiz.querySelector('.sobre-hero');
                 const molduraFoto = raiz.querySelector('.sobre-hero-img-wrap');
-                const foto = raiz.querySelector('.sobre-hero-img');
+                const foto = raiz.querySelector('.sobre-hero-img-frame');
                 const textos = Array.from(
                     raiz.querySelectorAll('.sobre-hero-content > *:not(.sobre-tags)')
                 );
@@ -243,8 +243,9 @@ function Sobre() {
                 {/* Hero Section */}
                 <div className="sobre-hero">
                     <div className="sobre-hero-img-wrap">
-                        <img src={equipeImg} loading="lazy" alt="Equipe Auvox" className="sobre-hero-img" />
-                        <span className="sobre-hero-ring"></span>
+                        <div className="sobre-hero-img-frame">
+                            <img src={equipeImg} loading="lazy" alt="Equipe Auvox" className="sobre-hero-img" />
+                        </div>
                         <span className="sobre-hero-dot"></span>
                     </div>
 
