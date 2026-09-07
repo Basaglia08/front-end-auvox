@@ -1,7 +1,7 @@
 import "../styles/footer.css";
-import logoImg from "../assets/logo-auvox.png";
-import logoRazorbyte from "../assets/razorbyte-logo.png";
-import logoSkillDev from "../assets/skilldev-logo.png";
+import logoImg from "../assets/logo-auvox.webp";
+import logoRazorbyte from "../assets/razorbyte-logo.webp";
+import logoSkillDev from "../assets/skilldev-logo.webp";
 
 function Footer() {
   return (

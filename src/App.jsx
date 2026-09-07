@@ -9,8 +9,6 @@ import "./styles/app.css";
 import Home from "./components/Home.jsx";
 
 /* Componentes abaixo da dobra — carregam só quando necessário */
-const Main = lazy(() => import("./components/Main.jsx"));
-const Baixe = lazy(() => import("./components/Baixe.jsx"));
 const Sobre = lazy(() => import("./components/Sobre.jsx"));
 const Footer = lazy(() => import("./components/Footer.jsx"));
 const CarrosselNav = lazy(() => import("./components/CarrosselNav.jsx"));
@@ -119,10 +117,6 @@ function App() {
 
       <Suspense fallback={<Skeleton />}>
         <CarrosselNav />
-        {/* <Main /> */}
-
-        {/* <Baixe /> */}
-
         <ProjetoAuvox />
 
         <Sobre />

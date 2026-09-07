@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/carrosselNav.css';
 import '../styles/YouCanScroll.css';
 import Carrossel from './Carrossel.jsx';
-import logo3d from '../assets/3dauvox.png';
+import logo3d from '../assets/3dauvox.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 

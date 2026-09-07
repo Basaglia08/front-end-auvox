@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import '../styles/sobre.css';
-import equipeImg from '../assets/equipeAuvox.png';
+import equipeImg from '../assets/equipeAuvox.webp';
 import Equipe from './Equipe.jsx';
 import Contato from './Contato.jsx';
 
@@ -212,13 +212,13 @@ function Sobre() {
         }
 
         const onLoad = () => {
-            try { ScrollTrigger.refresh(); } catch (_) { /* ignora */ }
+            try { ScrollTrigger.refresh(); } catch { /* ignora */ }
         };
         window.addEventListener('load', onLoad);
 
         return () => {
             window.removeEventListener('load', onLoad);
-            try { if (ctx) ctx.revert(); } catch (_) { /* ignora */ }
+            try { if (ctx) ctx.revert(); } catch { /* ignora */ }
         };
     }, []);
 

@@ -5,16 +5,11 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/projeto.css';
 
-import mockupCelulares from '../assets/mockup-celulares.png';
+import mockupCelulares from '../assets/mockup-celulares.webp';
 
 
 
-import banner1 from '../assets/banner1.png';
-import celular from '../assets/celular.png';
-import computer from '../assets/computer.png';
-import equipeAuvox from '../assets/equipeAuvox.png';
-import minhaImagem from '../assets/logo.png';
-import baixeIntermedi from '../assets/propaganda.png';
+import baixeIntermedi from '../assets/propaganda.webp';
 
 
 gsap.registerPlugin(ScrollTrigger);

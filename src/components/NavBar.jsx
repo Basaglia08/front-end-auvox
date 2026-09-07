@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import "../styles/navBar.css";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
 
 const NAV_LINKS = [
   { href: "#inicio",   label: "Início" },

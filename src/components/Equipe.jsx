@@ -1,26 +1,26 @@
 import "../styles/equipe.css";
 import { FaLinkedinIn, FaGithub, FaInstagram } from "react-icons/fa";
 
-import ariella    from "../assets/ariella.png";
-import ariellaC   from "../assets/ariellacolor.png";
-import ana        from "../assets/ana.png";
-import anaC       from "../assets/anacolor.png";
-import beatriz    from "../assets/bia.png";
-import beatrizC   from "../assets/biacolor.png";
-import gabriel    from "../assets/gabriel.png";
-import gabrielC   from "../assets/gabrielcolor.png";
-import matheus    from "../assets/matheus.png";
-import matheusC   from "../assets/matheuscolor.png";
-import alexandreR from "../assets/alexandre-rafael.png";
-import alexandreRC from "../assets/alex1color.png";
-import alexandreS from "../assets/alexandre-santiago.png";
-import alexandreSC from "../assets/alex2color.png";
-import miguel     from "../assets/miguel.png";
-import miguelC    from "../assets/miguelcolor.png";
-import eduardo    from "../assets/eduardo.png";
-import eduardoC   from "../assets/eduardocolor.png";
-import fabricio   from "../assets/fabricio.png";
-import fabricioC  from "../assets/fabascolor.png";
+import ariella    from "../assets/ariella.webp";
+import ariellaC   from "../assets/ariellacolor.webp";
+import ana        from "../assets/ana.webp";
+import anaC       from "../assets/anacolor.webp";
+import beatriz    from "../assets/bia.webp";
+import beatrizC   from "../assets/biacolor.webp";
+import gabriel    from "../assets/gabriel.webp";
+import gabrielC   from "../assets/gabrielcolor.webp";
+import matheus    from "../assets/matheus.webp";
+import matheusC   from "../assets/matheuscolor.webp";
+import alexandreR from "../assets/alexandre-rafael.webp";
+import alexandreRC from "../assets/alex1color.webp";
+import alexandreS from "../assets/alexandre-santiago.webp";
+import alexandreSC from "../assets/alex2color.webp";
+import miguel     from "../assets/miguel.webp";
+import miguelC    from "../assets/miguelcolor.webp";
+import eduardo    from "../assets/eduardo.webp";
+import eduardoC   from "../assets/eduardocolor.webp";
+import fabricio   from "../assets/fabricio.webp";
+import fabricioC  from "../assets/fabascolor.webp";
 
 const membros = [
   { nome: "Ariella",      cargo: "Tester",             foto: ariella,    fotoColor: ariellaC,    linkedin: "https://www.linkedin.com/in/ariella-pacheco-280119243",    github: "https://github.com/AriellaPacheco",    instagram: "https://www.instagram.com/ariellagomesz/" },

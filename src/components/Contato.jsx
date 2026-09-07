@@ -188,7 +188,7 @@ function Contato() {
     const onLoad = () => {
       try {
         ScrollTrigger.refresh();
-      } catch (_) {
+      } catch {
         /* ignora */
       }
     };
@@ -198,7 +198,7 @@ function Contato() {
       window.removeEventListener("load", onLoad);
       try {
         if (ctx) ctx.revert();
-      } catch (_) {
+      } catch {
         /* ignora */
       }
     };

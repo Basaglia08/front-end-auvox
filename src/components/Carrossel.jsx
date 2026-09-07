@@ -5,9 +5,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/carrossel.css';
 
 // 1. IMPORTAÇÃO DAS IMAGENS DA PASTA SRC/ASSETS/
-import imgPlanejamento from '../assets/planejamento.png';
-import imgPrototipacao from '../assets/prototipacao.png';
-import imgDesenvolvimento from '../assets/desenvolvimento.png';
+import imgPlanejamento from '../assets/planejamento.webp';
+import imgPrototipacao from '../assets/prototipacao.webp';
+import imgDesenvolvimento from '../assets/desenvolvimento.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
