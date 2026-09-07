@@ -10,9 +10,10 @@ gsap.registerPlugin(ScrollTrigger);
 // MÁSCARA DE TELEFONE
 const aplicarMascara = (valor) => {
   const nums = valor.replace(/\D/g, "").slice(0, 11);
-  if (nums.length <= 2)  return `(${nums}`;
-  if (nums.length <= 7)  return `(${nums.slice(0,2)}) ${nums.slice(2)}`;
-  if (nums.length <= 11) return `(${nums.slice(0,2)}) ${nums.slice(2,7)}-${nums.slice(7)}`;
+  if (nums.length <= 2) return `(${nums}`;
+  if (nums.length <= 7) return `(${nums.slice(0, 2)}) ${nums.slice(2)}`;
+  if (nums.length <= 11)
+    return `(${nums.slice(0, 2)}) ${nums.slice(2, 7)}-${nums.slice(7)}`;
   return valor;
 };
 
@@ -35,9 +36,17 @@ const MENSAGEM_MAX = 2000;
    Misturar `bx-` (contorno) com `bxs-` (preenchido) é o que deixa um
    conjunto sem unidade — assim os três têm o mesmo peso visual. */
 const CANAIS = [
-  { icone: "bxs-envelope", rotulo: "Mande um e-mail",     valor: "company.auvox@gmail.com" },
-  { icone: "bxs-phone",    rotulo: "Fale por telefone",   valor: "(11) 1234-5678" },
-  { icone: "bxs-map",      rotulo: "Venha tomar um café", valor: "Av. Paulista, 1000 — São Paulo, SP" },
+  {
+    icone: "bxs-envelope",
+    rotulo: "Mande um e-mail",
+    valor: "company.auvox@gmail.com",
+  },
+  { icone: "bxs-phone", rotulo: "Fale por telefone", valor: "(11) 1234-5678" },
+  {
+    icone: "bxs-map",
+    rotulo: "Venha tomar um café",
+    valor: "Av. Paulista, 1000 — São Paulo, SP",
+  },
 ];
 
 function Contato() {
@@ -94,7 +103,7 @@ function Contato() {
                 scrub: 0.8,
                 invalidateOnRefresh: true,
               },
-            }
+            },
           );
         }
 
@@ -116,18 +125,42 @@ function Contato() {
           });
 
           if (lateral) {
-            tl.fromTo(lateral, { opacity: 0, x: -40 },
-              { opacity: 1, x: 0, duration: 1, ease: "power3.out" }, 0);
+            tl.fromTo(
+              lateral,
+              { opacity: 0, x: -40 },
+              { opacity: 1, x: 0, duration: 1, ease: "power3.out" },
+              0,
+            );
           }
 
           if (canais.length) {
-            tl.fromTo(canais, { opacity: 0, y: 26 },
-              { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", stagger: 0.1 }, 0.3);
+            tl.fromTo(
+              canais,
+              { opacity: 0, y: 26 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                ease: "power2.out",
+                stagger: 0.1,
+              },
+              0.3,
+            );
           }
 
           if (campos.length) {
-            tl.fromTo(campos, { opacity: 0, y: 34 },
-              { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.09 }, 0.15);
+            tl.fromTo(
+              campos,
+              { opacity: 0, y: 34 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out",
+                stagger: 0.09,
+              },
+              0.15,
+            );
           }
         }
 
@@ -138,13 +171,21 @@ function Contato() {
     }
 
     const onLoad = () => {
-      try { ScrollTrigger.refresh(); } catch (_) { /* ignora */ }
+      try {
+        ScrollTrigger.refresh();
+      } catch (_) {
+        /* ignora */
+      }
     };
     window.addEventListener("load", onLoad);
 
     return () => {
       window.removeEventListener("load", onLoad);
-      try { if (ctx) ctx.revert(); } catch (_) { /* ignora */ }
+      try {
+        if (ctx) ctx.revert();
+      } catch (_) {
+        /* ignora */
+      }
     };
   }, []);
 
@@ -197,11 +238,14 @@ function Contato() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/contato", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://back-end-auvox.onrender.com/contato",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        },
+      );
 
       const data = await response.json();
 
@@ -212,7 +256,6 @@ function Contato() {
       } else {
         showToast("erro", "Erro ao enviar mensagem. Tente novamente.");
       }
-
     } catch (error) {
       console.log(error);
       showToast("erro", "Não foi possível conectar ao servidor.");
@@ -223,35 +266,39 @@ function Contato() {
 
   const mensagemLen = formData.mensagem.length;
   const contadorClasse =
-    mensagemLen > MENSAGEM_MAX ? "contador-erro" :
-    mensagemLen >= MENSAGEM_MIN ? "contador-ok" :
-    "contador-neutro";
+    mensagemLen > MENSAGEM_MAX
+      ? "contador-erro"
+      : mensagemLen >= MENSAGEM_MIN
+        ? "contador-ok"
+        : "contador-neutro";
 
   // Toast renderizado direto no body via Portal — escapa qualquer stacking context
-  const toastPortal = toast && createPortal(
-    <div className={`toast toast-${toast.tipo}`}>
-      <div className="toast-icone">
-        {toast.tipo === "sucesso"
-          ? <i className="bx bx-check"></i>
-          : <i className="bx bx-x"></i>
-        }
-      </div>
-      <div className="toast-texto">
-        <span className="toast-titulo">
-          {toast.tipo === "sucesso" ? "Enviado!" : "Ops, erro!"}
-        </span>
-        <span className="toast-msg">{toast.mensagem}</span>
-      </div>
-      <button className="toast-fechar" onClick={() => setToast(null)}>
-        <i className="bx bx-x"></i>
-      </button>
-    </div>,
-    document.body
-  );
+  const toastPortal =
+    toast &&
+    createPortal(
+      <div className={`toast toast-${toast.tipo}`}>
+        <div className="toast-icone">
+          {toast.tipo === "sucesso" ? (
+            <i className="bx bx-check"></i>
+          ) : (
+            <i className="bx bx-x"></i>
+          )}
+        </div>
+        <div className="toast-texto">
+          <span className="toast-titulo">
+            {toast.tipo === "sucesso" ? "Enviado!" : "Ops, erro!"}
+          </span>
+          <span className="toast-msg">{toast.mensagem}</span>
+        </div>
+        <button className="toast-fechar" onClick={() => setToast(null)}>
+          <i className="bx bx-x"></i>
+        </button>
+      </div>,
+      document.body,
+    );
 
   return (
     <section className="contato-secao" id="contato" ref={secaoRef}>
-
       {/* TOAST — renderizado no body via Portal */}
       {toastPortal}
 
@@ -279,14 +326,13 @@ function Contato() {
 
       {/* PAINEL */}
       <div className="contato-painel">
-
         {/* LATERAL */}
         <aside className="contato-lateral">
           <h3 className="contato-lateral-titulo">Não seja tímido</h3>
           <p className="contato-lateral-texto">
-            Fique à vontade para chamar a gente. Estamos sempre abertos a projetos
-            novos, ideias fora da caixa e à chance de fazer parte da sua visão —
-            do primeiro rascunho até o site no ar.
+            Fique à vontade para chamar a gente. Estamos sempre abertos a
+            projetos novos, ideias fora da caixa e à chance de fazer parte da
+            sua visão — do primeiro rascunho até o site no ar.
           </p>
 
           <ul className="contato-canais">
@@ -308,7 +354,6 @@ function Contato() {
 
         {/* FORM */}
         <form className="contato-form" onSubmit={handleSubmit} noValidate>
-
           <div className="contato-linha">
             <div className="contato-campo">
               <label htmlFor="nome">Nome</label>
@@ -347,7 +392,9 @@ function Contato() {
               onChange={handleChange}
               className={erros.telefone ? "input-erro" : ""}
             />
-            {erros.telefone && <span className="campo-erro">{erros.telefone}</span>}
+            {erros.telefone && (
+              <span className="campo-erro">{erros.telefone}</span>
+            )}
           </div>
 
           <div className="contato-campo">
@@ -356,8 +403,7 @@ function Contato() {
               <span className={`contador-chars ${contadorClasse}`}>
                 {mensagemLen < MENSAGEM_MIN
                   ? `Mínimo ${MENSAGEM_MIN - mensagemLen} caracteres restantes`
-                  : `${mensagemLen} / ${MENSAGEM_MAX}`
-                }
+                  : `${mensagemLen} / ${MENSAGEM_MAX}`}
               </span>
             </div>
             <textarea
@@ -369,18 +415,17 @@ function Contato() {
               className={erros.mensagem ? "input-erro" : ""}
               maxLength={MENSAGEM_MAX}
             ></textarea>
-            {erros.mensagem && <span className="campo-erro">{erros.mensagem}</span>}
+            {erros.mensagem && (
+              <span className="campo-erro">{erros.mensagem}</span>
+            )}
           </div>
 
           <button type="submit" className="btn-enviar" disabled={loading}>
             <span>{loading ? "Enviando..." : "Enviar mensagem"}</span>
             {!loading && <i className="bx bx-right-arrow-alt"></i>}
           </button>
-
         </form>
-
       </div>
-
     </section>
   );
 }
