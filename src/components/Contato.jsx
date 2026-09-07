@@ -7,6 +7,13 @@ import "../styles/contato.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// URL do back-end (pode ser sobrescrita por VITE_API_URL no .env do Vite)
+const API_URL =
+  import.meta.env.VITE_API_URL || "https://back-end-auvox.onrender.com";
+
+// Tempo máximo esperando o back-end antes de mostrar erro (ms)
+const TIMEOUT_MS = 30_000;
+
 // MÁSCARA DE TELEFONE
 const aplicarMascara = (valor) => {
   const nums = valor.replace(/\D/g, "").slice(0, 11);
@@ -62,6 +69,14 @@ function Contato() {
   const [erros, setErros] = useState({});
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
+
+  // "Acorda" o servidor no Render assim que a página carrega: o plano free
+  // hiberna após ~15 min sem uso e leva ~30-60 s para subir. Fazendo o ping
+  // aqui, quando o usuário terminar de preencher o formulário o back-end
+  // já está de pé e o envio leva poucos segundos.
+  useEffect(() => {
+    fetch(`${API_URL}/health`, { method: "GET" }).catch(() => {});
+  }, []);
 
   const showToast = (tipo, mensagem) => {
     setToast({ tipo, mensagem });
@@ -237,29 +252,40 @@ function Contato() {
     if (!validar()) return;
     setLoading(true);
 
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
     try {
-      const response = await fetch(
-        "https://back-end-auvox.onrender.com/contato",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        },
-      );
+      const response = await fetch(`${API_URL}/contato`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+        signal: controller.signal,
+      });
 
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
 
-      if (data.sucesso) {
+      if (response.ok && data.sucesso) {
         showToast("sucesso", "Mensagem enviada com sucesso!");
         setFormData({ nome: "", email: "", telefone: "", mensagem: "" });
         setErros({});
+      } else if (response.status === 422 && Array.isArray(data.erros)) {
+        // Validação do back-end: mostra o primeiro erro real
+        showToast("erro", data.erros[0]);
+      } else if (response.status === 429) {
+        showToast("erro", data.erro || "Muitas tentativas. Aguarde alguns minutos.");
       } else {
-        showToast("erro", "Erro ao enviar mensagem. Tente novamente.");
+        showToast("erro", data.erro || "Erro ao enviar mensagem. Tente novamente.");
       }
     } catch (error) {
-      console.log(error);
-      showToast("erro", "Não foi possível conectar ao servidor.");
+      console.error(error);
+      if (error.name === "AbortError") {
+        showToast("erro", "O servidor demorou para responder. Tente novamente.");
+      } else {
+        showToast("erro", "Não foi possível conectar ao servidor.");
+      }
     } finally {
+      clearTimeout(timer);
       setLoading(false);
     }
   };
