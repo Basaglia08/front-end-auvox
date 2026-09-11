@@ -136,7 +136,7 @@ body .footer-container {
   /* Mesmo recuo lateral do Contato. Os cantos do conjunto só fecham na
      base do Footer; a onda continua sendo a transição entre os fundos. */
   width: auto;
-  margin: 0 var(--quadro-espaco, 18px) var(--quadro-espaco, 18px);
+  margin: -1px var(--quadro-espaco, 18px) var(--quadro-espaco, 18px);
   border-radius: 0 0 var(--quadro-raio, 32px) var(--quadro-raio, 32px);
   box-shadow: none;
   background: #142740;

@@ -155,27 +155,33 @@ body .projeto-secao {
 /* ── Rodapé do item: número · título · etiqueta ── */
 .projeto-rodape {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: baseline;
-  gap: 18px;
-  margin-top: 26px;
-  padding-top: 16px;
-  border-top: 1px solid var(--projeto-linha);
+  grid-template-columns: 1fr;
+  grid-template-areas: 'numero' 'info';
+  align-items: center;
+  gap: 20px 16px;
+  margin-top: 34px;
+  padding: 0 2px;
   will-change: transform, opacity;
 }
 
 .projeto-numero {
-  font-size: 0.7rem;
+  grid-area: numero;
+  font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 1px;
-  color: var(--projeto-suave);
+  color: #a6afba;
+}
+
+.projeto-info {
+  grid-area: info;
+  min-width: 0;
 }
 
 /* Poppins, como nos títulos dos outros cards do site */
 .projeto-nome {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
   font-weight: 800;
   color: var(--projeto-fundo);
   letter-spacing: -1px;
@@ -184,18 +190,20 @@ body .projeto-secao {
 
 .projeto-legenda {
   margin: 10px 0 0;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   font-weight: 500;
   letter-spacing: 1.4px;
-  color: var(--projeto-fundo);
+  color: #a6afba;
 }
 
-.projeto-etiqueta {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 1.4px;
-  color: var(--projeto-dourado);
-  white-space: nowrap;
+.projeto-resumo {
+  max-width: 440px;
+  margin: 16px 0 0;
+  color: #e1e5eb;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  font-weight: 400;
+  text-wrap: pretty;
 }
 
 /* ── Responsivo ── */
@@ -216,13 +224,7 @@ body .projeto-secao {
   }
 
   .projeto-rodape {
-    grid-template-columns: auto 1fr;
-    gap: 12px;
-  }
-
-  /* a etiqueta desce para a linha de baixo em vez de espremer o título */
-  .projeto-etiqueta {
-    grid-column: 1 / -1;
+    gap: 18px 10px;
   }
 }
 
@@ -532,6 +534,64 @@ body .projeto-secao {
   font-size: 0.85rem;
   line-height: 1.65;
   color: var(--projeto-suave);
+}
+
+/* ── Tecnologias e ferramentas ── */
+.projeto-modal-tecnologias {
+  flex: none;
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--projeto-linha);
+}
+
+.projeto-modal-tecnologias h4 {
+  margin: 0 0 12px;
+  color: var(--projeto-suave);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.projeto-tecnologia-grupo + .projeto-tecnologia-grupo {
+  margin-top: 16px;
+}
+
+.projeto-tecnologia-grupo h5 {
+  margin: 0 0 8px;
+  color: var(--projeto-suave);
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.projeto-modal-tecnologias ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.projeto-modal-tecnologias li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px 12px;
+  border: 1px solid var(--projeto-linha);
+  border-radius: 10px;
+  background: #f8f9fb;
+  color: var(--projeto-azul);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.projeto-modal-tecnologias li svg {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
 }
 
 /* ── Ficha técnica ── */

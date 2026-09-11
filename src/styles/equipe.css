@@ -220,6 +220,8 @@
 
 /* ── INFO (NOME + LINHA + REDES) ── */
 .container .card .content {
+  /* Ajuste local da margem herdada de .content, preservando respiro no hover. */
+  margin-bottom: 88px;
   padding: 14px 2px 0;
   background: transparent;
   border-radius: 0;

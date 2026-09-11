@@ -104,6 +104,76 @@ body section.contato-secao {
   box-shadow: 0 20px 50px rgba(20, 39, 64, 0.06);
 }
 
+/* Localização: chamada centralizada e mapa alinhado ao painel. */
+.contato-localizacao-header {
+  width: 100%;
+  max-width: 1150px;
+  container-type: inline-size;
+  margin-top: clamp(48px, 6vw, 80px);
+  text-align: center;
+}
+
+.contato-localizacao-selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 20px;
+  padding: 9px 16px;
+  border: 1px solid rgba(212, 155, 40, 0.2);
+  border-radius: 999px;
+  background: #fffaf0;
+  color: var(--azul);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.contato-localizacao-selo i {
+  color: var(--dourado);
+  font-size: 1rem;
+}
+
+.contato-localizacao-titulo {
+  margin: 0;
+  color: var(--azul);
+  font-size: min(2.4rem, 3.7cqi);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.contato-localizacao-titulo span {
+  display: block;
+  color: var(--dourado);
+  white-space: nowrap;
+}
+
+.contato-localizacao-texto {
+  max-width: 550px;
+  margin: 18px auto 0;
+  color: var(--texto-suave);
+  font-size: 0.88rem;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.contato-mapa {
+  width: 100%;
+  max-width: 1150px;
+  margin-top: clamp(28px, 3vw, 40px);
+  border: 1px solid var(--borda);
+  border-radius: 15px;
+  overflow: hidden;
+  background: #eef0f2;
+}
+
+.contato-mapa iframe {
+  display: block;
+  width: 100%;
+  height: clamp(320px, 42vw, 480px);
+  border: 0;
+}
+
 /* ── Lateral ── */
 .contato-lateral {
   padding: 52px 44px;

@@ -52,7 +52,7 @@ const CANAIS = [
   {
     icone: "bxs-map",
     rotulo: "Venha tomar um café",
-    valor: "Av. Paulista, 1000 — São Paulo, SP",
+    valor: "ETEC de Guaianazes — Rua Feliciano de Mendonça, 290 — Guaianases, São Paulo, SP",
   },
 ];
 
@@ -451,6 +451,33 @@ function Contato() {
             {!loading && <i className="bx bx-right-arrow-alt"></i>}
           </button>
         </form>
+      </div>
+
+      <div className="contato-localizacao-header">
+        <p className="contato-localizacao-selo">
+          <i className="bx bxs-map" aria-hidden="true" />
+          Onde estamos
+        </p>
+        <h3 className="contato-localizacao-titulo">
+          Aqui é a nossa sede.
+          <span>Seu próximo projeto começa com uma conversa.</span>
+        </h3>
+        <p className="contato-localizacao-texto">
+          Venha conhecer a Auvox, compartilhar suas ideias e descobrir como
+          podemos transformar seu projeto em uma solução digital.
+        </p>
+      </div>
+
+      <div className="contato-mapa">
+        <iframe
+          title="Localização da ETEC de Guaianazes no Google Maps"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.431334559614!2d-46.3996062!3d-23.5529472!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce65086cafaf55%3A0xf7da96815e7611da!2sEscola%20T%C3%A9cnica%20Estadual%20de%20Guaianazes!5e0!3m2!1spt-BR!2sbr!4v1789078972497!5m2!1spt-BR!2sbr"
+          width="1150"
+          height="480"
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="strict-origin-when-cross-origin"
+        />
       </div>
     </section>
   );

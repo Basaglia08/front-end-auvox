@@ -1,205 +1,184 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import InteractiveGlobe from "./InteractiveGlobe";
 import "../styles/home.css";
 
+const TITLE_LINE_ONE = "Onde a inovação";
+const TITLE_LINE_TWO = "tem valor de ";
+const TITLE_GOLD_WORD = "OURO.";
+
 function Home() {
-  const icone = "<";
-  const icone2 = "/>";
   const canvasRef = useRef(null);
+  const reducedMotionInitial = typeof window !== "undefined"
+    && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const [typedTitleLineOne, setTypedTitleLineOne] = useState(
+    reducedMotionInitial ? TITLE_LINE_ONE : "",
+  );
+  const [typedTitleLineTwo, setTypedTitleLineTwo] = useState(
+    reducedMotionInitial ? TITLE_LINE_TWO : "",
+  );
+  const [typedTitleWord, setTypedTitleWord] = useState(
+    reducedMotionInitial ? TITLE_GOLD_WORD : "",
+  );
 
-  // Efeito de digitação no título
-  const fullTextLine1 = "Onde a inovação";
-  const fullTextLine2 = " tem valor de ";
-  const fullTextWord = "OURO";
-
-  const [textLine1, setTextLine1] = useState("");
-  const [textLine2, setTextLine2] = useState("");
-  const [textWord, setTextWord] = useState("");
-
-  // 1. Otimização do efeito de digitação usando setTimeout encadeado
   useEffect(() => {
-    let timeoutId;
-    let currentStep = 0;
-    let index = 0;
+    if (reducedMotionInitial) return undefined;
 
-    const type = () => {
-      if (currentStep === 0) {
-        if (index <= fullTextLine1.length) {
-          setTextLine1(fullTextLine1.slice(0, index));
-          index++;
-          timeoutId = setTimeout(type, 50);
+    let phase = 0;
+    let characterIndex = 0;
+    let timeoutId;
+
+    const typeTitle = () => {
+      if (phase === 0) {
+        if (characterIndex <= TITLE_LINE_ONE.length) {
+          setTypedTitleLineOne(TITLE_LINE_ONE.slice(0, characterIndex));
+          characterIndex += 1;
+          timeoutId = setTimeout(typeTitle, 52);
         } else {
-          currentStep = 1;
-          index = 0;
-          timeoutId = setTimeout(type, 100);
+          phase = 1;
+          characterIndex = 0;
+          timeoutId = setTimeout(typeTitle, 120);
         }
-      } else if (currentStep === 1) {
-        if (index <= fullTextLine2.length) {
-          setTextLine2(fullTextLine2.slice(0, index));
-          index++;
-          timeoutId = setTimeout(type, 50);
+      } else if (phase === 1) {
+        if (characterIndex <= TITLE_LINE_TWO.length) {
+          setTypedTitleLineTwo(TITLE_LINE_TWO.slice(0, characterIndex));
+          characterIndex += 1;
+          timeoutId = setTimeout(typeTitle, 52);
         } else {
-          currentStep = 2;
-          index = 0;
-          timeoutId = setTimeout(type, 100);
+          phase = 2;
+          characterIndex = 0;
+          timeoutId = setTimeout(typeTitle, 120);
         }
-      } else if (currentStep === 2) {
-        if (index <= fullTextWord.length) {
-          setTextWord(fullTextWord.slice(0, index));
-          index++;
-          timeoutId = setTimeout(type, 80);
-        }
+      } else if (characterIndex <= TITLE_GOLD_WORD.length) {
+        setTypedTitleWord(TITLE_GOLD_WORD.slice(0, characterIndex));
+        characterIndex += 1;
+        timeoutId = setTimeout(typeTitle, 80);
       }
     };
 
-    type();
-
+    typeTitle();
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [reducedMotionInitial]);
 
-  // 2. Animação de fundo no Canvas mais otimizada
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return undefined;
 
-    const ctx = canvas.getContext("2d");
-    let animationFrameId;
-
-    /* O canvas agora mede o PRÓPRIO quadro (elemento pai), não a janela.
-       Como a seção virou um card com margem, usar window.innerWidth deixaria
-       o desenho esticado/cortado em relação à área visível. */
-    const medir = () => {
-      const pai = canvas.parentElement;
-      return {
-        largura: pai ? pai.clientWidth : window.innerWidth,
-        altura: pai ? pai.clientHeight : window.innerHeight,
-      };
-    };
-
-    const resizeCanvas = () => {
-      const { largura, altura } = medir();
-      canvas.width = largura;
-      canvas.height = altura;
-      criarWriters();
-    };
-
+    const context = canvas.getContext("2d");
     const codeBlocks = [
-      ["function buildFuture() {", "  const tech = 'innovation';", "  return <Success />;", "}"],
-      ["import { Gold } from 'gold-tech';", "await solution.deploy();", "console.log('Value created');"],
-      ["const innovation = true;", "if (innovation) {", "  scaleBusiness();", "}"],
-      ["// Onde a inovação tem valor", "npm run build --production", "git commit -m 'feat: gold'"],
-      ["class Innovation {", "  constructor() {", "    this.value = 'OURO';", "  }", "}"]
+      ["const product = await build();", "product.ship();"],
+      ["import { future } from '@auvox';", "future.create({ impact: true });"],
+      ["interface Experience {", "  clarity: boolean;", "}"],
+      ["git commit -m 'launch'", "npm run scale"],
+      ["function solve(problem) {", "  return aBetterWay(problem);", "}"],
     ];
+    let columns = [];
+    let animationFrame;
+    let lastFrame = 0;
 
-    const fontSize = 13;
-    const blockWidth = 320;
-    let writers = [];
+    const createColumns = () => {
+      const width = canvas.clientWidth || window.innerWidth;
+      const height = canvas.clientHeight || window.innerHeight;
+      const density = window.innerWidth < 700 ? 250 : 300;
 
-    function criarWriters() {
-      const colunas = Math.floor(canvas.width / blockWidth) + 1;
-      writers = Array.from({ length: colunas }, (_, i) => ({
-        x: i * blockWidth + 20,
-        y: Math.random() * (canvas.height / 2),
-        blockIndex: Math.floor(Math.random() * codeBlocks.length),
-        lineIndex: 0,
-        charIndex: 0
+      canvas.width = width;
+      canvas.height = height;
+      columns = Array.from({ length: Math.ceil(width / density) + 1 }, (_, index) => ({
+        x: index * density + 20,
+        y: Math.random() * height,
+        block: Math.floor(Math.random() * codeBlocks.length),
+        line: 0,
+        character: 0,
       }));
-    }
+    };
 
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    const draw = (timestamp) => {
+      animationFrame = requestAnimationFrame(draw);
+      if (timestamp - lastFrame < 52) return;
+      lastFrame = timestamp;
 
-    let lastTime = 0;
-    const interval = 40; // Intervalo fixo para controle de FPS
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.font = '12px "Courier New", monospace';
+      context.fillStyle = "rgba(242, 181, 68, 0.46)";
 
-    const draw = (currentTime) => {
-      animationFrameId = requestAnimationFrame(draw);
+      columns.forEach((column) => {
+        const block = codeBlocks[column.block];
+        const currentLine = block[column.line] || "";
 
-      const delta = currentTime - lastTime;
-
-      if (delta < interval) return;
-      lastTime = currentTime - (delta % interval);
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.font = `${fontSize}px "Courier New", monospace`;
-
-      writers.forEach((w) => {
-        const currentBlock = codeBlocks[w.blockIndex];
-
-        // Atualiza a escrita de caracteres
-        if (w.lineIndex < currentBlock.length) {
-          const currentLine = currentBlock[w.lineIndex];
-          if (w.charIndex < currentLine.length) {
-            w.charIndex++;
-          } else {
-            w.lineIndex++;
-            w.charIndex = 0;
-          }
+        if (column.character < currentLine.length) {
+          column.character += 1;
+        } else if (column.line < block.length - 1) {
+          column.line += 1;
+          column.character = 0;
         } else {
-          // Reinicia posição da coluna
-          w.y += 120;
-          if (w.y > canvas.height) {
-            w.y = -50;
+          column.y += 112;
+          if (column.y > canvas.height + 80) column.y = -80;
+          column.block = Math.floor(Math.random() * codeBlocks.length);
+          column.line = 0;
+          column.character = 0;
+        }
+
+        block.forEach((line, lineIndex) => {
+          if (lineIndex < column.line) {
+            context.fillText(line, column.x, column.y + lineIndex * 18);
           }
-          w.blockIndex = Math.floor(Math.random() * codeBlocks.length);
-          w.lineIndex = 0;
-          w.charIndex = 0;
-        }
+        });
 
-        // Renderização do código
-        ctx.fillStyle = "#f2b544";
-
-        // Linhas completas
-        for (let l = 0; l < w.lineIndex; l++) {
-          ctx.fillText(currentBlock[l], w.x, w.y + l * 20);
-        }
-
-        // Linha atual em digitação
-        if (w.lineIndex < currentBlock.length) {
-          const activeLine = currentBlock[w.lineIndex].substring(0, w.charIndex);
-          ctx.fillText(activeLine + "_", w.x, w.y + w.lineIndex * 20);
+        if (column.line < block.length) {
+          context.fillText(
+            `${currentLine.slice(0, column.character)}_`,
+            column.x,
+            column.y + column.line * 18,
+          );
         }
       });
     };
 
-    animationFrameId = requestAnimationFrame(draw);
+    createColumns();
+    window.addEventListener("resize", createColumns);
+    animationFrame = requestAnimationFrame(draw);
 
     return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", createColumns);
+      cancelAnimationFrame(animationFrame);
     };
   }, []);
 
   return (
-    <section id="inicio" className="home-quadro" style={{ paddingTop: "120px" }}>
-      <canvas ref={canvasRef} className="code-rain-canvas" />
+    <section id="inicio" className="home-quadro">
+      <canvas ref={canvasRef} className="code-rain-canvas" aria-hidden="true" />
+      <div className="home-grid" aria-hidden="true" />
+      <div className="home-glow home-glow-one" aria-hidden="true" />
+      <div className="home-glow home-glow-two" aria-hidden="true" />
 
-      <div className="wave">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      <div className="content">
-        <h2>
-          <span className="title-slashes">
-            {icone}
-            {icone2}
-          </span>
-          <div className="title-text code-font">
-            {textLine1}
+      <div className="home-layout">
+        <div className="home-copy">
+          <h1>
+            {typedTitleLineOne}
             <br />
-            {textLine2}
-            <span className="gold-text">{textWord}</span>
-            <span className="cursor-blink">|</span>
-          </div>
-        </h2>
+            <span>
+              {typedTitleLineTwo}
+              <em>{typedTitleWord}</em>
+              <span className="title-caret" aria-hidden="true">|</span>
+            </span>
+          </h1>
 
-        <div className="container-btn">
-          <a className="button" href="#solucoes">
-            <span className="button-content">Conheça nossas soluções</span>
-          </a>
+          <p className="hero-description">
+            Criamos experiências digitais, plataformas e sistemas que transformam
+            ideias complexas em soluções simples de usar e prontas para crescer.
+          </p>
+
+          <div className="hero-actions">
+            <a className="hero-primary" href="#solucoes">
+              <span>Conheça nossas soluções</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="home-visual" aria-label="Globo terrestre interativo Auvox">
+          <InteractiveGlobe />
         </div>
       </div>
+
     </section>
   );
 }

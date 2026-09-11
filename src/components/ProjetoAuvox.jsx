@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { SiJavascript, SiTypescript, SiNodedotjs, SiReact, SiMysql, SiSqlite } from 'react-icons/si';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/projeto.css';
@@ -13,6 +14,15 @@ import baixeIntermedi from '../assets/propaganda.webp';
 
 
 gsap.registerPlugin(ScrollTrigger);
+
+const ICONES_TECNOLOGIAS = {
+  JavaScript: SiJavascript,
+  TypeScript: SiTypescript,
+  'Node.js': SiNodedotjs,
+  React: SiReact,
+  MySQL: SiMysql,
+  SQLite: SiSqlite,
+};
 
 /* ═══════════════════════════════════════════════════════════════
    PARA ADICIONAR UM PROJETO NOVO
@@ -46,6 +56,7 @@ gsap.registerPlugin(ScrollTrigger);
    simplesmente não é renderizado):
    - destaque    frase curta de impacto, em destaque colorido
    - descricao   parágrafo explicando o projeto
+   - tecnologias grupos com categoria e lista de itens usados
    - disciplina  o que foi feito (ex.: 'Front-end · UI Design')
    - equipe      quem fez
    - ano         ano de entrega
@@ -72,6 +83,11 @@ const PROJETOS = [
     descricao:
       'Plataforma completa para gestão da rede: painel administrativo, controle de chamados e integração entre farmácias, com um aplicativo pensado para o dia a dia de quem está no balcão.',
     disciplina: 'Produto digital · Front-end · UI Design',
+    tecnologias: [
+      { categoria: 'Linguagens', itens: ['JavaScript', 'TypeScript'] },
+      { categoria: 'Frameworks', itens: ['Node.js', 'React'] },
+      { categoria: 'Bancos de dados', itens: ['MySQL', 'SQLite'] },
+    ],
     equipe: 'Time Auvox',
     ano: '2026',
     link: '#contato',
@@ -404,18 +420,18 @@ export default function ProjetoAuvox() {
                   </div>
 
                   <div className="projeto-rodape">
-                    <span className="projeto-numero">{numero}</span>
+                    <span className="projeto-numero">PROJETO / {numero}</span>
 
                     <div className="projeto-info">
                       <h3 className="projeto-nome">{projeto.titulo}</h3>
                       {projeto.legenda && (
                         <p className="projeto-legenda">{projeto.legenda}</p>
                       )}
+                      {projeto.destaque && (
+                        <p className="projeto-resumo">{projeto.destaque}</p>
+                      )}
                     </div>
 
-                    {projeto.etiqueta && (
-                      <span className="projeto-etiqueta">{projeto.etiqueta}</span>
-                    )}
                   </div>
                 </button>
               </article>
@@ -540,6 +556,28 @@ export default function ProjetoAuvox() {
 
                 {ativo.descricao && (
                   <p className="projeto-modal-descricao">{ativo.descricao}</p>
+                )}
+
+                {ativo.tecnologias?.length > 0 && (
+                  <div className="projeto-modal-tecnologias">
+                    <h4>Tecnologias e ferramentas</h4>
+                    {ativo.tecnologias.map((grupo) => (
+                      <div className="projeto-tecnologia-grupo" key={grupo.categoria}>
+                        <h5>{grupo.categoria}</h5>
+                        <ul aria-label={grupo.categoria}>
+                          {grupo.itens.map((tecnologia) => {
+                            const Icone = ICONES_TECNOLOGIAS[tecnologia];
+                            return (
+                              <li key={tecnologia}>
+                                {Icone && <Icone aria-hidden="true" />}
+                                <span>{tecnologia}</span>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
                 )}
 
                 <dl className="projeto-modal-ficha">

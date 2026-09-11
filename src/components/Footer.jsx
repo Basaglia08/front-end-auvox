@@ -44,8 +44,10 @@ function Footer() {
           <h3>Links</h3>
           <ul>
             <li><a href="#inicio">Início</a></li>
+            <li><a href="#solucoes">Soluções</a></li>
+            <li><a href="#processos">Processos</a></li>
+            <li><a href="#projeto">Projeto</a></li>
             <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#solucoes">Serviços</a></li>
             <li><a href="#equipe">Equipe</a></li>
             <li><a href="#contato">Contato</a></li>
           </ul>
@@ -56,7 +58,7 @@ function Footer() {
           <h3>Contato</h3>
           <p className="contact-email">company.auvox@gmail.com</p>
           <p className="contact-phone">(11) 1234-5678</p>
-          <p className="contact-address">Av. Paulista, 1000 — São Paulo, SP</p>
+          <p className="contact-address">ETEC de Guaianazes — Rua Feliciano de Mendonça, 290 — Guaianases, São Paulo, SP</p>
         </div>
 
       </div>

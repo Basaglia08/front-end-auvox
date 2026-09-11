@@ -1,455 +1,640 @@
-/* ==========================================================================
-   1. CONFIGURAÇÕES GERAIS E ELEMENTOS BASE
-   ========================================================================== */
-   .link-btn {
-    background-color: #164480;
-    color: #fff;
-    font-size: 1.5rem;
-    padding: 10px;
-    border-radius: 10px;
+:root {
+  --quadro-espaco: 18px;
+  --quadro-raio: 30px;
+  --home-ink: #f7f8fb;
+  --home-muted: #9299a8;
+  --home-line: rgba(255, 255, 255, 0.12);
+  --home-gold: #f2b544;
+  --home-purple: #8f78ff;
+}
+
+#inicio.home-quadro {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: auto;
+  min-height: calc(100svh - (var(--quadro-espaco) * 2));
+  margin: var(--quadro-espaco);
+  padding: 122px clamp(28px, 6vw, 94px) 28px;
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: var(--quadro-raio);
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(125deg, #0b0e14 0%, #11151d 58%, #0b0e14 100%);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.42);
+  color: var(--home-ink);
+}
+
+#inicio.home-quadro::before,
+#inicio.home-quadro::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+#inicio.home-quadro::before {
+  inset: 0;
+  z-index: -2;
+  background: none;
+}
+
+#inicio.home-quadro .code-rain-canvas,
+#inicio.home-quadro .home-grid,
+#inicio.home-quadro .home-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#inicio.home-quadro .code-rain-canvas {
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  opacity: 0.78;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 74%, transparent 100%);
+}
+
+#inicio.home-quadro .home-grid {
+  z-index: -2;
+  opacity: 0.45;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at 72% 45%, #000 0%, transparent 64%);
+}
+
+#inicio.home-quadro .home-glow-one {
+  z-index: -1;
+  inset: auto auto 3% 24%;
+  width: 280px;
+  height: 120px;
+  display: none;
+}
+
+#inicio.home-quadro .home-glow-two {
+  z-index: -1;
+  inset: 18% 15% auto auto;
+  width: 220px;
+  height: 220px;
+  display: none;
+}
+
+#inicio.home-quadro .home-layout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(480px, 1.1fr);
+  align-items: center;
+  gap: clamp(38px, 6vw, 110px);
+  width: min(100%, 1320px);
+  margin: 0 auto;
+}
+
+#inicio.home-quadro .home-copy {
+  min-width: 0;
+  padding-bottom: 15px;
+}
+
+#inicio.home-quadro h1 {
+  max-width: 680px;
+  margin: 0;
+  color: var(--home-ink);
+  font-size: clamp(3.5rem, 5.3vw, 6.25rem);
+  font-weight: 500;
+  letter-spacing: -0.075em;
+  line-height: 0.98;
+}
+
+#inicio.home-quadro h1 > span {
+  display: block;
+  color: #d8dce4;
+  font-weight: 400;
+}
+
+#inicio.home-quadro h1 em {
+  color: var(--home-gold);
+  font-style: normal;
+}
+
+#inicio.home-quadro .title-caret {
+  display: inline-block;
+  margin-left: 4px;
+  color: var(--home-gold);
+  font-weight: 400;
+  animation: title-caret-blink 0.82s steps(1, end) infinite;
+}
+
+@keyframes title-caret-blink {
+  0%, 48% { opacity: 1; }
+  49%, 100% { opacity: 0; }
+}
+
+#inicio.home-quadro .hero-description {
+  max-width: 510px;
+  margin: 30px 0 0;
+  color: var(--home-muted);
+  font-size: clamp(0.88rem, 1vw, 1rem);
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+#inicio.home-quadro .hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 23px;
+  margin-top: 35px;
+}
+
+#inicio.home-quadro .hero-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: 0.3s ease;
+}
+
+#inicio.home-quadro .hero-primary {
+  gap: 0;
+  min-height: 53px;
+  padding: 0 25px;
+  border: 1px solid var(--home-gold);
+  border-radius: 999px;
+  background: var(--home-gold);
+  color: #14151a;
+}
+
+#inicio.home-quadro .hero-primary:hover {
+  background: #ffd06b;
+  border-color: #ffd06b;
+  box-shadow: 0 10px 34px rgba(242, 181, 68, 0.22);
+  transform: translateY(-2px);
+}
+
+#inicio.home-quadro .home-visual {
+  position: relative;
+  min-height: 480px;
+  isolation: isolate;
+}
+
+#inicio.home-quadro .visual-code-card {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: min(405px, 78%);
+  padding: 20px 22px 22px;
+  box-sizing: border-box;
+  border: 1px solid rgba(190, 198, 212, 0.2);
+  border-radius: 15px;
+  background: rgba(35, 38, 47, 0.9);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3), 0 0 34px rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  transform: rotate(4deg);
+  transform-origin: center;
+  animation: code-card-float 4.4s ease-in-out infinite;
+  transition: opacity 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform, box-shadow;
+}
+
+#inicio.home-quadro .visual-code-card::after {
+  position: absolute;
+  content: "";
+  inset: -8px;
+  border: 1px solid rgba(242, 181, 68, 0.7);
+  border-radius: 20px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#inicio.home-quadro .visual-code-card.is-colliding {
+  opacity: 0.56;
+  filter: brightness(1.2);
+  box-shadow: 0 0 0 1px rgba(242, 181, 68, 0.35), 0 0 44px rgba(242, 181, 68, 0.3);
+}
+
+#inicio.home-quadro .visual-code-card.is-colliding::after {
+  animation: code-collision-ripple 0.72s ease-out;
+}
+
+@keyframes code-collision-ripple {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.98);
   }
-  
-  /* ==========================================================================
-     1.1 QUADRO DA TELA INICIAL
-     A seção #inicio vira um "card": descolada das bordas da página por uma
-     margem e com os cantos arredondados. O `overflow: hidden` é o que faz a
-     onda e o canvas de código respeitarem o raio das bordas.
-     Tudo escopado em #inicio.home-quadro de propósito: as regras de `section`
-     deste arquivo não têm escopo e valem para toda <section> do site, então
-     qualquer coisa solta aqui vazaria para Sobre, Equipe, Contato etc.
-     ========================================================================== */
+  100% {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes code-card-float {
+  0%, 100% {
+    transform: rotate(4deg) translate3d(0, 0, 0);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3), 0 0 34px rgba(255, 255, 255, 0.03);
+  }
+  50% {
+    transform: rotate(4deg) translate3d(0, -8px, 0);
+    box-shadow: 0 25px 52px rgba(0, 0, 0, 0.36), 0 0 38px rgba(242, 181, 68, 0.08);
+  }
+}
+
+/* Composição dos cartões: uma pilha diagonal substitui as órbitas para que
+   os dois runtimes pareçam partes da mesma interface. */
+#inicio.home-quadro .code-card-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  isolation: isolate;
+}
+
+#inicio.home-quadro .code-stack-kicker {
+  position: absolute;
+  top: 4%;
+  right: 3%;
+  z-index: 1;
+  color: rgba(242, 181, 68, 0.62);
+  font: 600 0.56rem/1 "SFMono-Regular", Consolas, monospace;
+  letter-spacing: 0.18em;
+}
+
+#inicio.home-quadro .code-stack-connector {
+  position: absolute;
+  z-index: 1;
+  width: 112px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(242, 181, 68, 0.62), transparent);
+  opacity: 0.7;
+  transform-origin: left center;
+  animation: connector-pulse 3.8s ease-in-out infinite;
+}
+
+#inicio.home-quadro .code-stack-connector::before,
+#inicio.home-quadro .code-stack-connector::after {
+  position: absolute;
+  content: "";
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border: 1px solid rgba(242, 181, 68, 0.8);
+  border-radius: 50%;
+  background: #11151d;
+  transform: translateY(-50%);
+}
+
+#inicio.home-quadro .code-stack-connector::before { left: 0; }
+#inicio.home-quadro .code-stack-connector::after { right: 0; }
+
+#inicio.home-quadro .code-stack-connector--one {
+  top: 43%;
+  left: 42%;
+  transform: rotate(-25deg);
+}
+
+#inicio.home-quadro .code-stack-connector--two {
+  top: 45%;
+  left: 44%;
+  width: 72px;
+  opacity: 0.35;
+  transform: rotate(26deg);
+  animation-delay: -1.6s;
+}
+
+@keyframes connector-pulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.85; }
+}
+
+#inicio.home-quadro .code-stack-card {
+  position: absolute;
+  top: auto;
+  right: auto;
+  left: auto;
+  z-index: 2;
+  width: min(405px, 72%);
+  transform-origin: center;
+  will-change: transform;
+}
+
+#inicio.home-quadro .code-stack-card--typescript {
+  top: 8%;
+  left: 4%;
+  animation: stack-card-typescript 6.4s ease-in-out infinite;
+}
+
+#inicio.home-quadro .code-stack-card--javascript {
+  top: 43%;
+  right: 4%;
+  z-index: 3;
+  width: min(375px, 68%);
+  animation: stack-card-javascript 7.2s ease-in-out infinite;
+}
+
+#inicio.home-quadro .code-stack-card .visual-code-card {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  transform: none;
+  animation: code-card-content-float 4.6s ease-in-out infinite;
+}
+
+@keyframes stack-card-typescript {
+  0%, 100% { transform: rotate(-5deg) translate3d(0, 0, 0); }
+  50% { transform: rotate(-3deg) translate3d(12px, -8px, 0); }
+}
+
+@keyframes stack-card-javascript {
+  0%, 100% { transform: rotate(4deg) translate3d(0, 0, 0); }
+  46% { transform: rotate(2deg) translate3d(-34px, -32px, 0); }
+  54% { transform: rotate(2deg) translate3d(-34px, -32px, 0); }
+}
+
+@keyframes code-card-content-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -5px, 0); }
+}
+
+#inicio.home-quadro .code-window-bar {
+  display: flex;
+  align-items: center;
+  min-height: 24px;
+  gap: 10px;
+}
+
+#inicio.home-quadro .code-editor-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 7px;
+}
+
+#inicio.home-quadro .code-file-icon {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 2px;
+  background: #3178c6;
+  color: #fff;
+  font: 700 0.58rem/1 Arial, sans-serif;
+  letter-spacing: -0.04em;
+}
+
+#inicio.home-quadro .code-file-icon--typescript {
+  background: #3178c6;
+  color: #fff;
+}
+
+#inicio.home-quadro .code-file-icon--javascript {
+  background: #f7df1e;
+  color: #18181b;
+}
+
+#inicio.home-quadro .code-file-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+#inicio.home-quadro .code-file-name {
+  color: #e2e5eb;
+  font: 500 0.82rem/1 "SFMono-Regular", Consolas, monospace;
+  letter-spacing: -0.03em;
+}
+
+#inicio.home-quadro .editor-dot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+#inicio.home-quadro .editor-dot-red { background: #ff5d6c; }
+#inicio.home-quadro .editor-dot-yellow { background: #f2b544; }
+#inicio.home-quadro .editor-dot-green { background: #59d68b; }
+
+#inicio.home-quadro .code-window-bar .code-editor-dots {
+  gap: 7px;
+}
+
+#inicio.home-quadro .code-editor-dots + .code-file-icon {
+  margin-left: 2px;
+}
+
+#inicio.home-quadro .code-editor-dots,
+#inicio.home-quadro .code-file-icon,
+#inicio.home-quadro .code-file-name {
+  flex-shrink: 0;
+}
+
+#inicio.home-quadro .code-editor-lines {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 24px;
+  overflow: hidden;
+  color: #cad0db;
+  font: 500 0.75rem/1.85 "SFMono-Regular", Consolas, monospace;
+}
+
+#inicio.home-quadro .code-line {
+  display: block;
+  min-height: 1.85em;
+}
+
+#inicio.home-quadro .code-line code {
+  padding-left: 0;
+  white-space: pre;
+}
+
+#inicio.home-quadro .typing-caret {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -0.14em;
+  background: var(--home-gold);
+  animation: typing-caret-blink 0.82s steps(1, end) infinite;
+}
+
+@keyframes typing-caret-blink {
+  0%, 48% { opacity: 1; }
+  49%, 100% { opacity: 0; }
+}
+
+#inicio.home-quadro .code-purple { color: #c09cff; }
+#inicio.home-quadro .code-blue { color: #7dcaff; }
+#inicio.home-quadro .code-orange { color: var(--home-gold); }
+#inicio.home-quadro .code-green { color: #8fd9a7; }
+#inicio.home-quadro .code-muted { color: #697488; }
+
+@media (max-width: 1150px) {
+  #inicio.home-quadro .home-layout {
+    grid-template-columns: minmax(0, 0.92fr) minmax(410px, 1.08fr);
+    gap: 30px;
+  }
+
+  #inicio.home-quadro h1 {
+    font-size: clamp(3.2rem, 5.4vw, 5rem);
+  }
+
+  #inicio.home-quadro .home-visual {
+    min-height: 420px;
+  }
+}
+
+@media (max-width: 820px) {
+  #inicio.home-quadro {
+    min-height: auto;
+    padding: 105px 24px 23px;
+  }
+
+  #inicio.home-quadro .home-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #inicio.home-quadro .home-copy {
+    padding: 0;
+  }
+
+  #inicio.home-quadro h1 {
+    max-width: 600px;
+    font-size: clamp(3.2rem, 10vw, 5rem);
+  }
+
+  #inicio.home-quadro .hero-description {
+    max-width: 580px;
+  }
+
+  #inicio.home-quadro .home-visual {
+    min-height: min(82vw, 460px);
+    margin-top: 35px;
+  }
+
+  #inicio.home-quadro .code-card-stack {
+    min-height: min(82vw, 460px);
+  }
+
+  #inicio.home-quadro .code-stack-card--typescript {
+    top: 6%;
+    left: 0;
+    width: 82%;
+  }
+
+  #inicio.home-quadro .code-stack-card--javascript {
+    top: 43%;
+    right: 0;
+    width: 78%;
+  }
+
+}
+
+@media (max-width: 540px) {
   :root {
-    --quadro-espaco: 18px;   /* respiro entre o quadro e a borda da página */
-    --quadro-raio: 32px;     /* arredondamento dos cantos */
+    --quadro-espaco: 10px;
+    --quadro-raio: 22px;
   }
 
   #inicio.home-quadro {
-    width: auto;
-    margin: var(--quadro-espaco);
-    /* desconta a margem de cima e de baixo para não gerar scroll extra */
-    min-height: calc(100vh - (var(--quadro-espaco) * 2));
-    border-radius: var(--quadro-raio);
-    overflow: hidden;
-    isolation: isolate;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+    padding: 92px 18px 20px;
   }
 
-  /* a onda e o canvas são filhos absolutos: herdam o recorte do quadro */
-  #inicio.home-quadro .wave,
-  #inicio.home-quadro .code-rain-canvas {
-    border-radius: inherit;
+  #inicio.home-quadro h1 {
+    font-size: clamp(2.85rem, 14vw, 4.25rem);
+    letter-spacing: -0.08em;
   }
 
-  h2 {
-    margin: 0px;
-    display: inline-flex;       
-    flex-direction: column;     
-    align-items: flex-start;    
-    text-align: left;           
-    line-height: 1.15;
-    color: #ffffff;
+  #inicio.home-quadro .hero-description {
+    margin-top: 22px;
+    font-size: 0.83rem;
+    line-height: 1.65;
   }
-  
-  /* Os dois tracinhos dourados ACIMA do texto, alinhados à esquerda */
-  .title-slashes {
-    display: block;
-    color: #f2b544;
-    font-weight: 500;  
-    font-size: clamp(3rem, 8vw, 10rem);        
-    margin-bottom: 5px;         
-    font-family: 'Poppins', sans-serif;
-    
-    text-shadow: 
-      0 0 4px rgba(242, 181, 68, 0.4),
-      0 0 10px rgba(242, 181, 68, 0.2);
-  }
-  
-  /* Bloco do texto principal do h2 */
-  .title-text {
-    font-size: clamp(2rem, 6vw, 70px);          
-    font-weight: 400;           
-  }
-  
-  /* Título do hero: Poppins, como o resto do site. (Era Courier New —
-     a "fonte diferente" que aparecia na página inicial.) O ar de código
-     continua vindo dos // dourados e do cursor piscando. */
-  .code-font {
-    font-family: 'Poppins', sans-serif;
-    letter-spacing: -0.02em;
-  }
-  
-  /* Cursor piscando ao digitar */
-  .cursor-blink {
-    display: inline-block;
-    color: #f2b544;
-    margin-left: 2px;
-    animation: blink 0.8s infinite;
-  }
-  
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-  
-  /* Estilização específica para a palavra OURO */
-  h2 span.gold-text {
-    color: #f2b544;            
-    font-weight: 550;          
-    letter-spacing: 1px;       
-    
 
-  }
-  
-  section {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-  }
-  
-  /* Canvas de fundo com escrita de códigos */
-  .code-rain-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; 
-    z-index: 1;
-    opacity: 0.5;
-  }
-  
-  /* ==========================================================================
-     2. ANIMAÇÃO DE FUNDO (WAVE)
-     ========================================================================== */
-  section .wave {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #f2b544;
-    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
-    transition: 2s;
-    z-index: 0;
-  }
-  
-  section .wave span {
-    content: "";
-    position: absolute;
-    width: 325vh;
-    height: 325vh;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -75%);
-    background: #ececec;
-  }
-  
-  /* fundo aqui */
-  section .wave span:nth-child(1) {
-    border-radius: 45%;
-    background: #171A1F;
-    animation: animate 5s linear infinite;
-  }
-  
-  section .wave span:nth-child(2) {
-    border-radius: 40%;
-    background: rgba(20, 20, 20, 0.5);
-    animation: animate 10s linear infinite;
-  }
-  
-  section .wave span:nth-child(3) {
-    border-radius: 42.5%;
-    background: rgba(20, 20, 20, 0.5);
-    animation: animate 15s linear infinite;
-  }
-  
-  @keyframes animate {
-    0% {
-      transform: translate(-50%, -75%) rotate(0deg);
-    }
-    100% {
-      transform: translate(-50%, -75%) rotate(360deg);
-    }
-  }
-  
-  /* ==========================================================================
-     3. BLOCO DE CONTEÚDO PRINCIPAL E BOTÃO
-     ========================================================================== */
-  .content {
-    position: relative;
-    z-index: 2;
-    margin-bottom: 120px;       
-    padding: 0 30px;
-    text-align: center;         
-    width: 100%;
-    max-width: 1200px;
-    box-sizing: border-box;
-  }
-  
-  .container-btn {
-    margin-top: 35px;
-    margin-bottom: 65px;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .button {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    height: 5rem;
-    width: 420px;
-    max-width: 100%;
-    border-radius: 3rem;
-    background: #3d3a4e;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 1.4rem;
-    text-decoration: none;
-  }
-  
-  .button:hover::before {
-    transform: scaleX(1);
-  }
-  
-  .button-content {
-    position: relative;
-    z-index: 1;
-    padding: 10px;
-  }
-  
-  .button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: scaleX(0);
-    transform-origin: 0 50%;
-    width: 100%;
-    height: inherit;
-    border-radius: inherit;
-    background-color: #f2b544;
-    transition: all 0.475s;
-  }
-  
-  /* ==========================================================================
-     4. SEÇÃO DOS CARDS PEQUENOS (PROPORÇÃO 290x170px COM ALINHAMENTO)
-     ========================================================================== */
-  .container-card-small {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
-    margin-bottom: 80px;
-    padding: 0 20px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .card {
-    width: 290px;
-    height: 170px;
-    perspective: 1000px;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  
-  .card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-  }
-  
-  .card:hover .card-inner {
-    transform: rotateY(180deg);
-  }
-  
-  .card-front,
-  .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 2rem;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
+  #inicio.home-quadro .hero-actions {
+    align-items: flex-start;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 25px rgba(20, 24, 31, 0.15);
+    gap: 19px;
+    margin-top: 28px;
   }
-  
-  .card-front {
-    background: #ededed3b;
-    gap: 12px;
-  }
-  
-  .card-back {
-    background: #f2b544;
-    color: #fff;
-    transform: rotateY(180deg);
-  }
-  
-  .img-computer {
-    height: 45px;
-    width: 45px;
-    object-fit: contain;
-    margin-bottom: 0px;
-    flex-shrink: 0;
-  }
-  
-  .icon-boxicons {
-    font-size: 45px;
-    color: rgba(255, 255, 255, 0.85);
-    display: inline-block;
-    margin-bottom: 0px;
-    flex-shrink: 0;
-  }
-  
-  .text-card-small {
-    margin: 0px;
-    font-size: 1.05rem;
-    font-weight: 500;
-    color: #ffffff;
-    text-align: center;
-  }
-  
-  .card-back .text-card-small {
-    color: #142740;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
-  
-  .saiba-mais-wrapper {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center;
-    gap: 8px;              
-  }
-  
-  .icon-seta {
-    font-size: 45px;        
-    color: #142740;         
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  
-  .card:hover .icon-seta {
-    transform: translateX(5px);
-  }
-  
-  /* ==========================================================================
-     5. RESPONSIVIDADE (MEDIA QUERIES)
-     ========================================================================== */
-  
-  @media (min-width: 1280px) {
-    .title-text, .title-slashes {
-      font-size: 3.8rem;
-    }
-  
-    .button {
-      height: 5.5rem;
-      width: 460px;
-      font-size: 1.6rem;
-    }
-  
-    .container-card-small {
-      gap: 60px;
-    }
-  
-    .card {
-      width: 290px;
-      height: 170px;
-    }
-  }
-  
-  @media (max-width: 1024px) and (min-width: 768px) {
-    .title-text, .title-slashes {
-      font-size: 2.6rem;
-    }
-  
-    .container-btn {
-      margin-bottom: 50px;
-    }
-  
-    .button {
-      height: 4rem;
-      width: 320px;
-      font-size: 1.1rem;
-    }
-  
-    .card {
-      width: 280px;
-      height: 170px;
-    }
-  }
-  
-  @media (max-width: 767px) {
-    .title-text, .title-slashes {
-      font-size: 1.8rem;
-    }
-  
-    h2 {
-      line-height: 1.3;
-    }
-  
-    .title-slashes {
-      margin-right: 0px;
-      margin-bottom: 2px;
-    }
-  
-    .container-btn {
-      margin-bottom: 40px;
-      padding: 0 16px;
-    }
-  
-    .button {
-      height: auto;
-      width: 100%;
-      max-width: 300px;
-      padding: 14px 20px;
-      font-size: 1rem;
-    }
-  
-    .container-card-small {
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-      margin-bottom: 50px;
-      padding: 0 16px;
-    }
-  
-    .card {
-      width: 280px;
-      height: 170px;
-    }
-  
-    section {
-      min-height: 100svh;
-      padding-top: 85px;
-    }
 
-    :root {
-      --quadro-espaco: 10px;
-      --quadro-raio: 22px;
-    }
-
-    #inicio.home-quadro {
-      min-height: calc(100svh - (var(--quadro-espaco) * 2));
-    }
-  
-    .content {
-      padding: 0 16px;
-      margin-bottom: 60px;
-    }
+  #inicio.home-quadro .hero-primary {
+    width: 100%;
+    justify-content: center;
   }
+
+  #inicio.home-quadro .home-visual {
+    min-height: 360px;
+    margin-top: 28px;
+  }
+
+  #inicio.home-quadro .code-card-stack {
+    min-height: 360px;
+  }
+
+  #inicio.home-quadro .code-stack-kicker {
+    top: 1%;
+    right: 1%;
+    font-size: 0.48rem;
+  }
+
+  #inicio.home-quadro .code-stack-card--typescript {
+    top: 4%;
+    left: 0;
+    width: 94%;
+  }
+
+  #inicio.home-quadro .code-stack-card--javascript {
+    top: 45%;
+    right: 0;
+    width: 90%;
+  }
+
+  #inicio.home-quadro .visual-code-card {
+    padding: 16px 17px 18px;
+  }
+
+  #inicio.home-quadro .code-editor-lines {
+    margin-top: 18px;
+    font-size: 0.6rem;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #inicio.home-quadro .code-card-stack,
+  #inicio.home-quadro .code-stack-card,
+  #inicio.home-quadro .code-stack-connector,
+  #inicio.home-quadro .visual-code-card {
+    animation: none;
+  }
+
+  #inicio.home-quadro .code-stack-card {
+    transform: none;
+  }
+
+  #inicio.home-quadro .code-line {
+    animation: none;
+  }
+
+  #inicio.home-quadro .typing-caret {
+    animation: none;
+  }
+
+  #inicio.home-quadro .title-caret {
+    animation: none;
+  }
+
+  #inicio.home-quadro .hero-primary {
+    transition: none;
+  }
+}
